@@ -76,7 +76,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 video = test_video.ImageCompare().run()
                 data = json.dumps({"mouse": mouse,
                                    "keyb": keyb,
-                                   "video": video})
+                                   "video": video}, indent=4)
 
             self.send_response(200)
             self.send_header("Content-type", "application/json")
