@@ -14,7 +14,7 @@ from root.nested.jobs import mbed_jobs
 from root.nested.config import config
 from root.nested.utilities import test_video, test_usb, capture_gui
 
-HOME_PORT = 8081
+PORT = config.RPI_PORT
 PIS = config.get_rpis()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
@@ -90,7 +90,7 @@ try:
     args = parser.parse_args()
     ip = args.ip
     logging_start()
-    server = http.server.HTTPServer((ip, HOME_PORT), RemoteServer)
+    server = http.server.HTTPServer((ip, PORT), RemoteServer)
     logging.info("Started Server on %s" % ip)
     server.serve_forever()
 except KeyboardInterrupt:

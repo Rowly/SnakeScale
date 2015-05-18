@@ -3,15 +3,14 @@ Created on 27 Apr 2015
 
 @author: Mark
 '''
+from root.nested.config import config
+from root.nested.jobs import pi_jobs
+from queue import Queue
 import logging
 import time
 import threading  # @UnusedImport
 import argparse
-from queue import Queue
-from root.nested.config import config
-from root.nested.jobs import pi_jobs
 
-RPI_PORT = config.RPI_PORT
 RPIS = config.get_rpis()
 
 ControlQ = Queue()

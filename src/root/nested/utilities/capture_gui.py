@@ -35,7 +35,7 @@ class CaptureGui(QtGui.QMainWindow):
         return QtGui.QMainWindow.eventFilter(self, source, event)
 
     def keyPressEvent(self, e):
-        if e.key() == QtCore.Qt.Key_Escape:
+        if e.key() == QtCore.Qt.Key_F1:
             try:
                 with open("../dump/test.txt", "w+") as file:
                     file.write(self.area.toPlainText())

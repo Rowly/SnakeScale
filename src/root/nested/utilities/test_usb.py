@@ -74,4 +74,3 @@ if __name__ == "__main__":
     data = json.dumps({"mouse": mouse(),
                        "keyb": key_b()}, indent=4)
     print(data)
-
