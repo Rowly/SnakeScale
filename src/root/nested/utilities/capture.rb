@@ -6,7 +6,7 @@ target = ARGV[0]
 headless = Headless.new
 headless.start
 
-driver = Selenium::Webriver.for :firefox
+driver = Selenium::WebDriver.for :firefox
 wait = Selenium::WebDriver::Wait.new(:timeout => 60)
 
 driver.navigate.to target
