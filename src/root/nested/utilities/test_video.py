@@ -22,7 +22,7 @@ class Capture():
         logging.info("ADDER: Getting image")
         target = "http://%s" % ALIFS[self.alif]
         try:
-            subprocess.Popen("ruby capture.rb %s" % target)
+            subprocess.Popen("ruby capture.rb http://%s" % target)
         except TimeoutException as e:
             logging.info("ADDER: Timed out, stacktrace: %s" % e)
 
