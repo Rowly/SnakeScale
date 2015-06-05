@@ -50,8 +50,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         rpi = path[3]
 
         if command == "notify":
-            logging.info("Received notice to execute test for %s"
-                          % device)
+            logging.info("Received notice to execute test for %s" % device)
 
             capture_gui.main()
 

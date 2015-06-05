@@ -18,17 +18,16 @@ class GetResult():
         self.device = device
 
     def run(self):
-        logging.info("ADDER: Getting result from RPI %s @ %s"
-                      % (self.rpi, RPIS[self.rpi]))
+        logging.info("ADDER: Getting result from RPI %s @ %s" %
+                     (self.rpi, RPIS[self.rpi]))
         try:
             r = requests.get("http://" + RPIS[self.rpi] + ":" + RPI_PORT +
                              "/get_result/" + self.device)
             assert(r.status_code == 200)
-            logging.info("ADDER: RPI %s gives: %s"
-                          % (self.rpi, str(r.json())))
+            logging.info("ADDER: RPI %s gives: %s" %
+                         (self.rpi, str(r.json())))
         except Exception:
-            logging.info("ADDER: Failed to connect to RPI %s"
-                          % self.rpi)
+            logging.info("ADDER: Failed to connect to RPI %s" % self.rpi)
 
 
 class Notify():
@@ -38,12 +37,11 @@ class Notify():
         self.device = device
 
     def run(self):
-        logging.info("ADDER: Prepped RPI %s @ %s to run test"
-                      % (self.rpi, RPIS[self.rpi]))
+        logging.info("ADDER: Prepped RPI %s @ %s to run test" %
+                     (self.rpi, RPIS[self.rpi]))
         try:
             r = requests.get("http://" + RPIS[self.rpi] + ":" + RPI_PORT +
                              "/notify/" + self.device + "/" + self.rpi)
             assert(r.status_code == 200)
         except Exception:
-            logging.info("ADDER: Failed to connect to RPI %s"
-                          % self.rpi)
+            logging.info("ADDER: Failed to connect to RPI %s" % self.rpi)

@@ -4,11 +4,10 @@ Created on 8 May 2015
 @author: Mark
 '''
 from root.nested.config import config
-from selenium.common.exceptions import TimeoutException
 from PIL import Image
 import math
 import logging
-import subprocess
+import requests
 
 ALIFS = config.get_alifs()
 
@@ -22,9 +21,13 @@ class Capture():
         logging.info("ADDER: Getting image")
         target = "http://%s" % ALIFS[self.alif]
         try:
-            subprocess.Popen("ruby capture.rb http://%s" % target)
-        except TimeoutException as e:
-            logging.info("ADDER: Timed out, stacktrace: %s" % e)
+            response = requests.get(target + "")
+            if response.status_code == 200:
+                f = open("../imgs/capture.jpg", 'wb')
+                f.write(response.content)
+                f.close()
+        except Exception as e:
+            logging.info("ADDER: Error, stacktrace: %s" % e)
 
 
 class ImageCompare():

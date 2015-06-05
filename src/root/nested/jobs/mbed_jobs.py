@@ -24,8 +24,7 @@ def send(mbed_ip, payload):
                 break
         s.close()
     except Exception:
-        logging.info("ADDER: Failed to connect to MBED %s"
-                      % mbed_ip)
+        logging.info("ADDER: Failed to connect to MBED %s" % mbed_ip)
 
 
 class OSDConnect():
@@ -35,8 +34,8 @@ class OSDConnect():
         self.rpi = rpi
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to connect to RPI %s"
-                      % (self.mbed, self.rpi))
+        logging.info("ADDER: MBED %s instructed to connect to RPI %s" %
+                     (self.mbed, self.rpi))
         send(OSD_MBEDS[self.mbed], str.encode("connect %s\0" % self.rpi))
 
 
@@ -46,8 +45,8 @@ class SendKeys():
         self.mbed = alif
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to send test string"
-                      % self.mbed)
+        logging.info("ADDER: MBED %s instructed to send test string" %
+                     self.mbed)
         send(JOB_MBEDS[self.mbed], str.encode("keyboard\0"))
 
 
@@ -57,6 +56,5 @@ class MouseMove():
         self.mbed = alif
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to move mouse"
-                      % self.mbed)
+        logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed)
         send(JOB_MBEDS[self.mbed], str.encode("mouse\0"))
