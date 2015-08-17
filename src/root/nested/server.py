@@ -9,6 +9,10 @@ GET requests sent by the test controller running controller.py
 through the use of the pi_jobs modules.
 
 """
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 import logging
 import http.server
 from urllib.parse import urlsplit

@@ -8,6 +8,10 @@ It takes upto 3 arguments, 1 required and the other 2 optional
 as they have default values.
 
 """
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from root.nested.config import config
 from root.nested.jobs import pi_jobs
 from queue import Queue
