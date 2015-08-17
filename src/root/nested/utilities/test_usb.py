@@ -64,7 +64,6 @@ def mouse():
                 result["no"] = "TRUE"
         except ValueError:
             pass
-
     except IOError:
         logging.info("Could not find test file")
     return result

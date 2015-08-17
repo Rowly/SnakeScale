@@ -1,8 +1,13 @@
-'''
+"""
 Created on 27 Apr 2015
 
 @author: Mark
-'''
+
+This class runs on the test controller, hence the name.
+It takes upto 3 arguments, 1 required and the other 2 optional
+as they have default values.
+
+"""
 from root.nested.config import config
 from root.nested.jobs import pi_jobs
 from queue import Queue
@@ -11,13 +16,17 @@ import time
 import threading  # @UnusedImport
 import argparse
 
+#Get OrderedDict of Raspberry Pi IP addresses from data.json
 RPIS = config.get_rpis()
 
 ControlQ = Queue()
 
 
 class Executor():
-
+"""
+Each item is a Jobs() instance.
+Takes an item from the queue and executes it.
+"""
     def run(self):
         while not ControlQ.empty():
             item = ControlQ.get()
@@ -25,17 +34,31 @@ class Executor():
 
 
 class Jobs():
-
+"""
+Takes in the IP address of the Raspberry Pi that will be
+carrying out the test and the device type that is under test.
+Device is typically of DDX30 in the initial version.
+"""
     def __init__(self, rpi, device):
         self.rpi = rpi
         self.device = device
 
     def run(self):
+        """
+        First notifies the target Raspberry Pi that it is to
+        carry out tests for the device under tests.
+        
+        Then instructs the Raspberry Pi to log the results of
+        those tets.
+        """
         pi_jobs.Notify(self.rpi, self.device)
         pi_jobs.GetResult(self.rpi, self.device)
 
 
 def logging_start():
+    """
+    Inclusion of ADDER prefix to enable quick grep'ing of results
+    """
     logging.basicConfig(filename="./logs/result.log",
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
@@ -43,6 +66,9 @@ def logging_start():
 
 
 def logging_stop():
+    """
+    Inclusion of ADDER prefix to enable quick grep'ing of results
+    """
     logging.info("ADDER: ==== Stopped Logging ====")
     time.sleep(1)
     logging.shutdown()
@@ -55,9 +81,9 @@ if __name__ == '__main__':
                             required=True,
                             choices=["DDX30", "ALIF", "CCSPRO4"])
         parser.add_argument("--pcs", type=int,
-                            help="Number of connected Pis", default=20)
+                            help="Number of connected Pis", default=23)
         parser.add_argument("--mbeds", type=int,
-                            help="Number of connected Mbeds", default=10)
+                            help="Number of connected Mbed pairs", default=7)
         args = parser.parse_args()
         device = args.device
         config.RPIS_LIMIT = args.pcs

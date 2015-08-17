@@ -1,8 +1,14 @@
-'''
+"""
 Created on 27 Apr 2015
 
 @author: Mark
-'''
+
+This class runs on each Raspberry Pi source machine in
+the setup. It is a basic HTTPServer that listens for
+GET requests sent by the test controller running controller.py
+through the use of the pi_jobs modules.
+
+"""
 import logging
 import http.server
 from urllib.parse import urlsplit
@@ -40,14 +46,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     Inbound request methods:
     /<command>/<device>/<rpi>
     /notify/<device>/<rpi>
-    /get_result/device
+    /get_result/<device>
     """
     def do_GET(self):
+        # Split the inbound uri on / to determine info
         u = urlsplit(self.path)
         path = u.path.split("/")
-        command = path[1]
-        device = path[2]
-        rpi = path[3]
+        command = path[1] # First is the command
+        device = path[2] # Second is the device
+        rpi = path[3] # Third is the index of the Pi itself
 
         if command == "notify":
             logging.info("Received notice to execute test for %s" % device)
