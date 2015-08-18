@@ -7,8 +7,8 @@ import requests
 import logging
 from root.nested.config import config
 
-RPI_PORT = config.RPI_PORT
-RPIS = config.get_rpis().run()
+RPI_PORT = config.get_rpis_port()
+RPIS = config.get_rpis()
 
 
 class GetResult():

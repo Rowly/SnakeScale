@@ -7,7 +7,7 @@ import logging
 import socket
 from root.nested.config import config
 
-MBED_ECHO_PORT = config.MBED_ECHO_PORT
+MBED_ECHO_PORT = config.get_mbed_echo_port()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 RPIS = config.get_rpis()

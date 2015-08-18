@@ -24,7 +24,7 @@ from root.nested.jobs import mbed_jobs
 from root.nested.config import config
 from root.nested.utilities import test_video, test_usb, capture_gui
 
-PORT = config.RPI_PORT
+PORT = config.get_rpis_port()
 PIS = config.get_rpis()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
