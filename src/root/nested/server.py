@@ -32,7 +32,7 @@ ALIFS = config.get_alifs()
 
 
 def logging_start():
-    logging.basicConfig(filename="./logs/server.log",
+    logging.basicConfig(filename="/var/log/snakescale-ddx/result.log",
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
     logging.info("==== Started Logging ====")

@@ -52,8 +52,8 @@ Device is typically of DDX30 in the initial version.
         First notifies the target Raspberry Pi that it is to
         carry out tests for the device under tests.
         
-        Then instructs the Raspberry Pi to log the results of
-        those tets.
+        Then fetches the results of the tests from the
+        Raspberry Pis.
         """
         pi_jobs.Notify(self.rpi, self.device)
         pi_jobs.GetResult(self.rpi, self.device)
@@ -63,7 +63,7 @@ def logging_start():
     """
     Inclusion of ADDER prefix to enable quick grep'ing of results
     """
-    logging.basicConfig(filename="./logs/result.log",
+    logging.basicConfig(filename="/var/log/snakescale-ddx/result.log",
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
     logging.info("ADDER: ==== Started Logging ====")
