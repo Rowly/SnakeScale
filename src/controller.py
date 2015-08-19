@@ -10,7 +10,7 @@ as they have default values.
 """
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.append(os.path.dirname(__file__))
 
 from root.nested.config import config
 from root.nested.jobs import pi_jobs
@@ -20,7 +20,7 @@ import time
 import threading  # @UnusedImport
 import argparse
 
-#Get OrderedDict of Raspberry Pi IP addresses from data.json
+# Get OrderedDict of Raspberry Pi IP addresses from data.json
 RPIS = config.get_rpis()
 
 ControlQ = Queue()
