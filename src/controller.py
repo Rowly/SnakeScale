@@ -12,8 +12,8 @@ import sys
 import os
 sys.path.append(os.path.dirname(__file__))
 
-from root.nested.config import config
-from root.nested.jobs import pi_jobs
+from config import config
+from jobs import pi_jobs
 from queue import Queue
 import logging
 import time
@@ -27,10 +27,10 @@ ControlQ = Queue()
 
 
 class Executor():
-"""
-Each item is a Jobs() instance.
-Takes an item from the queue and executes it.
-"""
+    """
+    Each item is a Jobs() instance.
+    Takes an item from the queue and executes it.
+    """
     def run(self):
         while not ControlQ.empty():
             item = ControlQ.get()
@@ -38,11 +38,11 @@ Takes an item from the queue and executes it.
 
 
 class Jobs():
-"""
-Takes in the IP address of the Raspberry Pi that will be
-carrying out the test and the device type that is under test.
-Device is typically of DDX30 in the initial version.
-"""
+    """
+    Takes in the IP address of the Raspberry Pi that will be
+    carrying out the test and the device type that is under test.
+    Device is typically of DDX30 in the initial version.
+    """
     def __init__(self, rpi, device):
         self.rpi = rpi
         self.device = device
@@ -51,7 +51,7 @@ Device is typically of DDX30 in the initial version.
         """
         First notifies the target Raspberry Pi that it is to
         carry out tests for the device under tests.
-        
+
         Then fetches the results of the tests from the
         Raspberry Pis.
         """

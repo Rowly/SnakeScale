@@ -5,7 +5,7 @@ Created on 27 Apr 2015
 '''
 import logging
 import socket
-from root.nested.config import config
+from config import config
 
 MBED_ECHO_PORT = config.get_mbed_echo_port()
 OSD_MBEDS = config.get_mbed_osders()

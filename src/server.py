@@ -20,9 +20,9 @@ import time
 import json
 import argparse
 import random
-from root.nested.jobs import mbed_jobs
-from root.nested.config import config
-from root.nested.utilities import test_video, test_usb, capture_gui
+from jobs import mbed_jobs
+from config import config
+from utilities import test_video, test_usb, capture_gui
 
 PORT = config.get_rpis_port()
 PIS = config.get_rpis()
@@ -56,9 +56,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # Split the inbound uri on / to determine info
         u = urlsplit(self.path)
         path = u.path.split("/")
-        command = path[1] # First is the command
-        device = path[2] # Second is the device
-        rpi = path[3] # Third is the index of the Pi itself
+        command = path[1]  # First is the command
+        device = path[2]  # Second is the device
+        rpi = path[3]  # Third is the index of the Pi itself
 
         if command == "notify":
             logging.info("Received notice to execute test for %s" % device)

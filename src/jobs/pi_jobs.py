@@ -5,7 +5,7 @@ Created on 27 Apr 2015
 '''
 import requests
 import logging
-from root.nested.config import config
+from config import config
 
 RPI_PORT = config.get_rpis_port()
 RPIS = config.get_rpis()
