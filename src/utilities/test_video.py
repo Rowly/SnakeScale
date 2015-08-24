@@ -21,8 +21,8 @@ class Capture():
         logging.info("ADDER: Getting image")
         target = "http://%s" % ALIFS[self.alif]
         try:
-            response = requests.get(target + "")
-            # TODO: Put in the url to the thumbnail page
+            response = requests.get(target +
+                                    "/cgi-bin/show?page=screencapture0.html")
             if response.status_code == 200:
                 f = open(path, 'wb')
                 f.write(response.content)
