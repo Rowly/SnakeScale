@@ -55,8 +55,8 @@ class Jobs():
         Then fetches the results of the tests from the
         Raspberry Pis.
         """
-        pi_jobs.Notify(self.rpi, self.device)
-        pi_jobs.GetResult(self.rpi, self.device)
+        pi_jobs.Notify(self.rpi, self.device).run()
+        pi_jobs.GetResult(self.rpi, self.device).run()
 
 
 def logging_start():
@@ -82,7 +82,6 @@ if __name__ == '__main__':
     try:
         parser = argparse.ArgumentParser(description="Device to test")
         parser.add_argument("device", type=str, help="DDX30, ALIF, CCSPRO4",
-                            required=True,
                             choices=["DDX30", "ALIF", "CCSPRO4"])
         parser.add_argument("--pcs", type=int,
                             help="Number of connected Pis", default=23)
@@ -93,8 +92,9 @@ if __name__ == '__main__':
         config.RPIS_LIMIT = args.pcs
         config.MBED_LIMIT = args.mbeds
         logging_start()
-        while True:
+            while True:
             for rpi in RPIS:
+                print(rpi)
                 try:
                     item = Jobs(rpi, device)
                     ControlQ.put(item)
