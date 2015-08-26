@@ -92,7 +92,7 @@ if __name__ == '__main__':
         config.RPIS_LIMIT = args.pcs
         config.MBED_LIMIT = args.mbeds
         logging_start()
-            while True:
+        while True:
             for rpi in RPIS:
                 print(rpi)
                 try:
