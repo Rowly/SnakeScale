@@ -67,7 +67,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
             if device == "DDX30":
                 mbeds_key = str(random.randint(0, len(OSD_MBEDS) - 1))
-                alif_key = list(PIS.keys()).index(rpi)
+                alif_key = mbeds_key
 
                 mbed_jobs.OSDConnect(OSD_MBEDS[mbeds_key], rpi).run()
                 mbed_jobs.MouseMove(JOB_MBEDS[mbeds_key]).run()
