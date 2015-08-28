@@ -94,7 +94,6 @@ if __name__ == '__main__':
         logging_start()
         while True:
             for rpi in RPIS:
-                print(rpi)
                 try:
                     item = Jobs(rpi, device)
                     ControlQ.put(item)
