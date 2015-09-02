@@ -66,7 +66,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             pass
 
         if command == "notify":
-            logging.info("ADDER: Received notice to execute test for %s" % device)
+            logging.info("ADDER: Received notice to execute test for %s"
+                         % device)
             self.send_response(200)
             self.send_header("Content-type", "text/plain")
             self.end_headers()

@@ -17,7 +17,7 @@ class Capture():
     def __init__(self, alif):
         self.alif = alif
 
-    def run(self, path="./imgs/capture.jpg"):
+    def run(self, path="./imgs/capture.png"):
         logging.info("ADDER: Getting image")
         target = "http://%s" % ALIFS[self.alif]
         try:
@@ -34,7 +34,7 @@ class Capture():
 class ImageCompare():
 
     def run(self,
-            cap_path="./imgs/capture.jpg",
+            cap_path="./imgs/capture.png",
             def_path="./imgs/default.png"):
         logging.info("ADDER: Comparing images")
         result = "FALSE"
@@ -52,7 +52,7 @@ class ImageCompare():
 
 if __name__ == "__main__":
     for i in range(1, 7):
-        Capture(str(i)).run("../imges/capture.jpg")
-        r = ImageCompare(str(i)).run("../imges/capture.jpg",
-                                     "../imges/default.jpg")
+        Capture(str(i)).run("../imges/capture.png")
+        r = ImageCompare(str(i)).run("../imges/capture.png",
+                                     "../imges/default.png")
         print(r)
