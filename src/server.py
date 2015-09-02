@@ -60,7 +60,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         path = u.path.split("/")
         command = path[1]  # First is the command
         device = path[2]  # Second is the device
-        rpi = path[3]  # Third is the index of the Pi itself
+        try:
+            rpi = path[3]  # Third is the index of the Pi itself
+        except IndexError:
+            pass
 
         if command == "notify":
             logging.info("ADDER: Received notice to execute test for %s" % device)
