@@ -14,11 +14,11 @@ TEST_STRING = "abcdefghijklmnopqrstuvwxyz"
 def key_b():
     result = "FALSE"
     try:
-        data = [line.strip() for line in open("../dump/test.txt")]
+        data = [line.strip() for line in open("./dump/test.txt")]
         if TEST_STRING in set(data):
             result = "TRUE"
     except IOError:
-        logging.info("Could not find test file")
+        logging.info("ADDER: Could not find test file")
     return result
 
 
@@ -33,7 +33,7 @@ def mouse():
               "left": "FALSE",
               "no": "FALSE"}
     try:
-        data = [line.strip() for line in open("../dump/test.txt")]
+        data = [line.strip() for line in open("./dump/test.txt")]
         rights = [line for line in data if line.startswith("Right Click")]
         lefts = [line for line in data if line.startswith("Left Click")]
         nos = [line for line in data if line.startswith("No Click")]
@@ -65,7 +65,7 @@ def mouse():
         except ValueError:
             pass
     except IOError:
-        logging.info("Could not find test file")
+        logging.info("ADDER: Could not find test file")
     return result
 
 
