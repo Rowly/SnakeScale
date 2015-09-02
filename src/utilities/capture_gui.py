@@ -37,10 +37,10 @@ class CaptureGui(QtGui.QMainWindow):
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_F1:
             try:
-                with open("../dump/test.txt", "w+") as file:
+                with open("./dump/test.txt", "w+") as file:
                     file.write(self.area.toPlainText())
             except FileNotFoundError:
-                with open("../dump/test.txt", "a") as file:
+                with open("./dump/test.txt", "a") as file:
                     file.write(self.area.toPlainText())
             self.close()
 
