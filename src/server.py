@@ -73,8 +73,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             BUSY = True
-
-            capture_gui.main()
+            
+            try:
+                capture_gui.main()
+            except SystemExit:
+                pass
 
             if device == "DDX30":
                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
