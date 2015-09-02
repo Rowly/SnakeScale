@@ -5,6 +5,7 @@ Created on 27 Apr 2015
 '''
 import requests
 import logging
+import time
 from config import config
 
 RPI_PORT = config.get_rpis_port()
@@ -20,15 +21,22 @@ class GetResult():
     def run(self):
         logging.info("ADDER: Getting result from RPI %s @ %s" %
                      (self.rpi, RPIS[self.rpi]))
-        try:
-            r = requests.get("http://" + RPIS[self.rpi] + ":" + str(RPI_PORT) +
-                             "/get_result/" + self.device)
-            assert(r.status_code == 200)
-            logging.info("ADDER: RPI %s gives: %s" %
-                         (self.rpi, str(r.json())))
-        except Exception as e:
-            logging.info("ADDER: Failed to connect to RPI %s" % self.rpi)
-            logging.info("ADDER: Exception - %s" % e)
+        while True:
+            try:
+                r = requests.get("http://" + RPIS[self.rpi]
+                                 + ":" + str(RPI_PORT) +
+                                 "/get_result/" + self.device)
+                assert(r.status_code == 200)
+                if r.content is not "busy":
+                    logging.info("ADDER: RPI %s gives: %s" %
+                                 (self.rpi, str(r.json())))
+                    break
+                else:
+                    time.sleep(5)
+            except Exception as e:
+                logging.info("ADDER: Failed to connect to RPI %s" % self.rpi)
+                logging.info("ADDER: Exception - %s" % e)
+                break
 
 
 class Notify():
@@ -41,7 +49,8 @@ class Notify():
         logging.info("ADDER: Prepped RPI %s @ %s to run test" %
                      (self.rpi, RPIS[self.rpi]))
         try:
-            r = requests.get("http://" + RPIS[self.rpi] + ":" + str(RPI_PORT) +
+            r = requests.get("http://" + RPIS[self.rpi]
+                             + ":" + str(RPI_PORT) +
                              "/notify/" + self.device + "/" + self.rpi)
             assert(r.status_code == 200)
         except Exception as e:

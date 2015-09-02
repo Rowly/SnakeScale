@@ -29,6 +29,7 @@ PIS = config.get_rpis()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 ALIFS = config.get_alifs()
+BUSY = False
 
 
 def logging_start():
@@ -53,6 +54,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     /get_result/<device>
     """
     def do_GET(self):
+        global BUSY
         # Split the inbound uri on / to determine info
         u = urlsplit(self.path)
         path = u.path.split("/")
@@ -62,11 +64,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         if command == "notify":
             logging.info("Received notice to execute test for %s" % device)
+            self.send_response(200)
+            self.send_header("Content-type", "text/plain")
+            self.end_headers()
+
+            BUSY = True
 
             capture_gui.main()
 
             if device == "DDX30":
-                mbeds_key = str(random.randint(0, len(OSD_MBEDS) - 1))
+                mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                 alif_key = mbeds_key
 
                 mbed_jobs.OSDConnect(OSD_MBEDS[mbeds_key], rpi).run()
@@ -74,11 +81,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 mbed_jobs.SendKeys(JOB_MBEDS[mbeds_key]).run()
                 test_video.Capture(ALIFS[alif_key]).run()
 
-            self.send_response(200)
-            self.send_header("Content-type", "text/plain")
-            self.end_headers()
+            BUSY = False
 
         if command == "get_result":
+            if BUSY is True:
+                self.send_response(200)
+                self.send_header("Content-type", "test/plain")
+                self.end_headers()
+                self.wfile.write(bytes("busy", "UTF-8"))
             logging.info("Controller attempting to get results")
             if device == "DDX30":
                 mouse = test_usb.mouse()
@@ -87,11 +97,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 data = json.dumps({"mouse": mouse,
                                    "keyb": keyb,
                                    "video": video}, indent=4)
-
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            self.wfile.write(bytes(data, "UTF-8"))
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(bytes(data, "UTF-8"))
 
 
 try:
