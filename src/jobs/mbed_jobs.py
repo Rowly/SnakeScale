@@ -23,8 +23,9 @@ def send(mbed_ip, payload):
             if not data:
                 break
         s.close()
-    except Exception:
+    except Exception as e:
         logging.info("ADDER: Failed to connect to MBED %s" % mbed_ip)
+        logging.info("ADDER: Exception - %s" % e)
 
 
 class OSDConnect():
