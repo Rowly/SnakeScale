@@ -60,6 +60,3 @@ class MouseMove():
     def run(self):
         logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed)
         send(JOB_MBEDS[self.mbed], str.encode("mouse\0"))
-
-if __name__ == "__main__":
-    send("10.10.10.50", str.encode("keyboard\0"))

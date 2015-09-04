@@ -26,6 +26,7 @@ class GetResult():
                 r = requests.get("http://" + RPIS[self.rpi]
                                  + ":" + str(RPI_PORT) +
                                  "/get_result/" + self.device)
+                logging.info("ADDER: Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
                     logging.info("ADDER: RPI %s gives: %s" %
@@ -52,6 +53,7 @@ class Notify():
             r = requests.get("http://" + RPIS[self.rpi]
                              + ":" + str(RPI_PORT) +
                              "/notify/" + self.device + "/" + self.rpi)
+            logging.info("ADDER: Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
             logging.info("ADDER: Failed to connect to RPI %s" % self.rpi)

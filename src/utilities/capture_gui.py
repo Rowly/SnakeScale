@@ -4,6 +4,7 @@ Created on 30 Apr 2015
 @author: Mark
 '''
 import sys
+import logging
 from PyQt4 import QtGui, QtCore
 
 
@@ -46,11 +47,13 @@ class CaptureGui(QtGui.QMainWindow):
 
 
 def main():
+    logging.info("ADDER: Starting GUI")
     app = QtGui.QApplication(sys.argv)
     tracker = CaptureGui()
     tracker.showMaximized()
     app.installEventFilter(tracker)
     sys.exit(app.exec_())
+    logging.info("ADDER: Closed GUI")
 
 
 if __name__ == "__main__":
