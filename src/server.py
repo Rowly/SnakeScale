@@ -11,6 +11,7 @@ through the use of the pi_jobs modules.
 """
 import sys
 import os
+import subprocess
 sys.path.append(os.path.dirname(__file__))
 
 import logging
@@ -73,9 +74,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             self.end_headers()
 
             BUSY = True
-            
+
             try:
-                capture_gui.main()
+                subprocess.Popen(["python3", "./utilities/capture_gui.py"])
             except SystemExit:
                 pass
 
