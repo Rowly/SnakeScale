@@ -85,14 +85,11 @@ if __name__ == '__main__':
                             choices=["DDX30", "ALIF", "CCSPRO4"])
         parser.add_argument("--pcs", type=int,
                             help="Number of connected Pis", default=23)
-        parser.add_argument("--mbeds", type=int,
-                            help="Number of connected Mbed pairs", default=7)
         args = parser.parse_args()
         device = args.device
         config.RPIS_LIMIT = args.pcs
-        config.MBED_LIMIT = args.mbeds
         logging_start()
-        
+
         item = Jobs("1", device)
         ControlQ.put(item)
         Executor().run()

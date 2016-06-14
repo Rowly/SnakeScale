@@ -10,8 +10,6 @@ RPIS_LIMIT = None
 
 RPI_PORT = None
 
-MBED_LIMIT = None
-
 MBED_ECHO_PORT = None
 
 RPIS = OrderedDict()

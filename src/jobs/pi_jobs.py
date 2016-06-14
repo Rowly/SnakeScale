@@ -23,8 +23,8 @@ class GetResult():
                      (self.rpi, RPIS[self.rpi]))
         while True:
             try:
-                r = requests.get("http://" + RPIS[self.rpi]
-                                 + ":" + str(RPI_PORT) +
+                r = requests.get("http://" + RPIS[self.rpi] +
+                                 ":" + str(RPI_PORT) +
                                  "/get_result/" + self.device)
                 logging.info("ADDER: Assert Get Result response is 200")
                 assert(r.status_code == 200)
@@ -50,8 +50,8 @@ class Notify():
         logging.info("ADDER: Prepped RPI %s @ %s to run test" %
                      (self.rpi, RPIS[self.rpi]))
         try:
-            r = requests.get("http://" + RPIS[self.rpi]
-                             + ":" + str(RPI_PORT) +
+            r = requests.get("http://" + RPIS[self.rpi] +
+                             ":" + str(RPI_PORT) +
                              "/notify/" + self.device + "/" + self.rpi)
             logging.info("ADDER: Assert Notify response is 200")
             assert(r.status_code == 200)
