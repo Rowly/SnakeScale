@@ -31,32 +31,34 @@ def send(mbed_ip, payload):
 
 class OSDConnect():
 
-    def __init__(self, mbed, rpi):
-        self.mbed = mbed
+    def __init__(self, mbed_ip, rpi):
+        self.mbed_ip = mbed_ip
         self.rpi = rpi
 
     def run(self):
         logging.info("ADDER: MBED %s instructed to connect to RPI %s" %
-                     (self.mbed, self.rpi))
-        send(OSD_MBEDS[self.mbed], str.encode("connect %s\0" % self.rpi))
+                     (self.mbed_ip, self.rpi))
+        send(self.mbed_ip, str.encode("connect %s\0" % self.rpi))
 
 
 class SendKeys():
 
-    def __init__(self, mbed):
-        self.mbed = mbed
+    def __init__(self, mbed_ip):
+        self.mbed_ip = mbed_ip
 
     def run(self):
         logging.info("ADDER: MBED %s instructed to send test string" %
-                     self.mbed)
-        send(JOB_MBEDS[self.mbed], str.encode("keyboard\0"))
-
+                     self.mbed_ip)
+        send(self.mbed_ip, str.encode("keyboard\0"))
+        send(self.mbed_ip, str.encode("close\0"))
+        send(self.mbed_ip, str.encode("restart\0"))
 
 class MouseMove():
 
-    def __init__(self, mbed):
-        self.mbed = mbed
+    def __init__(self, mbed_ip):
+        self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed)
-        send(JOB_MBEDS[self.mbed], str.encode("mouse\0"))
+        logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed_ip)
+        send(self.mbed_ip, str.encode("mouse\0"))
+

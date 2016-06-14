@@ -7,18 +7,21 @@ import logging
 import subprocess
 import random
 import json
+import os
 
 TEST_STRING = "abcdefghijklmnopqrstuvwxyz"
 
 
-def key_b():
+def key_b(path="./dump/test.txt"):
     result = "FALSE"
+    print(os.getcwd())
     try:
-        data = [line.strip() for line in open("./dump/test.txt")]
+        data = [line.strip() for line in open(path)]
         if TEST_STRING in set(data):
             result = "TRUE"
-    except IOError:
-        logging.info("ADDER: Could not find test file")
+    except IOError as e:
+        logging.info("ADDER: Could not find test file.")
+        logging.info("ADDER: {}".format(e))
     return result
 
 
@@ -28,12 +31,12 @@ def info():
     return devices
 
 
-def mouse():
+def mouse(path="./dump/test.txt"):
     result = {"right": "FALSE",
               "left": "FALSE",
               "no": "FALSE"}
     try:
-        data = [line.strip() for line in open("./dump/test.txt")]
+        data = [line.strip() for line in open(path)]
         rights = [line for line in data if line.startswith("Right Click")]
         lefts = [line for line in data if line.startswith("Left Click")]
         nos = [line for line in data if line.startswith("No Click")]
@@ -64,12 +67,13 @@ def mouse():
                 result["no"] = "TRUE"
         except ValueError:
             pass
-    except IOError:
+    except IOError as e:
         logging.info("ADDER: Could not find test file")
+        logging.info("ADDER: {}".format(e))
     return result
 
 
 if __name__ == "__main__":
-    data = json.dumps({"mouse": mouse(),
-                       "keyb": key_b()}, indent=4)
+    data = json.dumps({"mouse": mouse("../dump/test.txt"),
+                       "keyb": key_b("../dump/test.txt")}, indent=4)
     print(data)
