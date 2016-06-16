@@ -5,6 +5,7 @@ Created on 27 Apr 2015
 '''
 import logging
 import socket
+import time
 from config import config
 
 MBED_ECHO_PORT = config.get_mbed_echo_port()
@@ -49,8 +50,11 @@ class SendKeys():
     def run(self):
         logging.info("ADDER: MBED %s instructed to send test string" %
                      self.mbed_ip)
+        time.sleep(1)
         send(self.mbed_ip, str.encode("keyboard\0"))
+        time.sleep(1)
         send(self.mbed_ip, str.encode("close\0"))
+        time.sleep(1)
         send(self.mbed_ip, str.encode("restart\0"))
 
 class MouseMove():
