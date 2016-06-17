@@ -4,59 +4,24 @@ Created on 27 Apr 2015
 @author: Mark
 
 This class runs on the test controller, hence the name.
-It takes upto 3 arguments, 1 required and the other 2 optional
-as they have default values.
 
 """
 import sys
 import os
-sys.path.append(os.path.dirname(__file__))
-
-from config import config
-from jobs import pi_jobs
 from queue import Queue
 import logging
 import time
-import threading  # @UnusedImport
 import argparse
+import atexit
+sys.path.append(os.path.dirname(__file__))
 
-# Get OrderedDict of Raspberry Pi IP addresses from data.json
-RPIS = config.get_rpis()
 
+from config import config
+from jobs import pi_jobs
+
+# Get OrderedDict of HOST IP addresses from data.json
+PORT = config.get_host_port()
 ControlQ = Queue()
-
-
-class Executor():
-    """
-    Each item is a Jobs() instance.
-    Takes an item from the queue and executes it.
-    """
-    def run(self):
-        while not ControlQ.empty():
-            item = ControlQ.get()
-            item.run()
-
-
-class Jobs():
-    """
-    Takes in the IP address of the Raspberry Pi that will be
-    carrying out the test and the device type that is under test.
-    Device is typically of DDX30 in the initial version.
-    """
-    def __init__(self, rpi, device):
-        self.rpi = rpi
-        self.device = device
-
-    def run(self):
-        """
-        First notifies the target Raspberry Pi that it is to
-        carry out tests for the device under tests.
-
-        Then fetches the results of the tests from the
-        Raspberry Pis.
-        """
-        pi_jobs.Notify(self.rpi, self.device).run()
-        pi_jobs.GetResult(self.rpi, self.device).run()
 
 
 def logging_start():
@@ -78,29 +43,67 @@ def logging_stop():
     logging.shutdown()
 
 
+def exit_handler():
+    print(">>>>> c2 got break")
+    logging_stop()
+    ControlQ.put(None)
+    ControlQ.join()
+
+
+class Executor():
+    """
+    Each item is a Jobs() instance.
+    Takes an item from the queue and executes it.
+    """
+    def run(self):
+        while not ControlQ.empty():
+            item = ControlQ.get()
+            item.run()
+
+
+class Jobs():
+    """
+    Takes in the IP address of the Raspberry Pi that will be
+    carrying out the test and the device type that is under test.
+    Device is typically of DDX30 in the initial version.
+    """
+    def __init__(self, device, host):
+        self.device = device
+        self.host = host
+
+    def run(self):
+        """
+        First notifies the target Raspberry Pi that it is to
+        carry out tests for the device under tests.
+
+        Then fetches the results of the tests from the
+        Raspberry Pis.
+        """
+        pi_jobs.Notify(self.device, self.host).run()
+        pi_jobs.GetResult(self.device, self.host).run()
+
+
+def main(device, hosts):
+    logging_start()
+    device = device
+    config.RPIS_LIMIT = hosts
+
+    counter = 0
+    while True:
+        counter += 1
+        print(counter)
+        item = Jobs(device, "1")
+        ControlQ.put(item)
+        Executor().run()
+        time.sleep(1)
+
+    atexit.register(exit_handler)
+
 if __name__ == '__main__':
-    try:
-        parser = argparse.ArgumentParser(description="Device to test")
-        parser.add_argument("device", type=str, help="DDX30, ALIF, CCSPRO4",
-                            choices=["DDX30", "ALIF", "CCSPRO4"])
-        parser.add_argument("--pcs", type=int,
-                            help="Number of connected Pis", default=23)
-        parser.add_argument("--mbeds", type=int,
-                            help="Number of connected Mbed pairs", default=7)
-        args = parser.parse_args()
-        device = args.device
-        config.RPIS_LIMIT = args.pcs
-        config.MBED_LIMIT = args.mbeds
-        logging_start()
-        while True:
-            for rpi in RPIS:
-                try:
-                    item = Jobs(rpi, device)
-                    ControlQ.put(item)
-                    Executor().run()
-                except KeyboardInterrupt:
-                    raise
-    except KeyboardInterrupt:
-        ControlQ.put(None)
-        ControlQ.join()
-        logging_stop()
+    parser = argparse.ArgumentParser(description="Control Server")
+    parser.add_argument("device", type=str, help="device under test")
+    parser.add_argument("hosts", type=str, help="Number of Host PCS")
+    args = parser.parse_args()
+    device = args.device
+    hosts = args.hosts
+    main(device, hosts)

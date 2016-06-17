@@ -11,12 +11,12 @@ from config import config
 MBED_ECHO_PORT = config.get_mbed_echo_port()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
-RPIS = config.get_rpis()
+HOSTS = config.get_hosts()
 
 
 def send(mbed_ip, payload):
     try:
-        logging.info("ADDER: Attemping to connect to MBED %s" % mbed_ip)
+        logging.info("ADDER: Attempting to connect to MBED %s" % mbed_ip)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
         s.sendall(payload)
@@ -32,14 +32,14 @@ def send(mbed_ip, payload):
 
 class OSDConnect():
 
-    def __init__(self, mbed_ip, rpi):
+    def __init__(self, mbed_ip, host):
         self.mbed_ip = mbed_ip
-        self.rpi = rpi
+        self.host = host
 
     def run(self):
         logging.info("ADDER: MBED %s instructed to connect to RPI %s" %
-                     (self.mbed_ip, self.rpi))
-        send(self.mbed_ip, str.encode("connect %s\0" % self.rpi))
+                     (self.mbed_ip, self.host))
+        send(self.mbed_ip, str.encode("connect %s\0" % self.host))
 
 
 class SendKeys():
@@ -57,6 +57,7 @@ class SendKeys():
         time.sleep(1)
         send(self.mbed_ip, str.encode("restart\0"))
 
+
 class MouseMove():
 
     def __init__(self, mbed_ip):
@@ -65,4 +66,3 @@ class MouseMove():
     def run(self):
         logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed_ip)
         send(self.mbed_ip, str.encode("mouse\0"))
-

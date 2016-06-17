@@ -25,8 +25,8 @@ from jobs import mbed_jobs
 from config import config
 from utilities import test_video, test_usb, capture_gui
 
-PORT = config.get_rpis_port()
-PIS = config.get_rpis()
+PORT = config.get_host_port()
+HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 ALIFS = config.get_alifs()
@@ -50,8 +50,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     """
     Inbound request methods:
-    /<command>/<device>/<rpi>
-    /notify/<device>/<rpi>
+    /<command>/<device>/<host>
+    /notify/<device>/<host>
     /get_result/<device>
     """
     def do_GET(self):
@@ -60,9 +60,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         u = urlsplit(self.path)
         path = u.path.split("/")
         command = path[1]  # First is the command
-        device = path[2]  # Second is the device
+        device = path[2].lower()  # Second is the device
         try:
-            rpi = path[3]  # Third is the index of the Pi itself
+            host = path[3]  # Third is the index of the Pi itself
         except IndexError:
             pass
 
@@ -80,11 +80,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             except SystemExit:
                 pass
 
-            if device == "DDX30":
+            if device == "ddx30":
 #                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                 mbeds_key = "1"
 #                 alif_key = mbeds_key
-                mbed_jobs.OSDConnect(OSD_MBEDS[mbeds_key], rpi).run()
+                mbed_jobs.OSDConnect(OSD_MBEDS[mbeds_key], host).run()
                 mbed_jobs.MouseMove(JOB_MBEDS[mbeds_key]).run()
                 mbed_jobs.SendKeys(JOB_MBEDS[mbeds_key]).run()
 #                 test_video.Capture(ALIFS[alif_key]).run()
