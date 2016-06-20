@@ -19,7 +19,7 @@ class Notify():
         self.host = host
 
     def run(self):
-        logging.info("ADDER: Prepped RPI %s @ %s to run test" %
+        logging.info("ADDER: Prepped HOST %s @ %s to run test" %
                      (self.host, HOSTS[self.host]))
         try:
             r = requests.get("http://" + HOSTS[self.host] +
@@ -28,7 +28,7 @@ class Notify():
             logging.info("ADDER: Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
-            logging.info("ADDER: Failed to connect to RPI %s" % self.host)
+            logging.info("ADDER: Failed to connect to HOST %s" % self.host)
             logging.info("ADDER: Exception - %s" % e)
 
 
@@ -39,7 +39,7 @@ class GetResult():
         self.host = host
 
     def run(self):
-        logging.info("ADDER: Getting result from RPI %s @ %s" %
+        logging.info("ADDER: Getting result from HOST %s @ %s" %
                      (self.host, HOSTS[self.host]))
         while True:
             try:
@@ -47,6 +47,7 @@ class GetResult():
                                  ":" + str(HOST_PORT) +
                                  "/get_result/" + self.device)
                 logging.info("ADDER: Assert Get Result response is 200")
+                print(r.content)
                 assert(r.status_code == 200)
                 if r.content is not "busy":
                     logging.info("ADDER: RPI %s gives: %s" %
@@ -55,6 +56,6 @@ class GetResult():
                 else:
                     time.sleep(5)
             except Exception as e:
-                logging.info("ADDER: Failed to connect to RPI %s" % self.host)
+                logging.info("ADDER: Failed to connect to HOST %s" % self.host)
                 logging.info("ADDER: Exception - %s" % e)
                 break
