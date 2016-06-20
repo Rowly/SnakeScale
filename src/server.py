@@ -100,7 +100,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(bytes("busy", "UTF-8"))
             logging.info("ADDER: Controller attempting to get results")
-            if device == "DDX30":
+            if device == "ddx30":
                 mouse = test_usb.mouse()
                 keyb = test_usb.key_b()
 #                 video = test_video.ImageCompare().run()
