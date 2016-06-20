@@ -87,6 +87,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 mbed_jobs.OSDConnect(OSD_MBEDS[mbeds_key], host).run()
                 mbed_jobs.SendKeys(JOB_MBEDS[mbeds_key]).run()
                 mbed_jobs.MouseMove(JOB_MBEDS[mbeds_key]).run()
+                mbed_jobs.Exit(JOB_MBEDS[mbeds_key]).run()
 #                 test_video.Capture(ALIFS[alif_key]).run()
 
             BUSY = False
