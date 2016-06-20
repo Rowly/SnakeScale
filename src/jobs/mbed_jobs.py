@@ -52,6 +52,20 @@ class SendKeys():
                      self.mbed_ip)
         time.sleep(1)
         send(self.mbed_ip, str.encode("keyboard\0"))
+#         time.sleep(1)
+#         send(self.mbed_ip, str.encode("close\0"))
+#         time.sleep(1)
+#         send(self.mbed_ip, str.encode("restart\0"))
+
+
+class Exit():
+
+    def __init__(self, mbed_ip):
+        self.mbed_ip = mbed_ip
+
+    def run(self):
+        logging.info("ADDER: MBED %s instructed to close and exit" %
+                     self.mbed_ip)
         time.sleep(1)
         send(self.mbed_ip, str.encode("close\0"))
         time.sleep(1)
