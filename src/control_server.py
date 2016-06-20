@@ -11,7 +11,7 @@ import http.server
 from urllib.parse import urlparse, parse_qs
 sys.path.append(os.path.dirname(__file__))
 
-import controller2
+import controller
 from config import config
 
 CON = None
