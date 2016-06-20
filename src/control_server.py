@@ -51,7 +51,7 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                 command = query["command"][0]
                 if command == "start":
                     if "device" in query:
-                        device = query["device"][0]
+                        device = query["device"][0].lower()
                     else:
                         self.send_response(400)
                         self.send_header("Content-type", "text/html")

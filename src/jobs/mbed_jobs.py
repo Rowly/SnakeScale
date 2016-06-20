@@ -52,10 +52,6 @@ class SendKeys():
                      self.mbed_ip)
         time.sleep(1)
         send(self.mbed_ip, str.encode("keyboard\0"))
-#         time.sleep(1)
-#         send(self.mbed_ip, str.encode("close\0"))
-#         time.sleep(1)
-#         send(self.mbed_ip, str.encode("restart\0"))
 
 
 class Exit():

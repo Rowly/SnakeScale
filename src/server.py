@@ -113,6 +113,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(bytes(data, "UTF-8"))
+                os.remove("./dump/test.txt")
 
 
 try:

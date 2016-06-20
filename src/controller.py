@@ -104,6 +104,6 @@ if __name__ == '__main__':
     parser.add_argument("device", type=str, help="device under test")
     parser.add_argument("hosts", type=str, help="Number of Host PCS")
     args = parser.parse_args()
-    device = args.device
+    device = args.device.lower()
     hosts = args.hosts
     main(device, hosts)

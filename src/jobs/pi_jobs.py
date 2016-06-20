@@ -47,7 +47,6 @@ class GetResult():
                                  ":" + str(HOST_PORT) +
                                  "/get_result/" + self.device)
                 logging.info("ADDER: Assert Get Result response is 200")
-                print(r.content)
                 assert(r.status_code == 200)
                 if r.content is not "busy":
                     logging.info("ADDER: RPI %s gives: %s" %
