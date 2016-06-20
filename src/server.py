@@ -57,7 +57,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         global BUSY
         # Split the inbound uri on / to determine info
-        print(">>>>>> {}".format(self.path))
         u = urlsplit(self.path)
         path = u.path.split("/")
         command = path[1]  # First is the command
