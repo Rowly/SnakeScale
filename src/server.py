@@ -115,6 +115,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(bytes(data, "UTF-8"))
                 if "FALSE" in data:
+                    time.sleep(2)
                     r = requests.get("http://10.10.10.200" +
                                      ":" + str(HOST_PORT) +
                                      "/api?command=stop")
