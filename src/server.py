@@ -117,7 +117,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 if "FALSE" in data:
                     r = requests.get("http://10.10.10.200" +
                                      ":" + str(HOST_PORT) +
-                                     "/stop")
+                                     "/api?command=stop")
                     assert(r.status_code == 200)
 
 
