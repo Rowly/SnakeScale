@@ -115,7 +115,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(bytes(data, "UTF-8"))
                 if "FALSE" in data:
-                    r = requests.get("http://192.168.42.67" +
+                    r = requests.get("http://10.10.10.200" +
                                      ":" + str(HOST_PORT) +
                                      "/stop")
                     assert(r.status_code == 200)
