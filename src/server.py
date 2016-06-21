@@ -19,7 +19,6 @@ import time
 import json
 import argparse
 import random
-import requests
 sys.path.append(os.path.dirname(__file__))
 
 from jobs import mbed_jobs

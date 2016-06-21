@@ -87,7 +87,7 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                         if CON is not None:
                             CON.kill()
                     except Exception as e:
-                        print("Tried to kill controller2.py but can't {}"
+                        print("Tried to kill controller.py but can't {}"
                               .format(e))
             else:
                 self.send_response(400)

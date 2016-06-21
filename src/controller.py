@@ -74,8 +74,7 @@ class Jobs():
         """
         pi_jobs.Notify(self.device, self.host).run()
         response = pi_jobs.GetResult(self.device, self.host).run()
-        print(response)
-        logging.info(response)
+        logging.info("{}".format(response))
         if "FALSE" in response:
             time.sleep(2)
             sys.exit()
