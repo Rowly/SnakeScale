@@ -12,7 +12,7 @@ from queue import Queue
 import logging
 import time
 import argparse
-import atexit
+import requests
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -41,13 +41,6 @@ def logging_stop():
     logging.info("ADDER: ==== Stopped Logging ====")
     time.sleep(1)
     logging.shutdown()
-
-
-def exit_handler():
-    print(">>>>> c2 got break")
-    logging_stop()
-    ControlQ.put(None)
-    ControlQ.join()
 
 
 class Executor():
@@ -80,7 +73,12 @@ class Jobs():
         Raspberry Pis.
         """
         pi_jobs.Notify(self.device, self.host).run()
-        pi_jobs.GetResult(self.device, self.host).run()
+        response = pi_jobs.GetResult(self.device, self.host).run()
+        print(response)
+        logging.info(response)
+        if "FALSE" in response:
+            time.sleep(2)
+            sys.exit()
 
 
 def main(device, hosts):
@@ -97,7 +95,6 @@ def main(device, hosts):
         Executor().run()
         time.sleep(1)
 
-    atexit.register(exit_handler)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Control Server")

@@ -49,8 +49,10 @@ class GetResult():
                 logging.info("ADDER: Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
-                    logging.info("ADDER: RPI %s gives: %s" %
-                                 (self.host, str(r.json())))
+                    return ("ADDER: HOST %s gives: %s" %
+                            (self.host, str(r.json())))
+#                     logging.info("ADDER: RPI %s gives: %s" %
+#                                  (self.host, str(r.json())))
                     break
                 else:
                     time.sleep(5)
