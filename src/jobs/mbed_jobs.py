@@ -37,7 +37,7 @@ class OSDConnect():
         self.host = host
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to connect to RPI %s" %
+        logging.info("ADDER: MBED %s instructed to connect to HOST %s" %
                      (self.mbed_ip, self.host))
         send(self.mbed_ip, str.encode("connect %s\0" % self.host))
 

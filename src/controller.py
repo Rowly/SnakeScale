@@ -13,6 +13,7 @@ import logging
 import time
 import argparse
 import requests
+from smtplib import SMTPException
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -77,7 +78,46 @@ class Jobs():
         logging.info("{}".format(response))
         if "FALSE" in response:
             time.sleep(2)
+            EmailNotifier(response).run()
             sys.exit()
+
+
+class EmailNotifier():
+
+    def __init__(self, body):
+        self.body = body
+
+    def run(self):
+        import smtplib
+        from email.mime.text import MIMEText
+
+        commaspace = ", "
+        receipients = ["mark.rowlands@adder.com",
+                       "dawie.vanrensburg@adder.com"]
+        content = """
+                  Response from most recent test:
+                  {}
+        """.format(self.body)
+        try:
+            with open("./dump/msg.txt", "w+") as file:
+                file.write(content)
+        except FileNotFoundError:
+            with open("./dump/msg.txt", "a") as file:
+                file.write(content)
+
+        with open("./dump/msg.txt") as file:
+            msg = MIMEText(file.read())
+        msg["Subject"] = "DDX30 Failure"
+        msg["From"] = "ddx30soaktest@example.com"
+        msg["To"] = commaspace.join(receipients)
+
+        try:
+            smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
+            smtpObj.send_message(msg)
+            smtpObj.quit()
+            print("Sent email")
+        except SMTPException:
+            print("Something went wrong")
 
 
 def main(device, hosts):
