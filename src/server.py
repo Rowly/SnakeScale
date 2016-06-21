@@ -12,8 +12,6 @@ through the use of the pi_jobs modules.
 import sys
 import os
 import subprocess
-sys.path.append(os.path.dirname(__file__))
-
 import logging
 import http.server
 from urllib.parse import urlsplit
@@ -21,11 +19,14 @@ import time
 import json
 import argparse
 import random
+import requests
+sys.path.append(os.path.dirname(__file__))
+
 from jobs import mbed_jobs
 from config import config
 from utilities import test_video, test_usb, capture_gui
 
-PORT = config.get_host_port()
+HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
@@ -81,6 +82,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 pass
 
             if device == "ddx30":
+                os.remove("./dump/test.txt")
 #                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                 mbeds_key = "1"
 #                 alif_key = mbeds_key
@@ -112,7 +114,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 self.send_header("Content-type", "application/json")
                 self.end_headers()
                 self.wfile.write(bytes(data, "UTF-8"))
-                os.remove("./dump/test.txt")
+                if "FALSE" in data:
+                    r = requests.get("http://192.168.42.67" +
+                                     ":" + str(HOST_PORT) +
+                                     "/stop")
+                    assert(r.status_code == 200)
 
 
 try:
@@ -121,7 +127,7 @@ try:
     args = parser.parse_args()
     ip = args.ip
     logging_start()
-    server = http.server.HTTPServer((ip, PORT), RemoteServer)
+    server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
     logging.info("ADDER: Started Server on %s" % ip)
     server.serve_forever()
 except KeyboardInterrupt:
