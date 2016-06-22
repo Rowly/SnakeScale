@@ -60,10 +60,11 @@ class Jobs():
     carrying out the test and the device type that is under test.
     Device is typically of DDX30 in the initial version.
     """
-    def __init__(self, device, host, test_type):
+    def __init__(self, device, host, test_type, execution):
         self.device = device
         self.host = host
         self.test_type = test_type
+        self.execution = execution
 
     def run(self):
         """
@@ -78,7 +79,17 @@ class Jobs():
         logging.info("{}".format(response))
         if "FALSE" in response:
             time.sleep(2)
-            EmailNotifier(response).run()
+            body = """
+                   Test for {}
+                   Using test style {}
+                   Execution number {}
+                   Response from most recent test:
+                   {}
+                   """.format(self.device,
+                              self.test_type,
+                              self.execution,
+                              response)
+            EmailNotifier(body).run()
             sys.exit()
 
 
@@ -93,16 +104,13 @@ class EmailNotifier():
 
         commaspace = ", "
         receipients = ["mark.rowlands@adder.com"]
-        content = """
-                  Response from most recent test:
-                  {}
-                  """.format(self.body)
+
         try:
             with open("./dump/msg.txt", "w+") as file:
-                file.write(content)
+                file.write(self.body)
         except FileNotFoundError:
             with open("./dump/msg.txt", "a") as file:
-                file.write(content)
+                file.write(self.body)
 
         with open("./dump/msg.txt") as file:
             msg = MIMEText(file.read())
@@ -128,7 +136,7 @@ def main(device, hosts, test_type):
     while True:
         counter += 1
         print(counter)
-        item = Jobs(device, "1", test_type)
+        item = Jobs(device, "1", test_type, counter)
         ControlQ.put(item)
         Executor().run()
         time.sleep(1)
