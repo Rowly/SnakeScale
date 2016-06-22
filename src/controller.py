@@ -13,6 +13,7 @@ import logging
 import time
 import argparse
 from smtplib import SMTPException
+import datetime
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -22,6 +23,7 @@ from jobs.pi_jobs import Notify, GetResult
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
 ControlQ = Queue()
+T_FORMAT = "%H%M_%d_%m_%Y"
 
 
 def logging_start():
@@ -54,11 +56,12 @@ class Jobs():
     carrying out the test and the device type that is under test.
     Device is typically of DDX30 in the initial version.
     """
-    def __init__(self, device, host, test_type, execution):
+    def __init__(self, device, host, test_type, execution, start):
         self.device = device
         self.host = host
         self.test_type = test_type
         self.execution = execution
+        self.start = start
 
     def run(self):
         """
@@ -72,15 +75,22 @@ class Jobs():
         response = GetResult(self.device, self.host, self.test_type).run()
         logging.info("{}".format(response))
         if "FALSE" in response:
+            end_time = datetime.datetime.now().strftime(T_FORMAT)
+            end_time = end_time.split("_")
+            end_time = " ".join(end_time)
             time.sleep(2)
             body = """
                    Test for {}
                    Using test style {}
+                   Begun {}
+                   Ended {}
                    Execution number {}
                    Response from most recent test:
                    {}
                    """.format(self.device,
                               self.test_type,
+                              self.start,
+                              end_time,
                               self.execution,
                               response)
             EmailNotifier(body).run()
@@ -126,11 +136,15 @@ def main(device, hosts, test_type):
     device = device
     config.RPIS_LIMIT = hosts
 
+    start_time = datetime.datetime.now().strftime(T_FORMAT)
+    start_time = start_time.split("_")
+    start_time = " ".join(start_time)
+
     counter = 0
     while True:
         counter += 1
         print(counter)
-        item = Jobs(device, "1", test_type, counter)
+        item = Jobs(device, "1", test_type, counter, start_time)
         ControlQ.put(item)
         Executor().run()
         time.sleep(1)
