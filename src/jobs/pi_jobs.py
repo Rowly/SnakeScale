@@ -23,16 +23,13 @@ class Notify():
         logging.info("ADDER: Prepped HOST %s @ %s to run test" %
                      (self.host, HOSTS[self.host]))
         try:
+            payload = {"command": "notify",
+                       "device": self.device,
+                       "hosts": self.host,
+                       "test_type": self.test_type}
             r = requests.get("http://" + HOSTS[self.host] +
                              ":" + str(HOST_PORT) +
-                             "/api?command=notify&" +
-                             "device={}&" +
-                             "hosts={}" +
-                             "test_type={}"
-                             .format(self.device, self.host, self.test_type))
-#             r = requests.get("http://" + HOSTS[self.host] +
-#                              ":" + str(HOST_PORT) +
-#                              "/notify/" + self.device + "/" + self.host)
+                             "/api", params=payload)
             logging.info("ADDER: Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
@@ -52,22 +49,17 @@ class GetResult():
                      (self.host, HOSTS[self.host]))
         while True:
             try:
+                payload = {"command": "get_result",
+                           "device": self.device,
+                           "test_type": self.test_type}
                 r = requests.get("http://" + HOSTS[self.host] +
                                  ":" + str(HOST_PORT) +
-                                 "/api?command=get_result&" +
-                                 "device={}&" +
-                                 "test_type={}"
-                                 .format(self.device, self.test_type))
-#                 r = requests.get("http://" + HOSTS[self.host] +
-#                                  ":" + str(HOST_PORT) +
-#                                  "/get_result/" + self.device)
+                                 "/api", params=payload)
                 logging.info("ADDER: Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
                     return ("ADDER: HOST %s gives: %s" %
                             (self.host, str(r.json())))
-#                     logging.info("ADDER: RPI %s gives: %s" %
-#                                  (self.host, str(r.json())))
                     break
                 else:
                     time.sleep(5)

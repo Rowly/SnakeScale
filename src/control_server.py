@@ -64,6 +64,13 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "text/html")
                         self.end_headers()
                         return
+                    if "test_type" in query:
+                        test_type = query["test_type"][0]
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
                     self.send_response(200)
                     self.send_header("Content-type", "text/html")
                     self.end_headers()
@@ -74,7 +81,8 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                     CON = subprocess.Popen(["python3",
                                             "controller.py",
                                             device,
-                                            hosts])
+                                            hosts,
+                                            test_type])
                 elif command == "stop":
                     self.send_response(200)
                     self.send_header("Content-type", "text/html")
