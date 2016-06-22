@@ -14,9 +14,10 @@ HOSTS = config.get_hosts()
 
 class Notify():
 
-    def __init__(self, device, host):
+    def __init__(self, device, host, test_type):
         self.device = device
         self.host = host
+        self.test_type = test_type
 
     def run(self):
         logging.info("ADDER: Prepped HOST %s @ %s to run test" %
@@ -24,7 +25,14 @@ class Notify():
         try:
             r = requests.get("http://" + HOSTS[self.host] +
                              ":" + str(HOST_PORT) +
-                             "/notify/" + self.device + "/" + self.host)
+                             "/api?command=notify&" +
+                             "device={}&" +
+                             "hosts={}" +
+                             "test_type={}"
+                             .format(self.device, self.host, self.test_type))
+#             r = requests.get("http://" + HOSTS[self.host] +
+#                              ":" + str(HOST_PORT) +
+#                              "/notify/" + self.device + "/" + self.host)
             logging.info("ADDER: Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
@@ -34,9 +42,10 @@ class Notify():
 
 class GetResult():
 
-    def __init__(self, device, host):
+    def __init__(self, device, host, test_type):
         self.device = device
         self.host = host
+        self.test_type = test_type
 
     def run(self):
         logging.info("ADDER: Getting result from HOST %s @ %s" %
@@ -45,7 +54,13 @@ class GetResult():
             try:
                 r = requests.get("http://" + HOSTS[self.host] +
                                  ":" + str(HOST_PORT) +
-                                 "/get_result/" + self.device)
+                                 "/api?command=get_result&" +
+                                 "device={}&" +
+                                 "test_type={}"
+                                 .format(self.device, self.test_type))
+#                 r = requests.get("http://" + HOSTS[self.host] +
+#                                  ":" + str(HOST_PORT) +
+#                                  "/get_result/" + self.device)
                 logging.info("ADDER: Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":

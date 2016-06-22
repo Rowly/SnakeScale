@@ -17,7 +17,7 @@ sys.path.append(os.path.dirname(__file__))
 
 
 from config import config
-from jobs import pi_jobs
+from jobs.pi_jobs import Notify, GetResult
 
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
@@ -60,9 +60,10 @@ class Jobs():
     carrying out the test and the device type that is under test.
     Device is typically of DDX30 in the initial version.
     """
-    def __init__(self, device, host):
+    def __init__(self, device, host, test_type):
         self.device = device
         self.host = host
+        self.test_type = test_type
 
     def run(self):
         """
@@ -72,8 +73,8 @@ class Jobs():
         Then fetches the results of the tests from the
         Raspberry Pis.
         """
-        pi_jobs.Notify(self.device, self.host).run()
-        response = pi_jobs.GetResult(self.device, self.host).run()
+        Notify(self.device, self.host, self.test_type).run()
+        response = GetResult(self.device, self.host, self.test_type).run()
         logging.info("{}".format(response))
         if "FALSE" in response:
             time.sleep(2)
@@ -118,7 +119,7 @@ class EmailNotifier():
             print("Something went wrong")
 
 
-def main(device, hosts):
+def main(device, hosts, test_type):
     logging_start()
     device = device
     config.RPIS_LIMIT = hosts
@@ -127,17 +128,20 @@ def main(device, hosts):
     while True:
         counter += 1
         print(counter)
-        item = Jobs(device, "1")
+        item = Jobs(device, "1", test_type)
         ControlQ.put(item)
         Executor().run()
         time.sleep(1)
 
 
 if __name__ == '__main__':
+    test_types = ["view", "shared", "exclusive", "private", "conflict", "all"]
     parser = argparse.ArgumentParser(description="Control Server")
     parser.add_argument("device", type=str, help="device under test")
     parser.add_argument("hosts", type=str, help="Number of Host PCS")
+    parser.add_argument("test_type", type=str, choices=test_types, help="Type of test to run")
     args = parser.parse_args()
     device = args.device.lower()
     hosts = args.hosts
-    main(device, hosts)
+    test_type = args.test_type
+    main(device, hosts, test_type)

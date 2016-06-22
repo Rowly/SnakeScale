@@ -14,7 +14,7 @@ import os
 import subprocess
 import logging
 import http.server
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urlparse, parse_qs
 import time
 import json
 import argparse
@@ -31,6 +31,11 @@ OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 ALIFS = config.get_alifs()
 BUSY = False
+HEADER_TEXT = ("<html>" +
+               "<head profile='http://www.w3.org/2005/10/profile'>" +
+               "<title>Host Server </title>" +
+               "<link rel='icon' type='image.png' href='http://example.com/myicon.png'>" +
+               "</head>")
 
 
 def logging_start():
@@ -56,67 +61,164 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     """
     def do_GET(self):
         global BUSY
-        # Split the inbound uri on / to determine info
-        u = urlsplit(self.path)
-        path = u.path.split("/")
-        command = path[1]  # First is the command
-        device = path[2].lower()  # Second is the device
-        try:
-            host = path[3]  # Third is the index of the Pi itself
-        except IndexError:
-            pass
 
-        if command == "notify":
-            logging.info("ADDER: Received notice to execute test for %s"
-                         % device)
+        if self.path == "/":
             self.send_response(200)
-            self.send_header("Content-type", "text/plain")
+            self.send_header("Content-type", "text/html")
             self.end_headers()
+            self.wfile.write(bytes(HEADER_TEXT, "UTF-8"))
+            self.wfile.write(bytes("<body>" +
+                                   "<p>This is the ControlServer.</p>" +
+                                   "<p>Usage:</p>" +
+                                   "<p>/api?command=start&device=ddx30&hosts=1</p>" +
+                                   "<p>/api?command=stop" +
+                                   "</body></html>", "UTF-8"))
+        else:
+            o = urlparse(self.path)
+            query = parse_qs(o.query)
+            if "command" in query:
+                command = query["command"][0]
+                if command == "notify":
+                    if "device" in query:
+                        device = query["device"][0].lower()
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
+                    if "hosts" in query:
+                        hosts = query["hosts"][0]
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
+                    if "test_type" in query:
+                        test_type = query["test_type"][0]
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
+                    logging.info("ADDER: Received notice to run test for %s"
+                                 % device)
+                    self.send_response(200)
+                    self.send_header("Content-type", "text/plain")
+                    self.end_headers()
 
-            BUSY = True
+                    BUSY = True
 
-            try:
-                subprocess.Popen(["python3", "./utilities/capture_gui.py"])
-            except SystemExit:
-                pass
-
-            if device == "ddx30":
-                try:
-                    with open("./dump/test.txt", "w"):
+                    try:
+                        subprocess.Popen(["python3",
+                                          "./utilities/capture_gui.py"])
+                    except SystemExit:
                         pass
-                except FileNotFoundError:
-                    pass
-#                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
-                key = "1"
-                mbed_jobs.OSDConnect(OSD_MBEDS[key], host).run()
-                time.sleep(5)
-                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-#                 test_video.Capture(ALIFS[key]).run()
 
-            BUSY = False
+                    if device == "ddx30":
+                        try:
+                            with open("./dump/test.txt", "w"):
+                                pass
+                        except FileNotFoundError:
+                            pass
+#                         mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
+                        if test_type == "exclusive":
+                            key = "1"
+                            mbed_jobs.OSDConnect(OSD_MBEDS[key], hosts).run()
+                            time.sleep(5)
+                            mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                            mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                            mbed_jobs.Exit(JOB_MBEDS[key]).run()
+#                             test_video.Capture(ALIFS[key]).run()
 
-        if command == "get_result":
-            if BUSY is True:
-                self.send_response(200)
-                self.send_header("Content-type", "test/plain")
-                self.end_headers()
-                self.wfile.write(bytes("busy", "UTF-8"))
-            logging.info("ADDER: Controller attempting to get results")
-            if device == "ddx30":
-                mouse = test_usb.mouse()
-                keyb = test_usb.key_b()
-#                 video = test_video.ImageCompare().run()
-                data = json.dumps({"mouse": mouse,
-                                   "keyb": keyb}, indent=4)
+                    BUSY = False
+                elif command == "get_result":
+                    if "device" in query:
+                        device = query["device"][0].lower()
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
+                    if BUSY is True:
+                        self.send_response(200)
+                        self.send_header("Content-type", "test/plain")
+                        self.end_headers()
+                        self.wfile.write(bytes("busy", "UTF-8"))
+                    logging.info("ADDER: Controller attempting to get results")
+                    if device == "ddx30":
+                        mouse = test_usb.mouse()
+                        keyb = test_usb.key_b()
+    #                   video = test_video.ImageCompare().run()
+                        data = json.dumps({"mouse": mouse,
+                                           "keyb": keyb}, indent=4)
+    #                   data = json.dumps({"mouse": mouse,
+    #                                      "keyb": keyb,
+    #                                      "video": video}, indent=4)
+                        self.send_response(200)
+                        self.send_header("Content-type", "application/json")
+                        self.end_headers()
+                        self.wfile.write(bytes(data, "UTF-8"))
+#         # Split the inbound uri on / to determine info
+#         u = urlsplit(self.path)
+#         path = u.path.split("/")
+#         command = path[1]  # First is the command
+#         device = path[2].lower()  # Second is the device
+#         try:
+#             host = path[3]  # Third is the index of the Pi itself
+#         except IndexError:
+#             pass
+#
+#         if command == "notify":
+#             logging.info("ADDER: Received notice to execute test for %s"
+#                          % device)
+#             self.send_response(200)
+#             self.send_header("Content-type", "text/plain")
+#             self.end_headers()
+#
+#             BUSY = True
+#
+#             try:
+#                 subprocess.Popen(["python3", "./utilities/capture_gui.py"])
+#             except SystemExit:
+#                 pass
+#
+#             if device == "ddx30":
+#                 try:
+#                     with open("./dump/test.txt", "w"):
+#                         pass
+#                 except FileNotFoundError:
+#                     pass
+# #                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
+#                 key = "1"
+#                 mbed_jobs.OSDConnect(OSD_MBEDS[key], host).run()
+#                 time.sleep(5)
+#                 mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+#                 mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+#                 mbed_jobs.Exit(JOB_MBEDS[key]).run()
+# #                 test_video.Capture(ALIFS[key]).run()
+#
+#             BUSY = False
+#
+#         if command == "get_result":
+#             if BUSY is True:
+#                 self.send_response(200)
+#                 self.send_header("Content-type", "test/plain")
+#                 self.end_headers()
+#                 self.wfile.write(bytes("busy", "UTF-8"))
+#             logging.info("ADDER: Controller attempting to get results")
+#             if device == "ddx30":
+#                 mouse = test_usb.mouse()
+#                 keyb = test_usb.key_b()
+# #                 video = test_video.ImageCompare().run()
 #                 data = json.dumps({"mouse": mouse,
-#                                    "keyb": keyb,
-#                                    "video": video}, indent=4)
-                self.send_response(200)
-                self.send_header("Content-type", "application/json")
-                self.end_headers()
-                self.wfile.write(bytes(data, "UTF-8"))
+#                                    "keyb": keyb}, indent=4)
+# #                 data = json.dumps({"mouse": mouse,
+# #                                    "keyb": keyb,
+# #                                    "video": video}, indent=4)
+#                 self.send_response(200)
+#                 self.send_header("Content-type", "application/json")
+#                 self.end_headers()
+#                 self.wfile.write(bytes(data, "UTF-8"))
 
 
 try:
