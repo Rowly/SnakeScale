@@ -100,7 +100,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "text/html")
                         self.end_headers()
                         return
-                    logging.info("ADDER: Received notice to run test for %s"
+                    logging.info("Received notice to run test for %s"
                                  % device)
                     self.send_response(200)
                     self.send_header("Content-type", "text/plain")
@@ -144,7 +144,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "test/plain")
                         self.end_headers()
                         self.wfile.write(bytes("busy", "UTF-8"))
-                    logging.info("ADDER: Controller attempting to get results")
+                    logging.info("Controller attempting to get results")
                     if device == "ddx30":
                         mouse = test_usb.mouse()
                         keyb = test_usb.key_b()
@@ -167,10 +167,10 @@ try:
     ip = args.ip
     logging_start()
     server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
-    logging.info("ADDER: Started Server on %s" % ip)
+    logging.info("Started Server on %s" % ip)
     server.serve_forever()
 except KeyboardInterrupt:
     server.socket.close()
-    logging.info("ADDER: Stopping Server on %s" % ip)
+    logging.info("Stopping Server on %s" % ip)
     logging_stop()
     server.socket.close()

@@ -16,7 +16,7 @@ HOSTS = config.get_hosts()
 
 def send(mbed_ip, payload):
     try:
-        logging.info("ADDER: Attempting to connect to MBED %s" % mbed_ip)
+        logging.info("Attempting to connect to MBED %s" % mbed_ip)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
         s.sendall(payload)
@@ -26,8 +26,8 @@ def send(mbed_ip, payload):
                 break
         s.close()
     except Exception as e:
-        logging.info("ADDER: Failed to connect to MBED %s" % mbed_ip)
-        logging.info("ADDER: Exception - %s" % e)
+        logging.info("Failed to connect to MBED %s" % mbed_ip)
+        logging.info("Exception - %s" % e)
 
 
 class OSDConnect():
@@ -37,7 +37,7 @@ class OSDConnect():
         self.host = host
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to connect to HOST %s" %
+        logging.info("MBED %s instructed to connect to HOST %s" %
                      (self.mbed_ip, self.host))
         send(self.mbed_ip, str.encode("connect %s\0" % self.host))
 
@@ -48,7 +48,7 @@ class SendKeys():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to send test string" %
+        logging.info("MBED %s instructed to send test string" %
                      self.mbed_ip)
         time.sleep(1)
         send(self.mbed_ip, str.encode("keyboard\0"))
@@ -60,7 +60,7 @@ class Exit():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to close and exit" %
+        logging.info("MBED %s instructed to close and exit" %
                      self.mbed_ip)
         time.sleep(1)
         send(self.mbed_ip, str.encode("close\0"))
@@ -74,5 +74,5 @@ class MouseMove():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("ADDER: MBED %s instructed to move mouse" % self.mbed_ip)
+        logging.info("MBED %s instructed to move mouse" % self.mbed_ip)
         send(self.mbed_ip, str.encode("mouse\0"))

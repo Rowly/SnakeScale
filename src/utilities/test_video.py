@@ -18,7 +18,7 @@ class Capture():
         self.alif = alif
 
     def run(self, path="./imgs/capture.png"):
-        logging.info("ADDER: Getting image")
+        logging.info("Getting image")
         target = "http://%s" % ALIFS[self.alif]
         try:
             response = requests.get(target +
@@ -28,7 +28,7 @@ class Capture():
                 f.write(response.content)
                 f.close()
         except Exception as e:
-            logging.info("ADDER: Error, stacktrace: %s" % e)
+            logging.info("Error, stacktrace: %s" % e)
 
 
 class ImageCompare():

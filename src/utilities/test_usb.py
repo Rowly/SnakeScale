@@ -20,8 +20,8 @@ def key_b(path="./dump/test.txt"):
         if TEST_STRING in set(data):
             result = "TRUE"
     except IOError as e:
-        logging.info("ADDER: Could not find test file.")
-        logging.info("ADDER: {}".format(e))
+        logging.info("Could not find test file.")
+        logging.info("{}".format(e))
     return result
 
 
@@ -68,8 +68,8 @@ def mouse(path="./dump/test.txt"):
         except ValueError:
             pass
     except IOError as e:
-        logging.info("ADDER: Could not find test file")
-        logging.info("ADDER: {}".format(e))
+        logging.info("Could not find test file")
+        logging.info("{}".format(e))
     return result
 
 

@@ -47,13 +47,13 @@ class CaptureGui(QtGui.QMainWindow):
 
 
 def main():
-    logging.info("ADDER: Starting GUI")
+    logging.info("Starting GUI")
     app = QtGui.QApplication(sys.argv)
     tracker = CaptureGui()
     tracker.showMaximized()
     app.installEventFilter(tracker)
     sys.exit(app.exec_())
-    logging.info("ADDER: Closed GUI")
+    logging.info("Closed GUI")
 
 
 if __name__ == "__main__":

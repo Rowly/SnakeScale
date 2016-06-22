@@ -20,7 +20,7 @@ class Notify():
         self.test_type = test_type
 
     def run(self):
-        logging.info("ADDER: Prepped HOST %s @ %s to run test" %
+        logging.info("Prepped HOST %s @ %s to run test" %
                      (self.host, HOSTS[self.host]))
         try:
             payload = {"command": "notify",
@@ -30,11 +30,11 @@ class Notify():
             r = requests.get("http://" + HOSTS[self.host] +
                              ":" + str(HOST_PORT) +
                              "/api", params=payload)
-            logging.info("ADDER: Assert Notify response is 200")
+            logging.info("Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
-            logging.info("ADDER: Failed to connect to HOST %s" % self.host)
-            logging.info("ADDER: Exception - %s" % e)
+            logging.info("Failed to connect to HOST %s" % self.host)
+            logging.info("Exception - %s" % e)
 
 
 class GetResult():
@@ -45,7 +45,7 @@ class GetResult():
         self.test_type = test_type
 
     def run(self):
-        logging.info("ADDER: Getting result from HOST %s @ %s" %
+        logging.info("Getting result from HOST %s @ %s" %
                      (self.host, HOSTS[self.host]))
         while True:
             try:
@@ -55,15 +55,15 @@ class GetResult():
                 r = requests.get("http://" + HOSTS[self.host] +
                                  ":" + str(HOST_PORT) +
                                  "/api", params=payload)
-                logging.info("ADDER: Assert Get Result response is 200")
+                logging.info("Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
-                    return ("ADDER: HOST %s gives: %s" %
+                    return ("HOST %s gives: %s" %
                             (self.host, str(r.json())))
                     break
                 else:
                     time.sleep(5)
             except Exception as e:
-                logging.info("ADDER: Failed to connect to HOST %s" % self.host)
-                logging.info("ADDER: Exception - %s" % e)
+                logging.info("Failed to connect to HOST %s" % self.host)
+                logging.info("Exception - %s" % e)
                 break

@@ -25,20 +25,14 @@ ControlQ = Queue()
 
 
 def logging_start():
-    """
-    Inclusion of ADDER prefix to enable quick grep'ing of results
-    """
     logging.basicConfig(filename="/var/log/snakescale-ddx/result.log",
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
-    logging.info("ADDER: ==== Started Logging ====")
+    logging.info("==== Started Logging ====")
 
 
 def logging_stop():
-    """
-    Inclusion of ADDER prefix to enable quick grep'ing of results
-    """
-    logging.info("ADDER: ==== Stopped Logging ====")
+    logging.info("==== Stopped Logging ====")
     time.sleep(1)
     logging.shutdown()
 
@@ -68,11 +62,11 @@ class Jobs():
 
     def run(self):
         """
-        First notifies the target Raspberry Pi that it is to
-        carry out tests for the device under tests.
+        First notifies the target HOST PC that it is to
+        carry out tests for the device under test.
 
         Then fetches the results of the tests from the
-        Raspberry Pis.
+        HOST PCs.
         """
         Notify(self.device, self.host, self.test_type).run()
         response = GetResult(self.device, self.host, self.test_type).run()
