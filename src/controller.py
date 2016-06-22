@@ -12,7 +12,6 @@ from queue import Queue
 import logging
 import time
 import argparse
-import requests
 from smtplib import SMTPException
 sys.path.append(os.path.dirname(__file__))
 
@@ -92,12 +91,11 @@ class EmailNotifier():
         from email.mime.text import MIMEText
 
         commaspace = ", "
-        receipients = ["mark.rowlands@adder.com",
-                       "dawie.vanrensburg@adder.com"]
+        receipients = ["mark.rowlands@adder.com"]
         content = """
                   Response from most recent test:
                   {}
-        """.format(self.body)
+                  """.format(self.body)
         try:
             with open("./dump/msg.txt", "w+") as file:
                 file.write(content)

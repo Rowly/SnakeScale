@@ -82,12 +82,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
             if device == "ddx30":
                 try:
-                    os.remove("./dump/test.txt")
+                    with open("./dump/test.txt", "w"):
+                        pass
                 except FileNotFoundError:
                     pass
 #                 mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                 key = "1"
                 mbed_jobs.OSDConnect(OSD_MBEDS[key], host).run()
+                time.sleep(5)
                 mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                 mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                 mbed_jobs.Exit(JOB_MBEDS[key]).run()
