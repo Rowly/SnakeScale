@@ -23,7 +23,7 @@ from jobs.pi_jobs import Notify, GetResult
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
 ControlQ = Queue()
-T_FORMAT = "%H%M_%d_%m_%Y"
+T_FORMAT = "%H:%M_%d_%m_%Y"
 
 
 def logging_start():
