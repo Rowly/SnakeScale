@@ -57,7 +57,7 @@ class OSDConnect():
 
     def run(self):
         logging.info("MBED {} instructed to connect to HOST {}"
-                     .format((self.mbed_ip, self.host)))
+                     .format(self.mbed_ip, self.host))
         payload = "{} {} {} {}\0".format(self.resx,
                                          self.resy,
                                          self.style,
