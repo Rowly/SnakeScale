@@ -73,7 +73,9 @@ class Jobs():
         HOST PCs.
         """
         Notify(self.device, self.host, self.test_type, self.resolution).run()
+
         response = GetResult(self.device, self.host, self.test_type).run()
+
         logging.info("{}".format(response))
         if "FALSE" in response:
             end_time = datetime.datetime.now().strftime(T_FORMAT)
