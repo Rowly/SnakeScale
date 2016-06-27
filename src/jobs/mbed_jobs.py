@@ -40,7 +40,7 @@ def send(mbed_ip, payload):
                     total_data.pop()
                     break
         s.close()
-        print("".join(total_data))
+        logging.info(bytes(''.join(total_data)))
     except Exception as e:
         logging.info("Failed to connect to MBED {}".format(mbed_ip))
         logging.info("Exception - {}".format(e))
