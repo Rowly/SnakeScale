@@ -137,17 +137,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         if test_type == "exclusive":
                             style = "e"
                             key = "1"
-                            logging.info("Starting OSD Connect")
                             mbed_jobs.OSDConnect(OSD_MBEDS[key],
                                                  resolution_x,
                                                  resolution_y,
                                                  style,
                                                  hosts).run()
-                            logging.info("OSD Connect sent")
-                            logging.info("Waiting 15")
                             time.sleep(15)
-                            logging.info("Waited")
-                            logging.info("Send keys starting")
                             mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                             mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                             mbed_jobs.Exit(JOB_MBEDS[key]).run()
