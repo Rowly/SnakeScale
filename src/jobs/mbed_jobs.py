@@ -23,6 +23,7 @@ def send(mbed_ip, payload):
         logging.info("Attempting to connect to MBED %s" % mbed_ip)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
+        s.setblocking(False)
         s.sendall(payload)
         while True:
             data = s.recv(1024)

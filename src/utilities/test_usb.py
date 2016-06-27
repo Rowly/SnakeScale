@@ -7,14 +7,12 @@ import logging
 import subprocess
 import random
 import json
-import os
 
 TEST_STRING = "abcdefghijklmnopqrstuvwxyz"
 
 
 def key_b(path="./dump/test.txt"):
     result = "FALSE"
-    print(os.getcwd())
     try:
         data = [line.strip() for line in open(path)]
         if TEST_STRING in set(data):
@@ -37,9 +35,9 @@ def mouse(path="./dump/test.txt"):
               "no": "FALSE"}
     try:
         data = [line.strip() for line in open(path)]
-        rights = [line for line in data if line.startswith("Right Click")]
-        lefts = [line for line in data if line.startswith("Left Click")]
-        nos = [line for line in data if line.startswith("No Click")]
+        rights = [line for line in data if line.startswith("Right")]
+        lefts = [line for line in data if line.startswith("Left")]
+        nos = [line for line in data if line.startswith("No")]
 
         try:
             sample_rights = random.sample(range(0, len(rights)), 2)
