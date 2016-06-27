@@ -137,6 +137,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         if test_type == "exclusive":
                             style = "e"
                             key = "1"
+                            logging.info("Starting OSD Connect")
                             mbed_jobs.OSDConnect(OSD_MBEDS[key],
                                                  resolution_x,
                                                  resolution_y,
