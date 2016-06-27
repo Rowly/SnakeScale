@@ -23,7 +23,7 @@ from jobs.pi_jobs import Notify, GetResult
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
 ControlQ = Queue()
-T_FORMAT = "%H:%M_%d_%m_%Y"
+T_FORMAT = "%H:%M %d-%m-%Y"
 
 
 def logging_start():
@@ -56,10 +56,11 @@ class Jobs():
     carrying out the test and the device type that is under test.
     Device is typically of DDX30 in the initial version.
     """
-    def __init__(self, device, host, test_type, execution, start):
+    def __init__(self, device, host, test_type, resolution, execution, start):
         self.device = device
         self.host = host
         self.test_type = test_type
+        self.resolution = resolution
         self.execution = execution
         self.start = start
 
@@ -71,13 +72,11 @@ class Jobs():
         Then fetches the results of the tests from the
         HOST PCs.
         """
-        Notify(self.device, self.host, self.test_type).run()
+        Notify(self.device, self.host, self.test_type, self.resolution).run()
         response = GetResult(self.device, self.host, self.test_type).run()
         logging.info("{}".format(response))
         if "FALSE" in response:
             end_time = datetime.datetime.now().strftime(T_FORMAT)
-            end_time = end_time.split("_")
-            end_time = " ".join(end_time)
             time.sleep(2)
             body = """
                    Test for {}
@@ -131,20 +130,19 @@ class EmailNotifier():
             print("Something went wrong")
 
 
-def main(device, hosts, test_type):
+def main(device, hosts, test_type, resolution):
     logging_start()
     device = device
     config.RPIS_LIMIT = hosts
 
     start_time = datetime.datetime.now().strftime(T_FORMAT)
-    start_time = start_time.split("_")
-    start_time = " ".join(start_time)
 
+    print(start_time)
     counter = 0
     while True:
         counter += 1
         print(counter)
-        item = Jobs(device, "1", test_type, counter, start_time)
+        item = Jobs(device, "1", test_type, resolution, counter, start_time)
         ControlQ.put(item)
         Executor().run()
         time.sleep(1)
@@ -156,8 +154,10 @@ if __name__ == '__main__':
     parser.add_argument("device", type=str, help="device under test")
     parser.add_argument("hosts", type=str, help="Number of Host PCS")
     parser.add_argument("test_type", type=str, choices=test_types, help="Type of test to run")
+    parser.add_argument("resolution", type=str, help="Resolution of display as 1920x1080")
     args = parser.parse_args()
     device = args.device.lower()
     hosts = args.hosts
     test_type = args.test_type
-    main(device, hosts, test_type)
+    resolution = args.resolution
+    main(device, hosts, test_type, resolution)

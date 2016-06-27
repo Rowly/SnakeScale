@@ -14,10 +14,11 @@ HOSTS = config.get_hosts()
 
 class Notify():
 
-    def __init__(self, device, host, test_type):
+    def __init__(self, device, host, test_type, resolution):
         self.device = device
         self.host = host
         self.test_type = test_type
+        self.resolution = resolution
 
     def run(self):
         logging.info("Prepped HOST %s @ %s to run test" %
@@ -26,7 +27,8 @@ class Notify():
             payload = {"command": "notify",
                        "device": self.device,
                        "hosts": self.host,
-                       "test_type": self.test_type}
+                       "test_type": self.test_type,
+                       "resolution": self.resolution}
             r = requests.get("http://" + HOSTS[self.host] +
                              ":" + str(HOST_PORT) +
                              "/api", params=payload)

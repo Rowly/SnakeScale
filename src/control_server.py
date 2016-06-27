@@ -71,6 +71,13 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "text/html")
                         self.end_headers()
                         return
+                    if "resolution" in query:
+                        resolution = query["resolution"][0]
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
                     self.send_response(200)
                     self.send_header("Content-type", "text/html")
                     self.end_headers()
@@ -82,7 +89,8 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                                             "controller.py",
                                             device,
                                             hosts,
-                                            test_type])
+                                            test_type,
+                                            resolution])
                 elif command == "stop":
                     self.send_response(200)
                     self.send_header("Content-type", "text/html")

@@ -78,6 +78,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             query = parse_qs(o.query)
             if "command" in query:
                 command = query["command"][0]
+                """
+                NOTIFY
+                """
                 if command == "notify":
                     if "device" in query:
                         device = query["device"][0].lower()
@@ -95,6 +98,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         return
                     if "test_type" in query:
                         test_type = query["test_type"][0]
+                    else:
+                        self.send_response(400)
+                        self.send_header("Content-type", "text/html")
+                        self.end_headers()
+                        return
+                    if "resolution" in query:
+                        resolution = query["resolution"][0]
+                        resolution = resolution.split("x")
+                        resolution_x = resolution[0]
+                        resolution_y = resolution[1]
                     else:
                         self.send_response(400)
                         self.send_header("Content-type", "text/html")
@@ -122,8 +135,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             pass
 #                         mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                         if test_type == "exclusive":
+                            style = "e"
                             key = "1"
-                            mbed_jobs.OSDConnect(OSD_MBEDS[key], hosts).run()
+                            mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                 resolution_x,
+                                                 resolution_y,
+                                                 style,
+                                                 hosts).run()
                             time.sleep(15)
                             mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                             mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
@@ -132,6 +150,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
                     BUSY = False
                 elif command == "get_result":
+                    """
+                    GET RESULT
+                    """
                     if "device" in query:
                         device = query["device"][0].lower()
                     else:
