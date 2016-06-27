@@ -21,8 +21,8 @@ class Notify():
         self.resolution = resolution
 
     def run(self):
-        logging.info("Prepped HOST %s @ %s to run test" %
-                     (self.host, HOSTS[self.host]))
+        logging.info("Prepped HOST {} @ {}%s to run test"
+                     .format(self.host, HOSTS[self.host]))
         try:
             payload = {"command": "notify",
                        "device": self.device,
@@ -35,8 +35,9 @@ class Notify():
             logging.info("Assert Notify response is 200")
             assert(r.status_code == 200)
         except Exception as e:
-            logging.info("Failed to connect to HOST %s" % self.host)
-            logging.info("Exception - %s" % e)
+            logging.info("Failed to connect to HOST {}"
+                         .format(self.host))
+            logging.info("Exception - {}".format(e))
 
 
 class GetResult():
@@ -47,8 +48,8 @@ class GetResult():
         self.test_type = test_type
 
     def run(self):
-        logging.info("Getting result from HOST %s @ %s" %
-                     (self.host, HOSTS[self.host]))
+        logging.info("Getting result from HOST {} @ {}"
+                     .format(self.host, HOSTS[self.host]))
         while True:
             try:
                 payload = {"command": "get_result",
@@ -60,12 +61,13 @@ class GetResult():
                 logging.info("Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
-                    return ("HOST %s gives: %s" %
-                            (self.host, str(r.json())))
+                    return ("HOST {} gives: {}"
+                            .format(self.host, str(r.json())))
                     break
                 else:
                     time.sleep(5)
             except Exception as e:
-                logging.info("Failed to connect to HOST %s" % self.host)
-                logging.info("Exception - %s" % e)
+                logging.info("Failed to connect to HOST {}"
+                             .format(self.host))
+                logging.info("Exception - {}".format(e))
                 break

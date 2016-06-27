@@ -68,34 +68,63 @@ class Jobs():
         """
         First notifies the target HOST PC that it is to
         carry out tests for the device under test.
-
-        Then fetches the results of the tests from the
-        HOST PCs.
         """
         Notify(self.device, self.host, self.test_type, self.resolution).run()
 
+        """
+        Then fetches the results of the tests from the
+        HOST PCs.
+        """
         response = GetResult(self.device, self.host, self.test_type).run()
 
+        """
+        Result of the most recent test is logged
+        """
         logging.info("{}".format(response))
-        if "FALSE" in response:
-            end_time = datetime.datetime.now().strftime(T_FORMAT)
-            time.sleep(2)
-            body = """
-                   Test for {}
-                   Using test style {}
-                   Begun {}
-                   Ended {}
-                   Execution number {}
-                   Response from most recent test:
-                   {}
-                   """.format(self.device,
-                              self.test_type,
-                              self.start,
-                              end_time,
-                              self.execution,
-                              response)
-            EmailNotifier(body).run()
-            sys.exit()
+
+        """
+        A place holder to test the email sending system
+        """
+        if test_type == "view":
+            if "TRUE" in response:
+                end_time = datetime.datetime.now().strftime(T_FORMAT)
+                time.sleep(2)
+                body = """
+                       Test for {}
+                       Using test style {}
+                       Begun {}
+                       Ended {}
+                       Execution number {}
+                       Response from most recent test:
+                       {}
+                       """.format(self.device,
+                                  self.test_type,
+                                  self.start,
+                                  end_time,
+                                  self.execution,
+                                  response)
+                EmailNotifier(body).run()
+                sys.exit()
+        else:
+            if "FALSE" in response:
+                end_time = datetime.datetime.now().strftime(T_FORMAT)
+                time.sleep(2)
+                body = """
+                       Test for {}
+                       Using test style {}
+                       Begun {}
+                       Ended {}
+                       Execution number {}
+                       Response from most recent test:
+                       {}
+                       """.format(self.device,
+                                  self.test_type,
+                                  self.start,
+                                  end_time,
+                                  self.execution,
+                                  response)
+                EmailNotifier(body).run()
+                sys.exit()
 
 
 class EmailNotifier():

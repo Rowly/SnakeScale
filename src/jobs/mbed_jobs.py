@@ -19,19 +19,31 @@ HOSTS = config.get_hosts()
 
 
 def send(mbed_ip, payload):
+    end = ':'
     try:
-        logging.info("Attempting to connect to MBED %s" % mbed_ip)
+        logging.info("Attempting to connect to MBED {}".format(mbed_ip))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
         s.sendall(payload)
+        total_data = []
+        data = ""
         while True:
             data = s.recv(1024)
-            if not data:
+            if end in data:
+                total_data.append(data[:data.find(end)])
                 break
+            total_data.append(data)
+            if len(total_data) > 1:
+                last_pair = total_data[-2] + total_data[-1]
+                if end in last_pair:
+                    total_data[-2] = last_pair[:last_pair.find(end)]
+                    total_data.pop()
+                    break
         s.close()
+        print("".join(total_data))
     except Exception as e:
-        logging.info("Failed to connect to MBED %s" % mbed_ip)
-        logging.info("Exception - %s" % e)
+        logging.info("Failed to connect to MBED {}".format(mbed_ip))
+        logging.info("Exception - {}".format(e))
 
 
 class OSDConnect():
@@ -44,8 +56,8 @@ class OSDConnect():
         self.host = host
 
     def run(self):
-        logging.info("MBED %s instructed to connect to HOST %s" %
-                     (self.mbed_ip, self.host))
+        logging.info("MBED {} instructed to connect to HOST {}"
+                     .format((self.mbed_ip, self.host)))
         payload = "{} {} {} {}\0".format(self.resx,
                                          self.resy,
                                          self.style,
@@ -59,8 +71,8 @@ class SendKeys():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("MBED %s instructed to send test string" %
-                     self.mbed_ip)
+        logging.info("MBED {} instructed to send test string"
+                     .format(self.mbed_ip))
         time.sleep(1)
         send(self.mbed_ip, str.encode("keyboard\0"))
 
@@ -71,8 +83,8 @@ class Exit():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("MBED %s instructed to close and exit" %
-                     self.mbed_ip)
+        logging.info("MBED {} instructed to close and exit"
+                     .format(self.mbed_ip))
         time.sleep(1)
         send(self.mbed_ip, str.encode("close\0"))
 
@@ -83,7 +95,8 @@ class MouseMove():
         self.mbed_ip = mbed_ip
 
     def run(self):
-        logging.info("MBED %s instructed to move mouse" % self.mbed_ip)
+        logging.info("MBED {} instructed to move mouse"
+                     .format(self.mbed_ip))
         send(self.mbed_ip, str.encode("mouse\0"))
 
 
