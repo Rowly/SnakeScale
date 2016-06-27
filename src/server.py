@@ -142,7 +142,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                                  resolution_y,
                                                  style,
                                                  hosts).run()
+                            print("OSD Connect sent")
+                            print("Waiting 15")
                             time.sleep(15)
+                            print("Waited")
+                            print("Send keys starting")
                             mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                             mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                             mbed_jobs.Exit(JOB_MBEDS[key]).run()
