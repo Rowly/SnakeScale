@@ -8,18 +8,18 @@ import socket
 import time
 from config import config
 
-MBED_ECHO_PORT = config.get_mbed_echo_port()
-OSD_MBEDS = config.get_mbed_osders()
-JOB_MBEDS = config.get_mbed_jobbers()
-HOSTS = config.get_hosts()
-# MBED_ECHO_PORT = config.get_mbed_echo_port("../config/data.json")
-# OSD_MBEDS = config.get_mbed_osders("../config/data.json")
-# JOB_MBEDS = config.get_mbed_jobbers("../config/data.json")
-# HOSTS = config.get_hosts("../config/data.json")
+# MBED_ECHO_PORT = config.get_mbed_echo_port()
+# OSD_MBEDS = config.get_mbed_osders()
+# JOB_MBEDS = config.get_mbed_jobbers()
+# HOSTS = config.get_hosts()
+MBED_ECHO_PORT = config.get_mbed_echo_port("../config/data.json")
+OSD_MBEDS = config.get_mbed_osders("../config/data.json")
+JOB_MBEDS = config.get_mbed_jobbers("../config/data.json")
+HOSTS = config.get_hosts("../config/data.json")
 
 
 def send(mbed_ip, payload):
-    end = ':'
+    end = b":"
     try:
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -40,7 +40,6 @@ def send(mbed_ip, payload):
                     total_data.pop()
                     break
         s.close()
-        logging.info(bytes(''.join(total_data)))
     except Exception as e:
         logging.info("Failed to connect to MBED {}".format(mbed_ip))
         logging.info("Exception - {}".format(e))
@@ -102,5 +101,6 @@ class MouseMove():
 
 if __name__ == "__main__":
         payload = "1920 1080 e 1\0"
+#         payload = "keyboard\0"
         print(payload)
         send("10.10.10.50", str.encode(payload))
