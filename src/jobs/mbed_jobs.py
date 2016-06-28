@@ -8,14 +8,14 @@ import socket
 import time
 from config import config
 
-# MBED_ECHO_PORT = config.get_mbed_echo_port()
-# OSD_MBEDS = config.get_mbed_osders()
-# JOB_MBEDS = config.get_mbed_jobbers()
-# HOSTS = config.get_hosts()
-MBED_ECHO_PORT = config.get_mbed_echo_port("../config/data.json")
-OSD_MBEDS = config.get_mbed_osders("../config/data.json")
-JOB_MBEDS = config.get_mbed_jobbers("../config/data.json")
-HOSTS = config.get_hosts("../config/data.json")
+MBED_ECHO_PORT = config.get_mbed_echo_port()
+OSD_MBEDS = config.get_mbed_osders()
+JOB_MBEDS = config.get_mbed_jobbers()
+HOSTS = config.get_hosts()
+# MBED_ECHO_PORT = config.get_mbed_echo_port("../config/data.json")
+# OSD_MBEDS = config.get_mbed_osders("../config/data.json")
+# JOB_MBEDS = config.get_mbed_jobbers("../config/data.json")
+# HOSTS = config.get_hosts("../config/data.json")
 
 
 def send(mbed_ip, payload):
