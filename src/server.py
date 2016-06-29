@@ -70,7 +70,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes("<body>" +
                                    "<p>This is the ControlServer.</p>" +
                                    "<p>Usage:</p>" +
-                                   "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive</p>" +
+                                   "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
                                    "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
                                    "</body></html>", "UTF-8"))
         else:
@@ -127,12 +127,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     except SystemExit:
                         pass
 
-                    if device == "ddx30":
-                        try:
-                            with open("./dump/test.txt", "w"):
-                                pass
-                        except FileNotFoundError:
+                    try:
+                        with open("./dump/test.txt", "w"):
                             pass
+                    except FileNotFoundError:
+                        pass
+
+                    if device == "ddx30":
 #                         mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
                         if test_type == "exclusive":
                             style = "e"
@@ -147,6 +148,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                             mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
+                    elif device == "av4pro":
+                        """
+                        TODO: Add in av4pro system
+                        """
+                        pass
 
                     BUSY = False
                 elif command == "get_result":
@@ -166,7 +172,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.end_headers()
                         self.wfile.write(bytes("busy", "UTF-8"))
                     logging.info("Controller attempting to get results")
-                    if device == "ddx30":
+                    if device == "ddx30" or device == "av4pro":
                         mouse = test_usb.mouse()
                         keyb = test_usb.key_b()
     #                   video = test_video.ImageCompare().run()

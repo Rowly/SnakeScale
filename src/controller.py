@@ -85,45 +85,45 @@ class Jobs():
         """
         A place holder to test the email sending system
         """
+        end_time = datetime.datetime.now().strftime(T_FORMAT)
+        update_body = """
+               Test for {}
+               Using test style {}
+               Begun {}
+               Execution number {}
+               Response from most recent test:
+               {}
+               """.format(self.device,
+                          self.test_type,
+                          self.start,
+                          self.execution,
+                          response)
+        fail_body = """
+               Test for {}
+               Using test style {}
+               Begun {}
+               Ended {}
+               Execution number {}
+               Response from most recent test:
+               {}
+               """.format(self.device,
+                          self.test_type,
+                          self.start,
+                          end_time,
+                          self.execution,
+                          response)
+        if self.execution % 1000 == 0:
+            time.sleep(2)
+            EmailNotifier(update_body).run()
         if test_type == "view":
             if "TRUE" in response:
-                end_time = datetime.datetime.now().strftime(T_FORMAT)
                 time.sleep(2)
-                body = """
-                       Test for {}
-                       Using test style {}
-                       Begun {}
-                       Ended {}
-                       Execution number {}
-                       Response from most recent test:
-                       {}
-                       """.format(self.device,
-                                  self.test_type,
-                                  self.start,
-                                  end_time,
-                                  self.execution,
-                                  response)
-                EmailNotifier(body).run()
+                EmailNotifier(fail_body).run()
                 sys.exit()
         else:
             if "FALSE" in response:
-                end_time = datetime.datetime.now().strftime(T_FORMAT)
                 time.sleep(2)
-                body = """
-                       Test for {}
-                       Using test style {}
-                       Begun {}
-                       Ended {}
-                       Execution number {}
-                       Response from most recent test:
-                       {}
-                       """.format(self.device,
-                                  self.test_type,
-                                  self.start,
-                                  end_time,
-                                  self.execution,
-                                  response)
-                EmailNotifier(body).run()
+                EmailNotifier(fail_body).run()
                 sys.exit()
 
 
@@ -163,10 +163,14 @@ class EmailNotifier():
 
 def main(device, hosts, test_type, resolution):
     logging_start()
-    device = device
     config.RPIS_LIMIT = hosts
 
     start_time = datetime.datetime.now().strftime(T_FORMAT)
+
+    """
+    TODO: Add in an API call to ensure that all receivers are connected
+    through to the hosts before tests start
+    """
 
     print(start_time)
     counter = 0
@@ -182,10 +186,19 @@ def main(device, hosts, test_type, resolution):
 if __name__ == '__main__':
     test_types = ["view", "shared", "exclusive", "private", "conflict", "all"]
     parser = argparse.ArgumentParser(description="Control Server")
-    parser.add_argument("device", type=str, help="device under test")
-    parser.add_argument("hosts", type=str, help="Number of Host PCS")
-    parser.add_argument("test_type", type=str, choices=test_types, help="Type of test to run")
-    parser.add_argument("resolution", type=str, help="Resolution of display as 1920x1080")
+    parser.add_argument("device",
+                        type=str,
+                        help="device under test")
+    parser.add_argument("hosts",
+                        type=str,
+                        help="Number of Host PCS")
+    parser.add_argument("test_type",
+                        type=str,
+                        choices=test_types,
+                        help="Type of test to run")
+    parser.add_argument("resolution",
+                        type=str,
+                        help="Resolution of display as 1920x1080")
     args = parser.parse_args()
     device = args.device.lower()
     hosts = args.hosts
