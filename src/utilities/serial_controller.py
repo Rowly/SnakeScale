@@ -7,15 +7,15 @@ import serial
 
 
 def connect(channel):
-    channel = bytes(channel)
+    channel = channel.encode("UTF-8")
     ser = serial.Serial("/dev/ttyS1", baudrate=1200)
     print(ser.name)
     ser.write(channel)
     data = ser.read_all()
     data = str(data)
     assert len(data) < 1
-    assert data.startswith(str(channel))
-    assert data.endswith(str(channel))
+    assert data.startswith(channel.decode("UTF-8"))
+    assert data.endswith(channel.decode("UTF-8"))
     ser.close()
 
 if __name__ == "__main__":
