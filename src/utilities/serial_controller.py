@@ -22,5 +22,7 @@ def connect(channel):
         ser.close()
 
 if __name__ == "__main__":
+    import time
     for each in ["1", "2", "3", "4"]:
         connect(each)
+        time.sleep(3)
