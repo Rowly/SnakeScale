@@ -12,12 +12,12 @@ def connect(channel):
     try:
         print(ser.name)
         ser.write(channel)
-        data = ser.read_all()
-        data = data.decode("UTF-8")
-        print(data)
-        assert len(data) < 1
-        assert data.startswith(channel.decode("UTF-8"))
-        assert data.endswith(channel.decode("UTF-8"))
+#         data = ser.read_all()
+#         data = data.decode("UTF-8")
+#         print(data)
+#         assert len(data) < 1
+#         assert data.startswith(channel.decode("UTF-8"))
+#         assert data.endswith(channel.decode("UTF-8"))
     finally:
         ser.close()
 
