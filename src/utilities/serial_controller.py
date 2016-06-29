@@ -3,7 +3,7 @@ Created on Jun 29, 2016
 
 @author: Mark
 '''
-import serial.Serial
+import serial
 
 
 def connect(channel):
