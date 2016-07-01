@@ -19,6 +19,7 @@ import time
 import json
 import argparse
 import random
+import platform
 sys.path.append(os.path.dirname(__file__))
 
 from jobs import mbed_jobs
@@ -121,16 +122,23 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
                     BUSY = True
 
+                    system = platform.system()
+                    if system == "Win32" or system == "Windows":
+                        suffix = ""
+                        path = ".."
+                    else:
+                        suffix = "3"
+                        path = "."
                     try:
-                        gui = subprocess.Popen(["python3",
-                                                "./utilities/capture_gui.py"])
+                        gui = subprocess.Popen(["python{}".format(suffix),
+                                                "{}/utilities/capture_gui.py".format(path)])
                         if device == "ddx30" and test_type == "view":
                             time.sleep(5)
                             gui.kill()
                     except SystemExit:
                         pass
 
-                    with open("./dump/test.txt", "w"):
+                    with open("{}/dump/test.txt".format(path), "w"):
                         pass
 
                     if device == "ddx30":
