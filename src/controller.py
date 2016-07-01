@@ -12,8 +12,8 @@ from queue import Queue
 import logging
 import time
 import argparse
-from smtplib import SMTPException
 import datetime
+from utilities.email_controller import EmailNotifier
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -86,79 +86,35 @@ class Jobs():
         A place holder to test the email sending system
         """
         end_time = datetime.datetime.now().strftime(T_FORMAT)
-        update_body = """
-               Test for {}
-               Using test style {}
-               Begun {}
-               Execution number {}
-               Response from most recent test:
-               {}
-               """.format(self.device,
-                          self.test_type,
-                          self.start,
-                          self.execution,
-                          response)
-        fail_body = """
-               Test for {}
-               Using test style {}
-               Begun {}
-               Ended {}
-               Execution number {}
-               Response from most recent test:
-               {}
-               """.format(self.device,
+
+        if self.execution % 1000 == 0:
+            time.sleep(2)
+            EmailNotifier(self.device,
                           self.test_type,
                           self.start,
                           end_time,
                           self.execution,
-                          response)
-        if self.execution % 1000 == 0:
-            time.sleep(2)
-            EmailNotifier(update_body).run()
+                          response).send_update_email()
         if test_type == "view":
             if "TRUE" in response:
                 time.sleep(2)
-                EmailNotifier(fail_body).run()
+                EmailNotifier(self.device,
+                              self.test_type,
+                              self.start,
+                              end_time,
+                              self.execution,
+                              response).send_failure_email()
                 sys.exit()
         else:
             if "FALSE" in response:
                 time.sleep(2)
-                EmailNotifier(fail_body).run()
+                EmailNotifier(self.device,
+                              self.test_type,
+                              self.start,
+                              end_time,
+                              self.execution,
+                              response).send_failure_email()
                 sys.exit()
-
-
-class EmailNotifier():
-
-    def __init__(self, body):
-        self.body = body
-
-    def run(self):
-        import smtplib
-        from email.mime.text import MIMEText
-
-        commaspace = ", "
-        receipients = ["mark.rowlands@adder.com"]
-
-        try:
-            with open("./dump/msg.txt", "w+") as file:
-                file.write(self.body)
-        except FileNotFoundError:
-            with open("./dump/msg.txt", "a") as file:
-                file.write(self.body)
-
-        with open("./dump/msg.txt") as file:
-            msg = MIMEText(file.read())
-        msg["Subject"] = "DDX30 Failure"
-        msg["From"] = "ddx30soaktest@example.com"
-        msg["To"] = commaspace.join(receipients)
-
-        try:
-            smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
-            smtpObj.send_message(msg)
-            smtpObj.quit()
-            print("Sent email")
-        except SMTPException:
-            print("Something went wrong")
 
 
 def main(device, hosts, test_type, resolution):
@@ -171,16 +127,25 @@ def main(device, hosts, test_type, resolution):
     TODO: Add in an API call to ensure that all receivers are connected
     through to the hosts before tests start
     """
-
     print(start_time)
     counter = 0
-    while True:
-        counter += 1
-        print(counter)
-        item = Jobs(device, "1", test_type, resolution, counter, start_time)
-        ControlQ.put(item)
-        Executor().run()
-        time.sleep(1)
+    if device == "ddx30":
+        while True:
+            counter += 1
+            print(counter)
+            item = Jobs(device, "1", test_type, resolution, counter, start_time)
+            ControlQ.put(item)
+            Executor().run()
+            time.sleep(1)
+    elif device == "av4pro":
+        while True:
+            for i in ["1", "2", "3", "4"]:
+                counter += 1
+                print(counter)
+                item = Jobs(device, "1", i, resolution, counter, start_time)
+                ControlQ.put(item)
+                Executor().run()
+                time.sleep(1)
 
 
 if __name__ == '__main__':
@@ -195,7 +160,7 @@ if __name__ == '__main__':
     parser.add_argument("test_type",
                         type=str,
                         choices=test_types,
-                        help="Type of test to run")
+                        help="Type of test to send_failure_email")
     parser.add_argument("resolution",
                         type=str,
                         help="Resolution of display as 1920x1080")

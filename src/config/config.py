@@ -53,6 +53,9 @@ def get_alifs(path="./config/data.json"):
     return ALIFS
 
 
+def get_dut_ip(path="./config/data.json"):
+    return json.load(open(path))["data"]["dut_ip"]
+
 if __name__ == "__main__":
     print("Rpis:")
     print(json.dumps(get_hosts("data.json"), indent=2))
@@ -66,3 +69,5 @@ if __name__ == "__main__":
     print(json.dumps(get_host_port("data.json")))
     print("Mbed Port: ")
     print(json.dumps(get_mbed_echo_port("data.json")))
+    print("Device Under Test IP: ")
+    print(json.dumps(get_dut_ip("data.json")))

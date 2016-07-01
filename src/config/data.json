@@ -1,5 +1,6 @@
 {"data":
         {
+         "dut_ip": "10.10.10.22",
          "host_port": 8081,
          "mbed_port": 7,
          "hosts": 

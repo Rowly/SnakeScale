@@ -99,6 +99,17 @@ class MouseMove():
         send(self.mbed_ip, str.encode("mouse\0"))
 
 
+class Av4proConnect():
+
+    def __init__(self, mbed_ip, channel):
+        self.mbed_ip = mbed_ip
+        self.channel = channel
+
+    def run(self):
+        logging.info("MBED {} instructed to connect AV4pro channel {}"
+                     .format(self.mbed_ip, self.channel))
+        send(self.mbed_ip, str.encode("channel{}\0".format(self.channel)))
+
 if __name__ == "__main__":
         payload = "1920 1080 e 1\0"
 #         payload = "keyboard\0"

@@ -122,15 +122,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     BUSY = True
 
                     try:
-                        subprocess.Popen(["python3",
-                                          "./utilities/capture_gui.py"])
+                        gui = subprocess.Popen(["python3",
+                                                "./utilities/capture_gui.py"])
+                        if device == "ddx30" and test_type == "view":
+                            time.sleep(5)
+                            gui.kill()
                     except SystemExit:
                         pass
 
-                    try:
-                        with open("./dump/test.txt", "w"):
-                            pass
-                    except FileNotFoundError:
+                    with open("./dump/test.txt", "w"):
                         pass
 
                     if device == "ddx30":
@@ -149,10 +149,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
                     elif device == "av4pro":
-                        """
-                        TODO: Add in av4pro system
-                        """
-                        pass
+                        mbed_jobs.Av4proConnect(test_type).run()
+                        time.sleep(15)
+                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                        mbed_jobs.Exit(JOB_MBEDS[key]).run()
 
                     BUSY = False
                 elif command == "get_result":
