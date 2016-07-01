@@ -14,6 +14,7 @@ import time
 import argparse
 import datetime
 from utilities.email_controller import EmailNotifier
+import platform
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -85,7 +86,12 @@ class Jobs():
         """
         A place holder to test the email sending system
         """
+        system = platform.system()
         end_time = datetime.datetime.now().strftime(T_FORMAT)
+        if system == "Win32" or system == "Windows":
+            path = ".."
+        else:
+            path = "."
 
         if self.execution % 1000 == 0:
             time.sleep(2)
@@ -94,7 +100,7 @@ class Jobs():
                           self.start,
                           end_time,
                           self.execution,
-                          response).send_update_email()
+                          response).send_update_email(path)
         if test_type == "view":
             if "TRUE" in response:
                 time.sleep(2)
@@ -103,7 +109,7 @@ class Jobs():
                               self.start,
                               end_time,
                               self.execution,
-                              response).send_failure_email()
+                              response).send_failure_email(path)
                 sys.exit()
         else:
             if "FALSE" in response:
@@ -113,7 +119,7 @@ class Jobs():
                               self.start,
                               end_time,
                               self.execution,
-                              response).send_failure_email()
+                              response).send_failure_email(path)
                 sys.exit()
 
 

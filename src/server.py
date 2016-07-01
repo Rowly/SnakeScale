@@ -176,6 +176,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     if device == "ddx30" or device == "av4pro":
                         mouse = test_usb.mouse()
                         keyb = test_usb.key_b()
+                        """
+                        TODO: When adding video back in, Windows path
+                        will need to be used
+                        """
     #                   video = test_video.ImageCompare().run()
                         data = json.dumps({"mouse": mouse,
                                            "keyb": keyb}, indent=4)
