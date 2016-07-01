@@ -125,20 +125,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     system = platform.system()
                     if system == "Win32" or system == "Windows":
                         suffix = ""
-                        path = ".."
+                        path = ""
                     else:
                         suffix = "3"
-                        path = "."
+                        path = "./"
                     try:
                         gui = subprocess.Popen(["python{}".format(suffix),
-                                                "{}/utilities/capture_gui.py".format(path)])
+                                                "{}utilities/capture_gui.py".format(path)])
                         if device == "ddx30" and test_type == "view":
                             time.sleep(5)
                             gui.kill()
                     except SystemExit:
                         pass
 
-                    with open("{}/dump/test.txt".format(path), "w"):
+                    with open("{}dump/test.txt".format(path), "w"):
                         pass
 
                     if device == "ddx30":
