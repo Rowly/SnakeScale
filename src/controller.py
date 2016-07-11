@@ -121,9 +121,8 @@ class Jobs():
                 sys.exit()
 
 
-def main(device, hosts, test_type, resolution):
+def main(device, test_type, resolution):
     logging_start()
-    config.RPIS_LIMIT = hosts
 
     start_time = datetime.datetime.now().strftime(T_FORMAT)
 
@@ -160,9 +159,6 @@ if __name__ == '__main__':
     parser.add_argument("device",
                         type=str,
                         help="device under test")
-#     parser.add_argument("hosts",
-#                         type=str,
-#                         help="Number of Host PCS")
     parser.add_argument("test_type",
                         type=str,
                         choices=test_types,
@@ -172,7 +168,6 @@ if __name__ == '__main__':
                         help="Resolution of display as 1920x1080")
     args = parser.parse_args()
     device = args.device.lower()
-    hosts = args.hosts
     test_type = args.test_type
     resolution = args.resolution
-    main(device, hosts, test_type, resolution)
+    main(device, test_type, resolution)
