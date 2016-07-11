@@ -53,8 +53,17 @@ def get_alifs(path="./config/data.json"):
     return ALIFS
 
 
-def get_dut_ip(path="./config/data.json"):
+def get_ddx_ut_ip(path="./config/data.json"):
     return json.load(open(path))["data"]["dut_ip"]
+
+
+def get_ddx_source_ip(path="./config/data.json"):
+    return json.load(open(path))["data"]["d_source_ip"]
+
+
+def get_ddx_reader_ip(path="./config/data.json"):
+    return json.load(open(path))["data"]["d_reader_ip"]
+
 
 if __name__ == "__main__":
     print("Rpis:")
@@ -70,4 +79,8 @@ if __name__ == "__main__":
     print("Mbed Port: ")
     print(json.dumps(get_mbed_echo_port("data.json")))
     print("Device Under Test IP: ")
-    print(json.dumps(get_dut_ip("data.json")))
+    print(json.dumps(get_ddx_ut_ip("data.json")))
+    print("Device Source IP: ")
+    print(json.dumps(get_ddx_source_ip("data.json")))
+    print("Device Reader Test IP: ")
+    print(json.dumps(get_ddx_reader_ip("data.json")))

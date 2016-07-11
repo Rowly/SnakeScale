@@ -21,7 +21,8 @@ from config import config
 
 class EmailNotifier():
 
-    def __init__(self, device, host, test_type, start, end, execution, response):
+    def __init__(self, device, host, test_type, start, end,
+                 execution, response):
         self.device = device
         self.host = host,
         self.test_type = test_type
@@ -54,7 +55,7 @@ class EmailNotifier():
                {}
                Location of test log /var/log/snakescale-ddx/result.log
                """.format(self.device,
-                          config.get_dut_ip(),
+                          config.get_ddx_ut_ip(),
                           name,
                           version,
                           self.host,
@@ -125,7 +126,7 @@ class EmailNotifier():
                Response from most recent test:
                {}
                """.format(self.device,
-                          config.get_dut_ip(),
+                          config.get_ddx_ut_ip(),
                           name,
                           version,
                           self.host,

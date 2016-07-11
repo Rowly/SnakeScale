@@ -1,6 +1,8 @@
 {"data":
         {
          "dut_ip": "10.10.10.22",
+         "d_source_ip": "10.10.10.23",
+         "d_reader_ip": "10.10.10.24",
          "host_port": 8081,
          "mbed_port": 7,
          "hosts": 

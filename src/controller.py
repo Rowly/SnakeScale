@@ -13,12 +13,12 @@ import logging
 import time
 import argparse
 import datetime
-from utilities.email_controller import EmailNotifier
 sys.path.append(os.path.dirname(__file__))
 
 
 from config import config
 from jobs.pi_jobs import Notify, GetResult
+from utilities.email_controller import EmailNotifier
 
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
@@ -101,6 +101,7 @@ class Jobs():
             if "TRUE" in response:
                 time.sleep(2)
                 EmailNotifier(self.device,
+                              self.host,
                               self.test_type,
                               self.start,
                               end_time,
@@ -111,6 +112,7 @@ class Jobs():
             if "FALSE" in response:
                 time.sleep(2)
                 EmailNotifier(self.device,
+                              self.host,
                               self.test_type,
                               self.start,
                               end_time,

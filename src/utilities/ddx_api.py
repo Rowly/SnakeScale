@@ -8,8 +8,8 @@ import time
 from config import config
 
 
-# IP = config.get_dut_ip("../config/data.json")
-IP = config.get_dut_ip()
+# IP = config.get_ddx_ut_ip("../config/data.json")
+IP = config.get_ddx_ut_ip()
 
 
 def login(retry=0):
