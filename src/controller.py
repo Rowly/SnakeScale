@@ -14,7 +14,6 @@ import time
 import argparse
 import datetime
 from utilities.email_controller import EmailNotifier
-import platform
 sys.path.append(os.path.dirname(__file__))
 
 
@@ -86,11 +85,7 @@ class Jobs():
         """
         A place holder to test the email sending system
         """
-#         system = platform.system()
         end_time = datetime.datetime.now().strftime(T_FORMAT)
-#         if system == "Win32" or system == "Windows":
-#             path = ".."
-#         else:
         path = "."
 
         if self.execution % 1000 == 0:
@@ -137,12 +132,14 @@ def main(device, hosts, test_type, resolution):
     counter = 0
     if device == "ddx30":
         while True:
-            counter += 1
-            print(counter)
-            item = Jobs(device, "1", test_type, resolution, counter, start_time)
-            ControlQ.put(item)
-            Executor().run()
-            time.sleep(1)
+            for host in ["Ubuntu", "Win7"]:
+                counter += 1
+                print(counter)
+                item = Jobs(device, host, test_type,
+                            resolution, counter, start_time)
+                ControlQ.put(item)
+                Executor().run()
+                time.sleep(1)
     elif device == "av4pro":
         while True:
             for i in ["1", "2", "3", "4"]:
@@ -160,9 +157,9 @@ if __name__ == '__main__':
     parser.add_argument("device",
                         type=str,
                         help="device under test")
-    parser.add_argument("hosts",
-                        type=str,
-                        help="Number of Host PCS")
+#     parser.add_argument("hosts",
+#                         type=str,
+#                         help="Number of Host PCS")
     parser.add_argument("test_type",
                         type=str,
                         choices=test_types,

@@ -26,7 +26,7 @@ class Notify():
         try:
             payload = {"command": "notify",
                        "device": self.device,
-                       "hosts": self.host,
+                       "host": self.host,
                        "test_type": self.test_type,
                        "resolution": self.resolution}
             r = requests.get("http://" + HOSTS[self.host] +

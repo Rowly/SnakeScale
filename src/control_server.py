@@ -27,8 +27,8 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
 
     """
     Inbound request methods:
-    /api?command=<command>&device=<device>&hosts=<hosts>
-    /api?command=start&device=<device>&hosts=<hosts>
+    /api?command=<command>&device=<device>
+    /api?command=start&device=<device>&test_type=<type>&resolution=<1902x1080>
     /api?comand=stop
     """
     def do_GET(self):
@@ -41,7 +41,7 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
             self.wfile.write(bytes("<body>" +
                                    "<p>This is the ControlServer.</p>" +
                                    "<p>Usage:</p>" +
-                                   "<p>/api?command=start&device=ddx30&hosts=1</p>" +
+                                   "<p>/api?command=start&device=ddx30&test_type=exclusive&resolution=1920x1080</p>" +
                                    "<p>/api?command=stop" +
                                    "</body></html>", "UTF-8"))
         else:
@@ -52,13 +52,6 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                 if command == "start":
                     if "device" in query:
                         device = query["device"][0].lower()
-                    else:
-                        self.send_response(400)
-                        self.send_header("Content-type", "text/html")
-                        self.end_headers()
-                        return
-                    if "hosts" in query:
-                        hosts = query["hosts"][0]
                     else:
                         self.send_response(400)
                         self.send_header("Content-type", "text/html")
@@ -88,7 +81,6 @@ class ControlServer(http.server.BaseHTTPRequestHandler):
                     CON = subprocess.Popen(["python3",
                                             "controller.py",
                                             device,
-                                            hosts,
                                             test_type,
                                             resolution])
                 elif command == "stop":

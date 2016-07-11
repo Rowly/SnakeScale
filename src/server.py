@@ -90,8 +90,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "text/html")
                         self.end_headers()
                         return
-                    if "hosts" in query:
-                        hosts = query["hosts"][0]
+                    if "host" in query:
+                        host = query["host"][0]
                     else:
                         self.send_response(400)
                         self.send_header("Content-type", "text/html")
@@ -142,19 +142,19 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         pass
 
                     if device == "ddx30":
-#                         mbeds_key = str(random.randint(1, len(OSD_MBEDS)))
+                        key = str(random.randint(1, len(OSD_MBEDS)))
                         if test_type == "exclusive":
                             style = "e"
-                            key = "1"
-                            mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                 resolution_x,
-                                                 resolution_y,
-                                                 style,
-                                                 hosts).run()
-                            time.sleep(15)
-                            mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                            mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                            mbed_jobs.Exit(JOB_MBEDS[key]).run()
+#                             key = "1"
+                        mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                             resolution_x,
+                                             resolution_y,
+                                             style,
+                                             host).run()
+                        time.sleep(15)
+                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                        mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
