@@ -91,6 +91,7 @@ class Jobs():
         if self.execution % 1000 == 0:
             time.sleep(2)
             EmailNotifier(self.device,
+                          self.host,
                           self.test_type,
                           self.start,
                           end_time,

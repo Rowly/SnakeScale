@@ -21,8 +21,9 @@ from config import config
 
 class EmailNotifier():
 
-    def __init__(self, device, test_type, start, end, execution, response):
+    def __init__(self, device, host, test_type, start, end, execution, response):
         self.device = device
+        self.host = host,
         self.test_type = test_type
         self.start = start
         self.end = end
@@ -44,6 +45,7 @@ class EmailNotifier():
                Unit IP {}
                Unit name {}
                Version {}
+               HOST {}
                Using test style {}
                Begun {}
                Ended {}
@@ -55,6 +57,7 @@ class EmailNotifier():
                           config.get_dut_ip(),
                           name,
                           version,
+                          self.host,
                           self.test_type,
                           self.start,
                           self.end,
@@ -115,7 +118,7 @@ class EmailNotifier():
                Unit IP {}
                Unit name {}
                Version {}
-               Version {}
+               HOST {}
                Using test style {}
                Begun {}
                Execution number {}
@@ -125,6 +128,7 @@ class EmailNotifier():
                           config.get_dut_ip(),
                           name,
                           version,
+                          self.host,
                           self.test_type,
                           self.start,
                           self.execution,
