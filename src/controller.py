@@ -86,12 +86,12 @@ class Jobs():
         """
         A place holder to test the email sending system
         """
-        system = platform.system()
+#         system = platform.system()
         end_time = datetime.datetime.now().strftime(T_FORMAT)
-        if system == "Win32" or system == "Windows":
-            path = ".."
-        else:
-            path = "."
+#         if system == "Win32" or system == "Windows":
+#             path = ".."
+#         else:
+        path = "."
 
         if self.execution % 1000 == 0:
             time.sleep(2)
