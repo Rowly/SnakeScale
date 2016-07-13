@@ -111,7 +111,9 @@ class Av4proConnect():
         send(self.mbed_ip, str.encode("channel{}\0".format(self.channel)))
 
 if __name__ == "__main__":
-        payload = "1920 1080 e 1\0"
-#         payload = "keyboard\0"
-        print(payload)
-        send("10.10.10.50", str.encode(payload))
+    time.sleep(10)
+    OSDConnect("10.10.10.50", "1920", "1080", "e", "1")
+    time.sleep(15)
+    SendKeys("10.10.10.150")
+    MouseMove("10.10.10.150")
+    Exit("10.10.10.150")
