@@ -13,17 +13,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from config import config
 
-MBED_ECHO_PORT = config.get_mbed_echo_port()
-OSD_MBEDS = config.get_mbed_osders()
-JOB_MBEDS = config.get_mbed_jobbers()
-HOSTS = config.get_hosts()
-# MBED_ECHO_PORT = config.get_mbed_echo_port("../config/data.json")
-# OSD_MBEDS = config.get_mbed_osders("../config/data.json")
-# JOB_MBEDS = config.get_mbed_jobbers("../config/data.json")
-# HOSTS = config.get_hosts("../config/data.json")
 
-
-def send(mbed_ip, payload):
+def send(mbed_ip, payload, path="."):
+    MBED_ECHO_PORT = config.get_mbed_echo_port(path)
     end = b":"
     try:
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
@@ -59,14 +51,14 @@ class OSDConnect():
         self.style = style
         self.host = host
 
-    def run(self):
+    def run(self, path="."):
         logging.info("MBED {} instructed to connect to HOST {}"
                      .format(self.mbed_ip, self.host))
         payload = "{} {} {} {}\0".format(self.resx,
                                          self.resy,
                                          self.style,
                                          self.host)
-        send(self.mbed_ip, str.encode(payload))
+        send(self.mbed_ip, str.encode(payload), path)
 
 
 class SendKeys():
@@ -74,11 +66,11 @@ class SendKeys():
     def __init__(self, mbed_ip):
         self.mbed_ip = mbed_ip
 
-    def run(self):
+    def run(self, path="."):
         logging.info("MBED {} instructed to send test string"
                      .format(self.mbed_ip))
         time.sleep(1)
-        send(self.mbed_ip, str.encode("keyboard\0"))
+        send(self.mbed_ip, str.encode("keyboard\0"), path)
 
 
 class Exit():
@@ -86,11 +78,11 @@ class Exit():
     def __init__(self, mbed_ip):
         self.mbed_ip = mbed_ip
 
-    def run(self):
+    def run(self, path="."):
         logging.info("MBED {} instructed to close and exit"
                      .format(self.mbed_ip))
         time.sleep(1)
-        send(self.mbed_ip, str.encode("close\0"))
+        send(self.mbed_ip, str.encode("close\0"), path)
 
 
 class MouseMove():
@@ -98,10 +90,10 @@ class MouseMove():
     def __init__(self, mbed_ip):
         self.mbed_ip = mbed_ip
 
-    def run(self):
+    def run(self, path="."):
         logging.info("MBED {} instructed to move mouse"
                      .format(self.mbed_ip))
-        send(self.mbed_ip, str.encode("mouse\0"))
+        send(self.mbed_ip, str.encode("mouse\0"), path)
 
 
 class Av4proConnect():
@@ -117,8 +109,8 @@ class Av4proConnect():
 
 if __name__ == "__main__":
     time.sleep(10)
-    OSDConnect("10.10.10.50", "1920", "1080", "e", "1")
+    OSDConnect("10.10.10.50", "1920", "1080", "e", "1").run("..")
     time.sleep(15)
-    SendKeys("10.10.10.150")
-    MouseMove("10.10.10.150")
-    Exit("10.10.10.150")
+    SendKeys("10.10.10.150").run("..")
+    MouseMove("10.10.10.150").run("..")
+    Exit("10.10.10.150").run("..")
