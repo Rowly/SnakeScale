@@ -156,7 +156,8 @@ class EmailNotifier():
 
     def get_dump_as_file(self, token, endpoint, path):
         content = ddx_api.get(token, endpoint)
-        with open("{}/dump/fail/{}.txt".format(path, endpoint), "w+") as file:
+        f = os.path.abspath("{}/dump/fail/{}.txt".format(path, endpoint))
+        with open(f, "w+") as file:
             file.write(json.dumps(content, indent=4))
 
 
