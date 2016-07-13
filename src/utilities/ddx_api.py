@@ -9,11 +9,8 @@ import time
 from config import config
 
 
-IP = config.get_ddx_ut_ip("..")
-# IP = config.get_ddx_ut_ip()
-
-
-def login(retry=0):
+def login(retry=0, path="."):
+    IP = config.get_ddx_ut_ip(path)
     target = "api/auth/local"
     payload = {"username": "admin",
                "password": "password"}
@@ -27,7 +24,7 @@ def login(retry=0):
         if retry < 3:
             retry += 1
             time.sleep(5)
-            login(retry)
+            login(retry, path)
         else:
             raise
 
@@ -71,7 +68,8 @@ def post(token, endpoint, path="."):
 
 if __name__ == "__main__":
     import json
-    token = login()
+    path = ".."
+    token = login(0, path)
     for endpoint in ["systemInfo",
                      "computers",
                      "consoles",
@@ -81,6 +79,6 @@ if __name__ == "__main__":
                      "supplies",
                      "temperatures",
                      ]:
-        info = get(token, endpoint)
+        info = get(token, endpoint, path)
         print(json.dumps(info, indent=4))
-#     post(token, "system/backup", "..")
+#     post(token, "system/backup", path)
