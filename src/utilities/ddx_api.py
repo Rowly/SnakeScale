@@ -32,7 +32,8 @@ def login(retry=0):
             raise
 
 
-def get(token, endpoint):
+def get(token, endpoint, path="."):
+    IP = config.get_ddx_ut_ip(path)
     if endpoint == "systemInfo":
         endpoint = "system/{}".format(endpoint)
     if endpoint == "supplies" or endpoint == "temperatures":
@@ -51,6 +52,7 @@ def get(token, endpoint):
 
 
 def post(token, endpoint, path="."):
+    IP = config.get_ddx_ut_ip(path)
     if endpoint == "backup":
         endpoint = "system/{}".format(endpoint)
     target = "api/{}".format(endpoint)

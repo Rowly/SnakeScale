@@ -22,38 +22,44 @@ JOB_MBEDS = OrderedDict()
 ALIFS = OrderedDict()
 
 
-def get_host_port(path="./config/data.json"):
+def get_host_port(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["host_port"]
 
 
-def get_hosts(path="./config/data.json"):
+def get_hosts(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     hosts = json.load(open(f), object_pairs_hook=OrderedDict)
     HOSTS.update(hosts["data"]["hosts"])
     return HOSTS
 
 
-def get_mbed_echo_port(path="./config/data.json"):
+def get_mbed_echo_port(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["mbed_port"]
 
 
-def get_mbed_osders(path="./config/data.json"):
+def get_mbed_osders(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     osders = json.load(open(f), object_pairs_hook=OrderedDict)
     OSD_MBEDS.update(osders["data"]["osd_mbeds"])
     return OSD_MBEDS
 
 
-def get_mbed_jobbers(path="./config/data.json"):
+def get_mbed_jobbers(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     jobbers = json.load(open(f), object_pairs_hook=OrderedDict)
     JOB_MBEDS.update(jobbers["data"]["job_mbeds"])
     return JOB_MBEDS
 
 
-def get_alifs(path="./config/data.json"):
+def get_alifs(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     alifs = json.load(open(f), object_pairs_hook=OrderedDict)
     ALIFS.update(alifs["data"]["alifs"])
@@ -78,22 +84,30 @@ def get_ddx_reader_ip(path="."):
     return json.load(open(f))["data"]["d_reader_ip"]
 
 
+def get_smtp_server_ip(path="."):
+    path = "{}/config/data.json".format(path)
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["smtp_server"]
+
+
 if __name__ == "__main__":
     print("Rpis:")
-    print(json.dumps(get_hosts("data.json"), indent=2))
+    print(json.dumps(get_hosts(".."), indent=2))
     print("Alifs:")
-    print(json.dumps(get_alifs("data.json"), indent=2))
+    print(json.dumps(get_alifs(".."), indent=2))
     print("OSD Mbeds:")
-    print(json.dumps(get_mbed_osders("data.json"), indent=2))
+    print(json.dumps(get_mbed_osders(".."), indent=2))
     print("Job Mbeds:")
-    print(json.dumps(get_mbed_jobbers("data.json"), indent=2))
+    print(json.dumps(get_mbed_jobbers(".."), indent=2))
     print("Rpi Port: ")
-    print(json.dumps(get_host_port("data.json")))
+    print(json.dumps(get_host_port("..")))
     print("Mbed Port: ")
-    print(json.dumps(get_mbed_echo_port("data.json")))
+    print(json.dumps(get_mbed_echo_port("..")))
     print("Device Under Test IP: ")
-    print(json.dumps(get_ddx_ut_ip("data.json")))
+    print(json.dumps(get_ddx_ut_ip("..")))
     print("Device Source IP: ")
-    print(json.dumps(get_ddx_source_ip("data.json")))
+    print(json.dumps(get_ddx_source_ip("..")))
     print("Device Reader Test IP: ")
-    print(json.dumps(get_ddx_reader_ip("data.json")))
+    print(json.dumps(get_ddx_reader_ip("..")))
+    print("SMTP Server IP:")
+    print(json.dumps(get_smtp_server_ip("..")))

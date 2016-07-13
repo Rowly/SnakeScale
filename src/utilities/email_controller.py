@@ -36,7 +36,7 @@ class EmailNotifier():
 
     def send_failure_email(self, path):
         token = ddx_api.login(3)
-        info = ddx_api.get(token, "systemInfo")
+        info = ddx_api.get(token, "systemInfo", path)
         version = info["firmwareVersion"]
         name = info["description"]
         for endpoint in ["systemInfo", "computers", "consoles",
@@ -106,8 +106,8 @@ class EmailNotifier():
             outer.attach(msg)
 
         try:
-#             smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
-            smtpObj = smtplib.SMTP("192.168.42.115", 25)
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
             smtpObj.sendmail(sender, receipients, outer.as_string())
             smtpObj.quit()
         except SMTPException:
@@ -149,14 +149,15 @@ class EmailNotifier():
         msg["To"] = commaspace.join(receipients)
 
         try:
-            smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
             smtpObj.send_message(msg)
             smtpObj.quit()
         except SMTPException:
             logging.info("Failed to send send_failure_email email")
 
     def get_dump_as_file(self, token, endpoint, path):
-        content = ddx_api.get(token, endpoint)
+        content = ddx_api.get(token, endpoint, path)
         f = os.path.abspath("{}/dump/fail/{}.txt".format(path, endpoint))
         with open(f, "w+") as file:
             file.write(json.dumps(content, indent=4))
