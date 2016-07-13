@@ -58,7 +58,7 @@ class EmailNotifier():
                {}
                Location of test log /var/log/snakescale-ddx/result.log
                """.format(self.device,
-                          config.get_ddx_ut_ip(),
+                          config.get_ddx_ut_ip(path),
                           name,
                           version,
                           self.host,

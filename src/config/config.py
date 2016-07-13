@@ -60,17 +60,20 @@ def get_alifs(path="./config/data.json"):
     return ALIFS
 
 
-def get_ddx_ut_ip(path="./config/data.json"):
+def get_ddx_ut_ip(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["dut_ip"]
 
 
-def get_ddx_source_ip(path="./config/data.json"):
+def get_ddx_source_ip(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["d_source_ip"]
 
 
-def get_ddx_reader_ip(path="./config/data.json"):
+def get_ddx_reader_ip(path="."):
+    path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["d_reader_ip"]
 

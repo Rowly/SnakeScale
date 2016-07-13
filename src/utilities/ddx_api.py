@@ -9,7 +9,7 @@ import time
 from config import config
 
 
-IP = config.get_ddx_ut_ip("../config/data.json")
+IP = config.get_ddx_ut_ip("..")
 # IP = config.get_ddx_ut_ip()
 
 
