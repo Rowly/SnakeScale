@@ -3,9 +3,14 @@ Created on 27 Apr 2015
 
 @author: Mark
 '''
+import sys
+import os
 import logging
 import socket
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+
 from config import config
 
 MBED_ECHO_PORT = config.get_mbed_echo_port()
