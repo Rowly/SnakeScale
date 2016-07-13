@@ -3,6 +3,7 @@ Created on Jun 29, 2016
 
 @author: Mark
 '''
+import os
 import requests
 import time
 from config import config
@@ -59,7 +60,8 @@ def post(token, endpoint, path="."):
                       verify=False,
                       stream=True)
     assert(r.status_code == 200)
-    with open("{}/dump/fail/switch.cfg".format(path), "wb") as fd:
+    f = os.path.abspath("{}/dump/fail/switch.cfg".format(path))
+    with open(f, "wb") as fd:
         for chunk in r.iter_content():
             fd.write(chunk)
         fd.close()
