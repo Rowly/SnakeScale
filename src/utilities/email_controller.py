@@ -3,6 +3,7 @@ Created on Jun 30, 2016
 
 @author: Mark
 '''
+import sys
 import os
 import smtplib
 import datetime
@@ -11,12 +12,14 @@ import mimetypes
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from smtplib import SMTPException
-from utilities import ddx_api
 from email.mime.base import MIMEBase
 from email import encoders
 import logging
+sys.path.append(os.path.dirname(__file__))
+
 
 from config import config
+from utilities import ddx_api
 
 
 class EmailNotifier():
