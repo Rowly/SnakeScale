@@ -1,0 +1,15 @@
+{
+    "supplies": [
+        {
+            "name": "Supply A", 
+            "value": "Supply OK"
+        }, 
+        {
+            "name": "Supply B", 
+            "value": "No Supply"
+        }
+    ], 
+    "links": {
+        "self": "/api/diagnostics/supplies"
+    }
+}

@@ -1,0 +1,1824 @@
+[
+    {
+        "osdMouseLaunch": true, 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "connectedComputer": 1, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=1", 
+            "computer": "/api/computers/1", 
+            "ports": "/api/ports?console=1", 
+            "self": "/api/consoles/1"
+        }, 
+        "description": "Console on Port 21", 
+        "ports": [
+            21
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 01", 
+        "userLogin": false, 
+        "id": 1, 
+        "currentAccessMode": "EXCLUSIVE", 
+        "computerAccess": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 22", 
+        "ports": [
+            22
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 02", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 2, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=2", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=2", 
+            "self": "/api/consoles/2"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 23", 
+        "ports": [
+            23
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 03", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 3, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=3", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=3", 
+            "self": "/api/consoles/3"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 24", 
+        "ports": [
+            24
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 04", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 4, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=4", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=4", 
+            "self": "/api/consoles/4"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 25", 
+        "ports": [
+            25
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 05", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 5, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=5", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=5", 
+            "self": "/api/consoles/5"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 26", 
+        "ports": [
+            26
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 06", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 6, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=6", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=6", 
+            "self": "/api/consoles/6"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 27", 
+        "ports": [
+            27
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 07", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 7, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=7", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=7", 
+            "self": "/api/consoles/7"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 28", 
+        "ports": [
+            28
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 08", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 8, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=8", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=8", 
+            "self": "/api/consoles/8"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 29", 
+        "ports": [
+            29
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 09", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 9, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=9", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=9", 
+            "self": "/api/consoles/9"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }, 
+    {
+        "osdMouseLaunch": true, 
+        "description": "Console on Port 30", 
+        "ports": [
+            30
+        ], 
+        "autoLogoutTime": 15, 
+        "name": "Console 10", 
+        "computerPermissions": [
+            {
+                "access": "PRIVATE", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ], 
+        "userLogin": false, 
+        "id": 10, 
+        "links": {
+            "user": "/api/users/undefined", 
+            "accessList": "/api/computers?console-access=10", 
+            "computer": "/api/computers/undefined", 
+            "ports": "/api/ports?console=10", 
+            "self": "/api/consoles/10"
+        }, 
+        "computerAccess": [
+            {
+                "access": "VIEWONLY", 
+                "id": 1
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 2
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 3
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 4
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 5
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 6
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 7
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 8
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 9
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 10
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 11
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 12
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 13
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 14
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 15
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 16
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 17
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 18
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 19
+            }, 
+            {
+                "access": "PRIVATE", 
+                "id": 20
+            }
+        ]
+    }
+]

@@ -1,0 +1,272 @@
+[
+    {
+        "consoleId": 1, 
+        "port": 21, 
+        "video": true, 
+        "links": {
+            "console": "/api/consoles/1", 
+            "operations": "/api/receivers/21/operations", 
+            "self": "/api/receivers/21"
+        }, 
+        "firmwareVersion": "1.03.4426", 
+        "connectorType": "DVI", 
+        "firmwareRequired": "", 
+        "videoClock": 148505488, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": "T635P0150WYU", 
+            "refreshRate": 60, 
+            "width": 1920, 
+            "edidName": "1920x1080 @ 60Hz (DELL SX2210T)", 
+            "model": "DELL SX2210T", 
+            "height": 1080
+        }, 
+        "uniqueId": "1BA00009A69C3EAE18F61D54401900F5", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 2, 
+        "port": 22, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/2", 
+            "operations": "/api/receivers/22/operations", 
+            "self": "/api/receivers/22"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 3, 
+        "port": 23, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/3", 
+            "operations": "/api/receivers/23/operations", 
+            "self": "/api/receivers/23"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 4, 
+        "port": 24, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/4", 
+            "operations": "/api/receivers/24/operations", 
+            "self": "/api/receivers/24"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 5, 
+        "port": 25, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/5", 
+            "operations": "/api/receivers/25/operations", 
+            "self": "/api/receivers/25"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 6, 
+        "port": 26, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/6", 
+            "operations": "/api/receivers/26/operations", 
+            "self": "/api/receivers/26"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 7, 
+        "port": 27, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/7", 
+            "operations": "/api/receivers/27/operations", 
+            "self": "/api/receivers/27"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 8, 
+        "port": 28, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/8", 
+            "operations": "/api/receivers/28/operations", 
+            "self": "/api/receivers/28"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 9, 
+        "port": 29, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/9", 
+            "operations": "/api/receivers/29/operations", 
+            "self": "/api/receivers/29"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }, 
+    {
+        "consoleId": 10, 
+        "port": 30, 
+        "video": false, 
+        "links": {
+            "console": "/api/consoles/10", 
+            "operations": "/api/receivers/30/operations", 
+            "self": "/api/receivers/30"
+        }, 
+        "firmwareVersion": "", 
+        "connectorType": "", 
+        "firmwareRequired": "", 
+        "videoClock": 0, 
+        "recoveryMode": false, 
+        "usbEnable": true, 
+        "monitorInfo": {
+            "serialNo": null, 
+            "refreshRate": null, 
+            "width": null, 
+            "edidName": null, 
+            "model": null, 
+            "height": null
+        }, 
+        "uniqueId": "", 
+        "monitorNo": 1, 
+        "firmwareAvailable": ""
+    }
+]

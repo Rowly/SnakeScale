@@ -1,0 +1,365 @@
+[
+    {
+        "connectedConsoles": [
+            1
+        ], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            1
+        ], 
+        "name": "Computer 01", 
+        "currentAccessMode": "EXCLUSIVE", 
+        "primaryConsole": 1, 
+        "id": 1, 
+        "computerNo": 1, 
+        "links": {
+            "primaryConsole": "/api/consoles/1", 
+            "consoles": "/api/consoles?computer=1", 
+            "ports": "/api/ports?computer=1", 
+            "self": "/api/computers/1"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            2
+        ], 
+        "name": "Computer 02", 
+        "primaryConsole": null, 
+        "id": 2, 
+        "computerNo": 2, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=2", 
+            "ports": "/api/ports?computer=2", 
+            "self": "/api/computers/2"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            3
+        ], 
+        "name": "Computer 03", 
+        "primaryConsole": null, 
+        "id": 3, 
+        "computerNo": 3, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=3", 
+            "ports": "/api/ports?computer=3", 
+            "self": "/api/computers/3"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            4
+        ], 
+        "name": "Computer 04", 
+        "primaryConsole": null, 
+        "id": 4, 
+        "computerNo": 4, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=4", 
+            "ports": "/api/ports?computer=4", 
+            "self": "/api/computers/4"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            5
+        ], 
+        "name": "Computer 05", 
+        "primaryConsole": null, 
+        "id": 5, 
+        "computerNo": 5, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=5", 
+            "ports": "/api/ports?computer=5", 
+            "self": "/api/computers/5"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            6
+        ], 
+        "name": "Computer 06", 
+        "primaryConsole": null, 
+        "id": 6, 
+        "computerNo": 6, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=6", 
+            "ports": "/api/ports?computer=6", 
+            "self": "/api/computers/6"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            7
+        ], 
+        "name": "Computer 07", 
+        "primaryConsole": null, 
+        "id": 7, 
+        "computerNo": 7, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=7", 
+            "ports": "/api/ports?computer=7", 
+            "self": "/api/computers/7"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            8
+        ], 
+        "name": "Computer 08", 
+        "primaryConsole": null, 
+        "id": 8, 
+        "computerNo": 8, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=8", 
+            "ports": "/api/ports?computer=8", 
+            "self": "/api/computers/8"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            9
+        ], 
+        "name": "Computer 09", 
+        "primaryConsole": null, 
+        "id": 9, 
+        "computerNo": 9, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=9", 
+            "ports": "/api/ports?computer=9", 
+            "self": "/api/computers/9"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            10
+        ], 
+        "name": "Computer 10", 
+        "primaryConsole": null, 
+        "id": 10, 
+        "computerNo": 10, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=10", 
+            "ports": "/api/ports?computer=10", 
+            "self": "/api/computers/10"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            11
+        ], 
+        "name": "Computer 11", 
+        "primaryConsole": null, 
+        "id": 11, 
+        "computerNo": 11, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=11", 
+            "ports": "/api/ports?computer=11", 
+            "self": "/api/computers/11"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            12
+        ], 
+        "name": "Computer 12", 
+        "primaryConsole": null, 
+        "id": 12, 
+        "computerNo": 12, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=12", 
+            "ports": "/api/ports?computer=12", 
+            "self": "/api/computers/12"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            13
+        ], 
+        "name": "Computer 13", 
+        "primaryConsole": null, 
+        "id": 13, 
+        "computerNo": 13, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=13", 
+            "ports": "/api/ports?computer=13", 
+            "self": "/api/computers/13"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            14
+        ], 
+        "name": "Computer 14", 
+        "primaryConsole": null, 
+        "id": 14, 
+        "computerNo": 14, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=14", 
+            "ports": "/api/ports?computer=14", 
+            "self": "/api/computers/14"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            15
+        ], 
+        "name": "Computer 15", 
+        "primaryConsole": null, 
+        "id": 15, 
+        "computerNo": 15, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=15", 
+            "ports": "/api/ports?computer=15", 
+            "self": "/api/computers/15"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            16
+        ], 
+        "name": "Computer 16", 
+        "primaryConsole": null, 
+        "id": 16, 
+        "computerNo": 16, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=16", 
+            "ports": "/api/ports?computer=16", 
+            "self": "/api/computers/16"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            17
+        ], 
+        "name": "Computer 17", 
+        "primaryConsole": null, 
+        "id": 17, 
+        "computerNo": 17, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=17", 
+            "ports": "/api/ports?computer=17", 
+            "self": "/api/computers/17"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            18
+        ], 
+        "name": "Computer 18", 
+        "primaryConsole": null, 
+        "id": 18, 
+        "computerNo": 18, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=18", 
+            "ports": "/api/ports?computer=18", 
+            "self": "/api/computers/18"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            19
+        ], 
+        "name": "Computer 19", 
+        "primaryConsole": null, 
+        "id": 19, 
+        "computerNo": 19, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=19", 
+            "ports": "/api/ports?computer=19", 
+            "self": "/api/computers/19"
+        }
+    }, 
+    {
+        "connectedConsoles": [], 
+        "description": "Computer description", 
+        "thumbnail": true, 
+        "ports": [
+            20
+        ], 
+        "name": "Computer 20", 
+        "primaryConsole": null, 
+        "id": 20, 
+        "computerNo": 20, 
+        "links": {
+            "primaryConsole": "/api/consoles/null", 
+            "consoles": "/api/consoles?computer=20", 
+            "ports": "/api/ports?computer=20", 
+            "self": "/api/computers/20"
+        }
+    }
+]

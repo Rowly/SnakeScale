@@ -1,0 +1,272 @@
+[
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 01", 
+        "uptime": 174219, 
+        "computerConsoleId": 1, 
+        "id": 1, 
+        "status": "OPERATIONAL"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 02", 
+        "uptime": 0, 
+        "computerConsoleId": 2, 
+        "id": 2, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 03", 
+        "uptime": 0, 
+        "computerConsoleId": 3, 
+        "id": 3, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 04", 
+        "uptime": 0, 
+        "computerConsoleId": 4, 
+        "id": 4, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 05", 
+        "uptime": 0, 
+        "computerConsoleId": 5, 
+        "id": 5, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 06", 
+        "uptime": 0, 
+        "computerConsoleId": 6, 
+        "id": 6, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 07", 
+        "uptime": 0, 
+        "computerConsoleId": 7, 
+        "id": 7, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 08", 
+        "uptime": 0, 
+        "computerConsoleId": 8, 
+        "id": 8, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 09", 
+        "uptime": 0, 
+        "computerConsoleId": 9, 
+        "id": 9, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 10", 
+        "uptime": 0, 
+        "computerConsoleId": 10, 
+        "id": 10, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 11", 
+        "uptime": 0, 
+        "computerConsoleId": 11, 
+        "id": 11, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 12", 
+        "uptime": 0, 
+        "computerConsoleId": 12, 
+        "id": 12, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 13", 
+        "uptime": 0, 
+        "computerConsoleId": 13, 
+        "id": 13, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 14", 
+        "uptime": 0, 
+        "computerConsoleId": 14, 
+        "id": 14, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 15", 
+        "uptime": 0, 
+        "computerConsoleId": 15, 
+        "id": 15, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 16", 
+        "uptime": 0, 
+        "computerConsoleId": 16, 
+        "id": 16, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 17", 
+        "uptime": 0, 
+        "computerConsoleId": 17, 
+        "id": 17, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 18", 
+        "uptime": 0, 
+        "computerConsoleId": 18, 
+        "id": 18, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 19", 
+        "uptime": 0, 
+        "computerConsoleId": 19, 
+        "id": 19, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "TRANSMITTER", 
+        "computerConsoleName": "Computer 20", 
+        "uptime": 0, 
+        "computerConsoleId": 20, 
+        "id": 20, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 01", 
+        "uptime": 173781, 
+        "computerConsoleId": 1, 
+        "id": 21, 
+        "status": "OPERATIONAL"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 02", 
+        "uptime": 0, 
+        "computerConsoleId": 2, 
+        "id": 22, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "ANY", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 03", 
+        "uptime": 0, 
+        "computerConsoleId": 3, 
+        "id": 23, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 04", 
+        "uptime": 0, 
+        "computerConsoleId": 4, 
+        "id": 24, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 05", 
+        "uptime": 0, 
+        "computerConsoleId": 5, 
+        "id": 25, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 06", 
+        "uptime": 0, 
+        "computerConsoleId": 6, 
+        "id": 26, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 07", 
+        "uptime": 0, 
+        "computerConsoleId": 7, 
+        "id": 27, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 08", 
+        "uptime": 0, 
+        "computerConsoleId": 8, 
+        "id": 28, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 09", 
+        "uptime": 0, 
+        "computerConsoleId": 9, 
+        "id": 29, 
+        "status": "DISCONNECTED"
+    }, 
+    {
+        "validType": "RECEIVER", 
+        "type": "RECEIVER", 
+        "computerConsoleName": "Console 10", 
+        "uptime": 0, 
+        "computerConsoleId": 10, 
+        "id": 30, 
+        "status": "DISCONNECTED"
+    }
+]
