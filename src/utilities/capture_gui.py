@@ -6,6 +6,7 @@ Created on 30 Apr 2015
 import sys
 import logging
 from PyQt4 import QtGui, QtCore
+import os
 
 
 class CaptureGui(QtGui.QMainWindow):
@@ -37,7 +38,8 @@ class CaptureGui(QtGui.QMainWindow):
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_F1:
-            with open("./dump/test.txt", "w+") as file:
+            f = os.path.abspath("../dump/test.txt")
+            with open(f, "w+") as file:
                 file.write(self.area.toPlainText())
             self.close()
 

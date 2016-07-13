@@ -137,8 +137,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             gui.kill()
                     except SystemExit:
                         pass
-
-                    with open("{}dump/test.txt".format(path), "w"):
+                    
+                    f = os.path.abspath("{}dump/test.txt".format(path))
+                    with open(f, "w"):
                         pass
 
                     if device == "ddx30":

@@ -3,6 +3,7 @@ Created on 29 Apr 2015
 
 @author: Mark
 '''
+import os
 import logging
 import subprocess
 import random
@@ -14,7 +15,8 @@ TEST_STRING = "abcdefghijklmnopqrstuvwxyz"
 def key_b(path="./dump/test.txt"):
     result = "FALSE"
     try:
-        data = [line.strip() for line in open(path)]
+        f = os.path.abspath(path)
+        data = [line.strip() for line in open(f)]
         if TEST_STRING in set(data):
             result = "TRUE"
     except IOError as e:
@@ -34,7 +36,8 @@ def mouse(path="./dump/test.txt"):
               "left": "FALSE",
               "no": "FALSE"}
     try:
-        data = [line.strip() for line in open(path)]
+        f = os.path.abspath(path)
+        data = [line.strip() for line in open(f)]
         rights = [line for line in data if line.startswith("Right")]
         lefts = [line for line in data if line.startswith("Left")]
         nos = [line for line in data if line.startswith("No")]
