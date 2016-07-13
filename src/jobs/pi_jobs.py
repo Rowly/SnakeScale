@@ -21,7 +21,7 @@ class Notify():
         self.resolution = resolution
 
     def run(self):
-        logging.info("Prepped HOST {} @ {}%s to run test"
+        logging.info("Prepped HOST {} @ {} to run test"
                      .format(self.host, HOSTS[self.host]))
         try:
             payload = {"command": "notify",

@@ -5,21 +5,21 @@ Created on Jun 30, 2016
 '''
 import sys
 import os
-import smtplib
+import logging
 import datetime
 import json
+import smtplib
 import mimetypes
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from smtplib import SMTPException
 from email.mime.base import MIMEBase
 from email import encoders
-import logging
 sys.path.append(os.path.dirname(__file__))
 
 
-from config import config
-from utilities import ddx_api
+import config.config
+import utilities.ddx_api
 
 
 class EmailNotifier():
@@ -35,15 +35,15 @@ class EmailNotifier():
         self.response = response
 
     def send_failure_email(self, path):
-        token = ddx_api.login(3)
-        info = ddx_api.get(token, "systemInfo")
+        token = utilities.ddx_api.login(3)
+        info = utilities.ddx_api.get(token, "systemInfo")
         version = info["firmwareVersion"]
         name = info["description"]
         for endpoint in ["systemInfo", "computers", "consoles",
                          "transmitters", "receivers", "ports",
                          "supplies", "temperatures"]:
             self.get_dump_as_file(token, endpoint, path)
-        ddx_api.post(token, "backup", "{}".format(path))
+        utilities.ddx_api.post(token, "backup", "{}".format(path))
         fail_body = """
                Test for {}
                Unit IP {}
@@ -58,7 +58,7 @@ class EmailNotifier():
                {}
                Location of test log /var/log/snakescale-ddx/result.log
                """.format(self.device,
-                          config.get_ddx_ut_ip(),
+                          config.config.get_ddx_ut_ip(),
                           name,
                           version,
                           self.host,
@@ -113,8 +113,8 @@ class EmailNotifier():
             logging.info("Failed to send send_failure_email email")
 
     def send_update_email(self, path):
-        token = ddx_api.login(3)
-        info = ddx_api.get(token, "systemInfo")
+        token = utilities.ddx_api.login(3)
+        info = utilities.ddx_api.get(token, "systemInfo")
         version = info["firmwareVersion"]
         name = info["description"]
         update_body = """
@@ -129,7 +129,7 @@ class EmailNotifier():
                Response from most recent test:
                {}
                """.format(self.device,
-                          config.get_ddx_ut_ip(),
+                          config.config.get_ddx_ut_ip(),
                           name,
                           version,
                           self.host,
@@ -155,7 +155,7 @@ class EmailNotifier():
             logging.info("Failed to send send_failure_email email")
 
     def get_dump_as_file(self, token, endpoint, path):
-        content = ddx_api.get(token, endpoint)
+        content = utilities.ddx_api.get(token, endpoint)
         with open("{}/dump/fail/{}.txt".format(path, endpoint), "w+") as file:
             file.write(json.dumps(content, indent=4))
 
@@ -164,5 +164,5 @@ if __name__ == "__main__":
     T_FORMAT = "%H:%M %d-%m-%Y"
     start = datetime.datetime.now().strftime(T_FORMAT)
     end = datetime.datetime.now().strftime(T_FORMAT)
-    em = EmailNotifier("ddx30", "exclusive", start, end, 1, "testing")
+    em = EmailNotifier("ddx30", "Ubuntu", "exclusive", start, end, 1, "testing")
     em.send_failure_email("..")

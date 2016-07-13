@@ -69,13 +69,13 @@ if __name__ == "__main__":
     import json
     token = login()
     for endpoint in ["systemInfo",
-#                      "computers",
-#                      "consoles",
-#                      "transmitters",
-#                     "receivers",
-#                      "ports",
-#                      "supplies",
-#                      "temperatures",
+                     "computers",
+                     "consoles",
+                     "transmitters",
+                     "receivers",
+                     "ports",
+                     "supplies",
+                     "temperatures",
                      ]:
         info = get(token, endpoint)
         print(json.dumps(info, indent=4))

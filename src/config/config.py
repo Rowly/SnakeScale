@@ -3,8 +3,8 @@ Created on 11 May 2015
 
 @author: Mark
 '''
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 
 RPIS_LIMIT = None
 
