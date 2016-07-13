@@ -137,16 +137,28 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             gui.kill()
                     except SystemExit:
                         pass
-                    
+
                     f = os.path.abspath("{}dump/test.txt".format(path))
                     with open(f, "w"):
                         pass
 
                     if device == "ddx30":
                         key = str(random.randint(1, len(OSD_MBEDS)))
-                        if test_type == "exclusive":
+#                        key = "1"
+                        if test_type == "view":
+                            style = "v"
+                        elif test_type == "shared":
+                            style = "s"
+                        elif test_type == "exclusive":
                             style = "e"
-#                             key = "1"
+                        elif test_type == "private":
+                            style = "p"
+                        if host == "Ubuntu":
+                            host = random.choice("1", "2", "3", "4", "5"
+                                                 "6", "7", "8", "9", "10")
+                        elif host == "Win7":
+                            host = random.choice("11", "12", "13", "14", "15"
+                                                 "16", "17", "18", "19", "20")
                         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                                              resolution_x,
                                              resolution_y,
