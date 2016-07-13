@@ -5,6 +5,7 @@ Created on 11 May 2015
 '''
 import json
 from collections import OrderedDict
+import os
 
 RPIS_LIMIT = None
 
@@ -22,47 +23,56 @@ ALIFS = OrderedDict()
 
 
 def get_host_port(path="./config/data.json"):
-    return json.load(open(path))["data"]["host_port"]
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["host_port"]
 
 
 def get_hosts(path="./config/data.json"):
-    hosts = json.load(open(path), object_pairs_hook=OrderedDict)
+    f = os.path.abspath(path)
+    hosts = json.load(open(f), object_pairs_hook=OrderedDict)
     HOSTS.update(hosts["data"]["hosts"])
     return HOSTS
 
 
 def get_mbed_echo_port(path="./config/data.json"):
-    return json.load(open(path))["data"]["mbed_port"]
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["mbed_port"]
 
 
 def get_mbed_osders(path="./config/data.json"):
-    osders = json.load(open(path), object_pairs_hook=OrderedDict)
+    f = os.path.abspath(path)
+    osders = json.load(open(f), object_pairs_hook=OrderedDict)
     OSD_MBEDS.update(osders["data"]["osd_mbeds"])
     return OSD_MBEDS
 
 
 def get_mbed_jobbers(path="./config/data.json"):
-    jobbers = json.load(open(path), object_pairs_hook=OrderedDict)
+    f = os.path.abspath(path)
+    jobbers = json.load(open(f), object_pairs_hook=OrderedDict)
     JOB_MBEDS.update(jobbers["data"]["job_mbeds"])
     return JOB_MBEDS
 
 
 def get_alifs(path="./config/data.json"):
-    alifs = json.load(open(path), object_pairs_hook=OrderedDict)
+    f = os.path.abspath(path)
+    alifs = json.load(open(f), object_pairs_hook=OrderedDict)
     ALIFS.update(alifs["data"]["alifs"])
     return ALIFS
 
 
 def get_ddx_ut_ip(path="./config/data.json"):
-    return json.load(open(path))["data"]["dut_ip"]
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["dut_ip"]
 
 
 def get_ddx_source_ip(path="./config/data.json"):
-    return json.load(open(path))["data"]["d_source_ip"]
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["d_source_ip"]
 
 
 def get_ddx_reader_ip(path="./config/data.json"):
-    return json.load(open(path))["data"]["d_reader_ip"]
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["d_reader_ip"]
 
 
 if __name__ == "__main__":
