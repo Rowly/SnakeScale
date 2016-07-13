@@ -38,7 +38,7 @@ class CaptureGui(QtGui.QMainWindow):
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_F1:
-            f = os.path.abspath("../dump/test.txt")
+            f = os.path.abspath("./dump/test.txt")
             with open(f, "w+") as file:
                 file.write(self.area.toPlainText())
             self.close()
