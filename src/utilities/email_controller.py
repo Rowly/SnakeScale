@@ -106,7 +106,8 @@ class EmailNotifier():
             outer.attach(msg)
 
         try:
-            smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
+#             smtpObj = smtplib.SMTP("hq-mail3.adder.local", 25)
+            smtpObj = smtplib.SMTP("192.168.42.115", 25)
             smtpObj.sendmail(sender, receipients, outer.as_string())
             smtpObj.quit()
         except SMTPException:
