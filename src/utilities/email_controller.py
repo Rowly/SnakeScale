@@ -15,7 +15,7 @@ from email.mime.multipart import MIMEMultipart
 from smtplib import SMTPException
 from email.mime.base import MIMEBase
 from email import encoders
-sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 
 from config import config
