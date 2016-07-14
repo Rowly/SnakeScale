@@ -143,6 +143,7 @@ def main(device, test_type, resolution):
             for host in ["Ubuntu", "Win7"]:
                 counter += 1
                 print(counter)
+                print(host)
                 item = Jobs(device, host, test_type,
                             resolution, counter, start_time)
                 ControlQ.put(item)

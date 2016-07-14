@@ -166,16 +166,18 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         elif test_type == "private":
                             style = "p"
                         if host == "Ubuntu":
-                            host = random.choice(["1", "2", "3", "4", "5"
-                                                 "6", "7", "8", "9", "10"])
+                            target = random.choice(["1", "2", "3", "4", "5"
+                                                   "6", "7", "8", "9", "10"])
+                            print(target)
                         elif host == "Win7":
-                            host = random.choice(["11", "12", "13", "14", "15"
-                                                 "16", "17", "18", "19", "20"])
+                            target = random.choice(["11", "12", "13", "14", "15"
+                                                   "16", "17", "18", "19", "20"])
+                            print(target)
                         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                                              resolution_x,
                                              resolution_y,
                                              style,
-                                             host).run()
+                                             target).run()
                         time.sleep(15)
                         mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
