@@ -40,9 +40,15 @@ DEBUG = False
 BUSY = False
 HEADER_TEXT = ("<html>" +
                "<head profile='http://www.w3.org/2005/10/profile'>" +
-               "<title>Host Server </title>" +
+               "<title>Host Server</title>" +
                "<link rel='icon' type='image.png' href='http://example.com/myicon.png'>" +
                "</head>")
+BODY_TEXT = ("<body>" +
+             "<p>This is the ControlServer.</p>" +
+             "<p>Usage:</p>" +
+             "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
+             "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
+             "</body></html>")
 
 
 def logging_start():
@@ -75,12 +81,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             self.send_header("Content-type", "text/html")
             self.end_headers()
             self.wfile.write(bytes(HEADER_TEXT, "UTF-8"))
-            self.wfile.write(bytes("<body>" +
-                                   "<p>This is the ControlServer.</p>" +
-                                   "<p>Usage:</p>" +
-                                   "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
-                                   "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
-                                   "</body></html>", "UTF-8"))
+            self.wfile.write(bytes(BODY_TEXT, "UTF-8"))
         else:
             o = urlparse(self.path)
             query = parse_qs(o.query)
@@ -166,12 +167,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         elif test_type == "private":
                             style = "p"
                         if host == "Ubuntu":
-                            target = random.choice(["1", "2", "3", "4", "5",
-                                                   "6", "7", "8", "9", "10"])
+                            target = random.choice(["1", "2", "3",
+                                                    "4", "5", "6",
+                                                    "7", "8", "9",
+                                                    "10"])
                             print(target)
                         elif host == "Win7":
-                            target = random.choice(["11", "12", "13", "14", "15",
-                                                   "16", "17", "18", "19", "20"])
+                            target = random.choice(["11", "12", "13",
+                                                    "14", "15", "16",
+                                                    "17", "18", "19",
+                                                    "20"])
                             print(target)
                         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                                              resolution_x,
@@ -184,12 +189,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
                         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                        time.sleep(3)
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
                         time.sleep(15)
                         mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                         mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                        time.sleep(3)
 
                     BUSY = False
                 elif command == "get_result":

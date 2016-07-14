@@ -92,7 +92,6 @@ class Jobs():
         A place holder to test the email sending system
         """
         end_time = datetime.datetime.now().strftime(T_FORMAT)
-        path = "."
 
         if self.execution % 1000 == 0:
             time.sleep(2)
@@ -102,7 +101,7 @@ class Jobs():
                           self.start,
                           end_time,
                           self.execution,
-                          response).send_update_email(path)
+                          response).send_update_email()
         if test_type == "view":
             if "TRUE" in response:
                 time.sleep(2)
@@ -112,7 +111,7 @@ class Jobs():
                               self.start,
                               end_time,
                               self.execution,
-                              response).send_failure_email(path)
+                              response).send_failure_email()
                 sys.exit()
         else:
             if "FALSE" in response:
@@ -123,7 +122,7 @@ class Jobs():
                               self.start,
                               end_time,
                               self.execution,
-                              response).send_failure_email(path)
+                              response).send_failure_email()
                 sys.exit()
 
 

@@ -36,8 +36,8 @@ class EmailNotifier():
         self.execution = execution
         self.response = response
 
-    def send_failure_email(self, path):
-        token = ddx_api.login(3)
+    def send_failure_email(self, path="."):
+        token = ddx_api.login(3, path)
         info = ddx_api.get(token, "systemInfo", path)
         version = info["firmwareVersion"]
         name = info["description"]
@@ -115,7 +115,7 @@ class EmailNotifier():
         except SMTPException:
             logging.info("Failed to send send_failure_email email")
 
-    def send_update_email(self, path):
+    def send_update_email(self, path="."):
         token = ddx_api.login(3)
         info = ddx_api.get(token, "systemInfo")
         version = info["firmwareVersion"]
