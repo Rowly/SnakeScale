@@ -36,6 +36,7 @@ HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 ALIFS = config.get_alifs()
+DEBUG = False
 BUSY = False
 HEADER_TEXT = ("<html>" +
                "<head profile='http://www.w3.org/2005/10/profile'>" +
@@ -67,6 +68,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     """
     def do_GET(self):
         global BUSY
+        global DEBUG
 
         if self.path == "/":
             self.send_response(200)
@@ -149,7 +151,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         pass
 
                     if device == "ddx30":
-                        key = str(random.randint(1, len(OSD_MBEDS)))
+                        if DEBUG:
+                            key = "1"
+                        else:
+                            key = str(random.randint(1, len(OSD_MBEDS)))
+                        print(DEBUG)
+                        print(key)
                         if test_type == "view":
                             style = "v"
                         elif test_type == "shared":
@@ -225,10 +232,10 @@ try:
     parser.add_argument("--debug", dest="debug", action="store_true",
                         help="Force to use console 1 only")
     parser.set_defaults(debug=False)
-    
+
     args = parser.parse_args()
     ip = args.ip
-    debug = args.debug
+    DEBUG = args.debug
     logging_start()
     server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
     logging.info("Started Server on %s" % ip)
