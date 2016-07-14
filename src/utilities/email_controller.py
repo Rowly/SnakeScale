@@ -15,11 +15,13 @@ from email.mime.multipart import MIMEMultipart
 from smtplib import SMTPException
 from email.mime.base import MIMEBase
 from email import encoders
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
-
-from config import config
-from utilities import ddx_api
+try:
+    from config import config
+    from utilities import ddx_api
+except ImportError:
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from config import config
+    from utilities import ddx_api
 
 
 class EmailNotifier():

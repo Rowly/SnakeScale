@@ -8,10 +8,11 @@ import os
 import logging
 import socket
 import time
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-
-
-from config import config
+try:
+    from config import config
+except:
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from config import config
 
 
 def send(mbed_ip, payload, path="."):

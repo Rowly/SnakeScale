@@ -13,12 +13,15 @@ import logging
 import time
 import argparse
 import datetime
-sys.path.append(os.path.dirname(__file__))
-
-
-from config import config
-from jobs.pi_jobs import Notify, GetResult
-from utilities.email_controller import EmailNotifier
+try:
+    from config import config
+    from jobs.pi_jobs import Notify, GetResult
+    from utilities.email_controller import EmailNotifier
+except ImportError:
+    sys.path.append(os.path.dirname(__file__))
+    from config import config
+    from jobs.pi_jobs import Notify, GetResult
+    from utilities.email_controller import EmailNotifier
 
 # Get OrderedDict of HOST IP addresses from data.json
 PORT = config.get_host_port()
@@ -52,9 +55,12 @@ class Executor():
 
 class Jobs():
     """
-    Takes in the IP address of the Raspberry Pi that will be
-    carrying out the test and the device type that is under test.
-    Device is typically of DDX30 in the initial version.
+    Takes in the device that is under test, eg DDX30
+    The HOST name of the PC that is to carry out the tests
+    Which type of test style is in use
+    The resolution of the screen
+    The exection number, for failure tracking
+    Start time, for failure tracking
     """
     def __init__(self, device, host, test_type, resolution, execution, start):
         self.device = device

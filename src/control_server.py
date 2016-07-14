@@ -9,10 +9,11 @@ import subprocess
 import argparse
 import http.server
 from urllib.parse import urlparse, parse_qs
-sys.path.append(os.path.dirname(__file__))
-
-import controller
-from config import config
+try:
+    from config import config
+except ImportError:
+    sys.path.append(os.path.dirname(__file__))
+    from config import config
 
 CON = None
 PORT = config.get_host_port()

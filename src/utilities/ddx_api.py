@@ -3,10 +3,15 @@ Created on Jun 29, 2016
 
 @author: Mark
 '''
+import sys
 import os
 import requests
 import time
-from config import config
+try:
+    from config import config
+except ImportError:
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from config import config
 
 
 def login(retry=0, path="."):

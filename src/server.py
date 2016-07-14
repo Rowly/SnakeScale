@@ -20,11 +20,16 @@ import json
 import argparse
 import random
 import platform
-sys.path.append(os.path.dirname(__file__))
+try:
+    from jobs import mbed_jobs
+    from config import config
+    from utilities import test_video, test_usb, capture_gui
+except ImportError:
+    sys.path.append(os.path.dirname(__file__))
+    from jobs import mbed_jobs
+    from config import config
+    from utilities import test_video, test_usb, capture_gui
 
-from jobs import mbed_jobs
-from config import config
-from utilities import test_video, test_usb, capture_gui
 
 HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()
@@ -131,7 +136,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         path = "./"
                     try:
                         gui = subprocess.Popen(["python{}".format(suffix),
-                                                "{}utilities/capture_gui.py".format(path)])
+                                                "{}utilities/capture_gui.py"
+                                                .format(path)])
                         if device == "ddx30" and test_type == "view":
                             time.sleep(5)
                             gui.kill()
