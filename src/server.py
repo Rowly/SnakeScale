@@ -222,8 +222,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 try:
     parser = argparse.ArgumentParser(description="Remote Server")
     parser.add_argument("ip", type=str, help="IP of Server")
+    parser.add_argument("--debug", dest="debug", action="store_true",
+                        help="Force to use console 1 only")
+    parser.set_defaults(debug=False)
+    
     args = parser.parse_args()
     ip = args.ip
+    debug = args.debug
     logging_start()
     server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
     logging.info("Started Server on %s" % ip)
