@@ -97,6 +97,17 @@ class MouseMove():
         send(self.mbed_ip, str.encode("mouse\0"), path)
 
 
+class Disconnect():
+
+    def __init__(self, mbed_ip):
+        self.mbed_ip = mbed_ip
+
+    def run(self, path="."):
+        logging.info("MBED {} instructed to disconnect"
+                     .format(self.mbed_ip))
+        send(self.mbed_ip, str.encode("disconnect\0"), path)
+
+
 class Av4proConnect():
 
     def __init__(self, mbed_ip, channel):

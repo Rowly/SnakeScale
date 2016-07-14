@@ -150,7 +150,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
                     if device == "ddx30":
                         key = str(random.randint(1, len(OSD_MBEDS)))
-#                        key = "1"
                         if test_type == "view":
                             style = "v"
                         elif test_type == "shared":
@@ -175,6 +174,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                         mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
+                        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
                         time.sleep(15)

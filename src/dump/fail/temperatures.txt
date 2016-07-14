@@ -1,31 +1,31 @@
 {
-    "temperatures": [
-        {
-            "name": "CPU core", 
-            "value": 60
-        }, 
-        {
-            "name": "Case", 
-            "value": 30
-        }, 
-        {
-            "name": "Board", 
-            "value": 47
-        }, 
-        {
-            "name": "X-Point (Red)", 
-            "value": 38
-        }, 
-        {
-            "name": "X-Point (Blue)", 
-            "value": 38
-        }, 
-        {
-            "name": "X-Point (Green)", 
-            "value": 46
-        }
-    ], 
     "links": {
         "self": "/api/diagnostics/temperatures"
-    }
+    }, 
+    "temperatures": [
+        {
+            "value": 60, 
+            "name": "CPU core"
+        }, 
+        {
+            "value": 30, 
+            "name": "Case"
+        }, 
+        {
+            "value": 47, 
+            "name": "Board"
+        }, 
+        {
+            "value": 38, 
+            "name": "X-Point (Red)"
+        }, 
+        {
+            "value": 38, 
+            "name": "X-Point (Blue)"
+        }, 
+        {
+            "value": 46, 
+            "name": "X-Point (Green)"
+        }
+    ]
 }

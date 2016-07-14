@@ -1,12 +1,12 @@
 {
     "supplies": [
         {
-            "name": "Supply A", 
-            "value": "Supply OK"
+            "value": "Supply OK", 
+            "name": "Supply A"
         }, 
         {
-            "name": "Supply B", 
-            "value": "No Supply"
+            "value": "No Supply", 
+            "name": "Supply B"
         }
     ], 
     "links": {
