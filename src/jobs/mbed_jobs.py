@@ -120,9 +120,13 @@ class Av4proConnect():
         send(self.mbed_ip, str.encode("channel{}\0".format(self.channel)))
 
 if __name__ == "__main__":
-    time.sleep(10)
-    OSDConnect("10.10.10.50", "1920", "1080", "e", "1").run("..")
-    time.sleep(15)
-    SendKeys("10.10.10.150").run("..")
-    MouseMove("10.10.10.150").run("..")
-    Exit("10.10.10.150").run("..")
+    time.sleep(3)
+    for i in ["11", "12", "13", "14", "15",
+              "16", "17", "18", "19", "20"]:
+        OSDConnect("10.10.10.50", "1920", "1080", "e", i).run("..")
+        time.sleep(15)
+        Disconnect("10.10.10.50").run("..")
+#     SendKeys("10.10.10.150").run("..")
+#     MouseMove("10.10.10.150").run("..")
+#     Exit("10.10.10.150").run("..")
+    Disconnect("10.10.10.50").run("..")
