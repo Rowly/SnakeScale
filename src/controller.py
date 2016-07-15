@@ -79,7 +79,7 @@ class Jobs():
 
         """
         Then fetches the results of the tests from the
-        HOST PCs.
+        HOST PC.
         """
         response = GetResult(self.device, self.host, self.test_type).run()
 
@@ -89,7 +89,7 @@ class Jobs():
         logging.info("{}".format(response))
 
         """
-        A place holder to test the email sending system
+        Record time at the end of each Job
         """
         end_time = datetime.datetime.now().strftime(T_FORMAT)
 
@@ -139,22 +139,15 @@ def main(device, test_type, resolution):
     counter = 0
     if device == "ddx30":
         while True:
-            counter += 1
-            print(counter)
-            item = Jobs(device, "Win7", test_type,
-                        resolution, counter, start_time)
-            ControlQ.put(item)
-            Executor().run()
-            time.sleep(1)
-#             for host in ["Ubuntu", "Win7"]:
-#                 counter += 1
-#                 print(counter)
-#                 print(host)
-#                 item = Jobs(device, host, test_type,
-#                             resolution, counter, start_time)
-#                 ControlQ.put(item)
-#                 Executor().run()
-#                 time.sleep(1)
+            for host in ["Ubuntu", "Win7"]:
+                counter += 1
+                print(counter)
+                print(host)
+                item = Jobs(device, host, test_type,
+                            resolution, counter, start_time)
+                ControlQ.put(item)
+                Executor().run()
+                time.sleep(3)
     elif device == "av4pro":
         while True:
             for i in ["1", "2", "3", "4"]:
