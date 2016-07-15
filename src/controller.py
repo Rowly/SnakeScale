@@ -132,22 +132,29 @@ def main(device, test_type, resolution):
     start_time = datetime.datetime.now().strftime(T_FORMAT)
 
     """
-    TODO: Add in an API call to ensure that all receivers are connected
-    through to the hosts before tests start
+    TODO: Add in an API call to ensure that all Source Receivers are connected
+    through to the HOSTs before tests start
     """
     print(start_time)
     counter = 0
     if device == "ddx30":
         while True:
-            for host in ["Ubuntu", "Win7"]:
-                counter += 1
-                print(counter)
-                print(host)
-                item = Jobs(device, host, test_type,
-                            resolution, counter, start_time)
-                ControlQ.put(item)
-                Executor().run()
-                time.sleep(1)
+            counter += 1
+            print(counter)
+            item = Jobs(device, "Win7", test_type,
+                        resolution, counter, start_time)
+            ControlQ.put(item)
+            Executor().run()
+            time.sleep(1)
+#             for host in ["Ubuntu", "Win7"]:
+#                 counter += 1
+#                 print(counter)
+#                 print(host)
+#                 item = Jobs(device, host, test_type,
+#                             resolution, counter, start_time)
+#                 ControlQ.put(item)
+#                 Executor().run()
+#                 time.sleep(1)
     elif device == "av4pro":
         while True:
             for i in ["1", "2", "3", "4"]:
