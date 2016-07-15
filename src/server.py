@@ -184,8 +184,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                              style,
                                              target).run()
                         time.sleep(15)
-                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                         mbed_jobs.Exit(JOB_MBEDS[key]).run()
 #                             test_video.Capture(ALIFS[key]).run()
                         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
