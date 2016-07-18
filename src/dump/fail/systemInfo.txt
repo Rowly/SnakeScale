@@ -1,14 +1,14 @@
 {
-    "webVersion": "0.3.77", 
-    "location": "Mark's Desk", 
-    "recoveryVersion": "1.02.4091", 
-    "ignoreFirmwareMismatch": false, 
+    "imageType": "PRIMARY", 
+    "systemVersion": "2.00", 
+    "edidId": 101, 
+    "description": "Marks AdderView DDX30", 
     "links": {
         "self": "/api/system/systemInfo"
     }, 
-    "systemVersion": "1.03.0116", 
-    "description": "Marks AdderView DDX30", 
-    "firmwareVersion": "1.03.0116", 
-    "imageType": "PRIMARY", 
-    "edidId": 101
+    "firmwareVersion": "2.00.0157", 
+    "ignoreFirmwareMismatch": false, 
+    "location": "Mark's Desk", 
+    "webVersion": "0.3.82", 
+    "recoveryVersion": "1.02.4091"
 }

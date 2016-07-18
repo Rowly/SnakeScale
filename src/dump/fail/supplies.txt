@@ -1,15 +1,15 @@
 {
-    "supplies": [
-        {
-            "value": "Supply OK", 
-            "name": "Supply A"
-        }, 
-        {
-            "value": "No Supply", 
-            "name": "Supply B"
-        }
-    ], 
     "links": {
         "self": "/api/diagnostics/supplies"
-    }
+    }, 
+    "supplies": [
+        {
+            "name": "Supply A", 
+            "value": "Supply OK"
+        }, 
+        {
+            "name": "Supply B", 
+            "value": "No Supply"
+        }
+    ]
 }

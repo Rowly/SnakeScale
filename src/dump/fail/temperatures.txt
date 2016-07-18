@@ -4,28 +4,28 @@
     }, 
     "temperatures": [
         {
-            "value": 60, 
-            "name": "CPU core"
+            "name": "CPU core", 
+            "value": 62
         }, 
         {
-            "value": 30, 
-            "name": "Case"
+            "name": "Case", 
+            "value": 33
         }, 
         {
-            "value": 47, 
-            "name": "Board"
+            "name": "Board", 
+            "value": 49
         }, 
         {
-            "value": 38, 
-            "name": "X-Point (Red)"
+            "name": "X-Point (Red)", 
+            "value": 38
         }, 
         {
-            "value": 38, 
-            "name": "X-Point (Blue)"
+            "name": "X-Point (Blue)", 
+            "value": 46
         }, 
         {
-            "value": 46, 
-            "name": "X-Point (Green)"
+            "name": "X-Point (Green)", 
+            "value": 46
         }
     ]
 }

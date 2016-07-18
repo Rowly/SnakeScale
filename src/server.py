@@ -193,7 +193,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                 mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                                 mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                                 mbed_jobs.Exit(JOB_MBEDS[key]).run()
-#                                   test_video.Capture(ALIFS[key]).run()
+                                test_video.Video(host, key).set_response()
                                 mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
                                 time.sleep(3)
                         else:
@@ -206,7 +206,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
                             mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                             mbed_jobs.Exit(JOB_MBEDS[key]).run()
-    #                             test_video.Capture(ALIFS[key]).run()
+                            test_video.Video(host, key).set_response()
                             mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
                             time.sleep(3)
 
@@ -239,16 +239,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     if device == "ddx30" or device == "av4pro":
                         mouse = test_usb.mouse()
                         keyb = test_usb.key_b()
-                        """
-                        TODO: When adding video back in, Windows path
-                        will need to be used
-                        """
-    #                   video = test_video.ImageCompare().run()
+                        video = test_video.Video().get_response()
                         data = json.dumps({"mouse": mouse,
-                                           "keyb": keyb}, indent=4)
-    #                   data = json.dumps({"mouse": mouse,
-    #                                      "keyb": keyb,
-    #                                      "video": video}, indent=4)
+                                           "keyb": keyb,
+                                           "video": video}, indent=4)
                         self.send_response(200)
                         self.send_header("Content-type", "application/json")
                         self.end_headers()
