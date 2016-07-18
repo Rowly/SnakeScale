@@ -58,7 +58,7 @@ def get(token, endpoint, path=".", target="dut"):
                      headers=headers,
                      verify=False)
     print(r.url)
-    print(r.content())
+    print(r.text)
     try:
         assert(r.status_code == 200)
     except Exception as e:
