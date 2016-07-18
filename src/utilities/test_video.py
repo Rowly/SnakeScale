@@ -8,7 +8,7 @@ import os
 try:
     from utilities import ddx_api
 except ImportError:
-    sys.path.append(os.path.dirname(__file__))
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from utilities import ddx_api
 
 RESULT = False
