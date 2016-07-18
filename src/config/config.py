@@ -90,6 +90,11 @@ def get_smtp_server_ip(path="."):
     return json.load(open(f))["data"]["smtp_server"]
 
 
+def get_email_recipients(path="."):
+    path = "{}/config/data.json".format(path)
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["email_recipients"]
+
 if __name__ == "__main__":
     print("Rpis:")
     print(json.dumps(get_hosts(".."), indent=2))
@@ -111,3 +116,6 @@ if __name__ == "__main__":
     print(json.dumps(get_ddx_reader_ip("..")))
     print("SMTP Server IP:")
     print(json.dumps(get_smtp_server_ip("..")))
+    print("Email Recipients")
+    print(json.dumps(get_email_recipients("..")))
+

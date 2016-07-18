@@ -3,7 +3,7 @@ Created on 27 Apr 2015
 
 @author: Mark
 
-This class runs on each Raspberry Pi source machine in
+This class runs on each HOST machine in
 the setup. It is a basic HTTPServer that listens for
 GET requests sent by the test controller running controller.py
 through the use of the pi_jobs modules.
@@ -152,6 +152,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         pass
 
                     if device == "ddx30":
+                        styles = None
                         if DEBUG:
                             key = "1"
                         else:
@@ -166,6 +167,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             style = "e"
                         elif test_type == "private":
                             style = "p"
+                        elif test_type == "all":
+                            styles = ["v", "s", "e", "p"]
                         if host == "Ubuntu":
                             target = random.choice(["1", "2", "3",
                                                     "4", "5", "6",
@@ -178,18 +181,35 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                                     "17", "18", "19",
                                                     "20"])
                             print(target)
-                        mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                             resolution_x,
-                                             resolution_y,
-                                             style,
-                                             target).run()
-                        time.sleep(15)
-                        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                        mbed_jobs.Exit(JOB_MBEDS[key]).run()
-#                             test_video.Capture(ALIFS[key]).run()
-                        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                        time.sleep(3)
+
+                        if styles is not None:
+                            for style in styles:
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
+#                                   test_video.Capture(ALIFS[key]).run()
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                time.sleep(3)
+                        else:
+                            mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                 resolution_x,
+                                                 resolution_y,
+                                                 style,
+                                                 target).run()
+                            time.sleep(15)
+                            mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                            mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                            mbed_jobs.Exit(JOB_MBEDS[key]).run()
+    #                             test_video.Capture(ALIFS[key]).run()
+                            mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                            time.sleep(3)
+
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
                         time.sleep(15)

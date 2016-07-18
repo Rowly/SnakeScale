@@ -3,13 +3,22 @@ Created on 8 May 2015
 
 @author: Mark
 '''
-from config import config
-from PIL import Image
+import sys
+import os
 import math
 import logging
 import requests
+from PIL import Image
+from utilities import ddx_api
+try:
+    from config import config
+except ImportError:
+    sys.path.append(os.path.dirname(__file__))
+    from config import config
 
 ALIFS = config.get_alifs()
+
+RESULT = False
 
 
 class Capture():
@@ -50,9 +59,28 @@ class ImageCompare():
         return result
 
 
+class Video():
+
+    def __init__(self, host, target):
+        self.host = host
+        self.target = target
+
+    def set_response(self, path="."):
+        global RESULT
+        token = ddx_api.login(0, path)
+        source = ddx_api.get(token, "", path, "source")
+        reader = ddx_api.get(token, "", path, "reader")
+        if source[""] == reader[""]:
+            RESULT = True
+
+    def get_response(self):
+        global RESULT
+        return RESULT
+
+
 if __name__ == "__main__":
     for i in range(1, 7):
         Capture(str(i)).run("../imges/capture.png")
-        r = ImageCompare(str(i)).run("../imges/capture.png",
-                                     "../imges/default.png")
+        r = ImageCompare().run("../imges/capture.png",
+                               "../imges/default.png")
         print(r)

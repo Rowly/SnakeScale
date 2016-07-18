@@ -35,6 +35,7 @@ class EmailNotifier():
         self.end = end
         self.execution = execution
         self.response = response
+        self.recipients = config.get_email_recipients("..")
 
     def send_failure_email(self, path="."):
         token = ddx_api.login(3, path)
@@ -71,14 +72,12 @@ class EmailNotifier():
                           self.response)
 
         commaspace = ", "
-        receipients = ["mark.rowlands@adder.com"]
         sender = "ddx30soaktest@example.com"
 
         outer = MIMEMultipart()
         outer["Subject"] = "DDX30 Failure"
         outer["From"] = sender
-        outer["To"] = commaspace.join(receipients)
-#         outer.preamble = fail_body
+        outer["To"] = commaspace.join(self.recipients)
 
         outer.attach(MIMEText(fail_body))
 
@@ -110,7 +109,7 @@ class EmailNotifier():
         try:
             smtp_ip = config.get_smtp_server_ip(path)
             smtpObj = smtplib.SMTP(smtp_ip, 25)
-            smtpObj.sendmail(sender, receipients, outer.as_string())
+            smtpObj.sendmail(sender, self.recipients, outer.as_string())
             smtpObj.quit()
         except SMTPException:
             logging.info("Failed to send send_failure_email email")
@@ -142,13 +141,12 @@ class EmailNotifier():
                           self.response)
 
         commaspace = ", "
-        receipients = ["mark.rowlands@adder.com"]
 
         msg = MIMEText(update_body)
 
         msg["Subject"] = "DDX30 Status Update"
         msg["From"] = "ddx30soaktest@example.com"
-        msg["To"] = commaspace.join(receipients)
+        msg["To"] = commaspace.join(self.recipients)
 
         try:
             smtp_ip = config.get_smtp_server_ip(path)

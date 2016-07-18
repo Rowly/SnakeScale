@@ -27,6 +27,7 @@ except ImportError:
 PORT = config.get_host_port()
 ControlQ = Queue()
 T_FORMAT = "%H:%M %d-%m-%Y"
+DEBUG = False
 
 
 def logging_start():
@@ -93,7 +94,8 @@ class Jobs():
         """
         end_time = datetime.datetime.now().strftime(T_FORMAT)
 
-        if self.execution % 1000 == 0:
+#         if self.execution % 1000 == 0:
+        if self.execution % 50 == 0:
             time.sleep(2)
             EmailNotifier(self.device,
                           self.host,
@@ -141,8 +143,9 @@ def main(device, test_type, resolution):
         while True:
             for host in ["Ubuntu", "Win7"]:
                 counter += 1
-                print(counter)
-                print(host)
+                if DEBUG:
+                    print(counter)
+                    print(host)
                 item = Jobs(device, host, test_type,
                             resolution, counter, start_time)
                 ControlQ.put(item)
@@ -172,8 +175,13 @@ if __name__ == '__main__':
     parser.add_argument("resolution",
                         type=str,
                         help="Resolution of display as 1920x1080")
+    parser.add_argument("--debug", dest="debug", action="store_true",
+                        help="Show count and HOST name to screen")
+    parser.set_defaults(debug=False)
+
     args = parser.parse_args()
     device = args.device.lower()
     test_type = args.test_type
     resolution = args.resolution
+    DEBUG = args.debug
     main(device, test_type, resolution)

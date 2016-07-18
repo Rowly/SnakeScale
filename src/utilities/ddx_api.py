@@ -34,15 +34,21 @@ def login(retry=0, path="."):
             raise
 
 
-def get(token, endpoint, path="."):
-    IP = config.get_ddx_ut_ip(path)
+def get(token, endpoint, path=".", target="dut"):
+    if target == "dut":
+        ip = config.get_ddx_ut_ip(path)
+    elif target == "source":
+        ip = config.get_ddx_source_ip(path)
+    elif target == "reader":
+        ip = config.get_ddx_reader_ip(path)
+
     if endpoint == "systemInfo":
         endpoint = "system/{}".format(endpoint)
     if endpoint == "supplies" or endpoint == "temperatures":
         endpoint = "diagnostics/{}".format(endpoint)
     target = "api/{}".format(endpoint)
     headers = {"Authorization": "Bearer {}".format(token)}
-    r = requests.get("https://{}/{}".format(IP, target),
+    r = requests.get("https://{}/{}".format(ip, target),
                      headers=headers,
                      verify=False)
     try:
