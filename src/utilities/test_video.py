@@ -5,12 +5,11 @@ Created on 8 May 2015
 '''
 import sys
 import os
-from utilities import ddx_api
 try:
-    from config import config
+    from utilities import ddx_api
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
-    from config import config
+    from utilities import ddx_api
 
 RESULT = False
 
