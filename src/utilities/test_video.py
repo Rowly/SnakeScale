@@ -24,9 +24,9 @@ class Video():
         global RESULT
 
         if self.host == "Ubuntu":
-            port = "1"
+            port = "21"
         elif self.host == "Win7":
-            port = "2"
+            port = "22"
         token = ddx_api.login(0, path, "source")
         source = ddx_api.get(token,
                              "transmitters/{}".format(port),
