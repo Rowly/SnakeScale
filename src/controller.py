@@ -12,7 +12,7 @@ from queue import Queue
 import logging
 import time
 import argparse
-import datetime
+from datetime import datetime, timedelta
 try:
     from config import config
     from jobs.pi_jobs import Notify, GetResult
@@ -92,10 +92,13 @@ class Jobs():
         """
         Record time at the end of each Job
         """
-        end_time = datetime.datetime.now().strftime(T_FORMAT)
+        end_time = datetime.now().strftime(T_FORMAT)
 
-#         if self.execution % 1000 == 0:
-        if self.execution % 50 == 0:
+        """
+        If 24hours (timedelta(1)) has passed between start_time
+        and end_time, send the update email
+        """
+        if self.start - end_time > timedelta(1):
             time.sleep(2)
             EmailNotifier(self.device,
                           self.host,
@@ -131,7 +134,7 @@ class Jobs():
 def main(device, test_type, resolution):
     logging_start()
 
-    start_time = datetime.datetime.now().strftime(T_FORMAT)
+    start_time = datetime.now().strftime(T_FORMAT)
 
     """
     TODO: Add in an API call to ensure that all Source Receivers are connected

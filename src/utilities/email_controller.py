@@ -35,7 +35,7 @@ class EmailNotifier():
         self.end = end
         self.execution = execution
         self.response = response
-        self.recipients = config.get_email_recipients("..")
+        self.recipients = config.get_email_recipients(".")
 
     def send_failure_email(self, path="."):
         token = ddx_api.login(3, path)
