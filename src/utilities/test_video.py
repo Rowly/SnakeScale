@@ -16,16 +16,12 @@ RESULT = False
 
 class Video():
 
-    def __init__(self, host, target):
-        self.host = host
-        self.target = target
-
-    def set_response(self, path="."):
+    def set_response(self, host, target, path="."):
         global RESULT
 
-        if self.host == "Ubuntu":
+        if host == "Ubuntu":
             port = "21"
-        elif self.host == "Win7":
+        elif host == "Win7":
             port = "22"
         token = ddx_api.login(0, path, "source")
         source = ddx_api.get(token,
@@ -35,7 +31,7 @@ class Video():
 
         token = ddx_api.login(0, path, "reader")
         reader = ddx_api.get(token,
-                             "transmitters/{}".format(self.target),
+                             "transmitters/{}".format(target),
                              path,
                              "reader")
 
