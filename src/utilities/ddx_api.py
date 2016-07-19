@@ -57,8 +57,6 @@ def get(token, endpoint, path=".", target="dut"):
     r = requests.get("https://{}/{}".format(ip, target),
                      headers=headers,
                      verify=False)
-    print(r.url)
-    print(r.text)
     try:
         assert(r.status_code == 200)
     except Exception as e:

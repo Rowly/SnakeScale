@@ -38,6 +38,7 @@ class Video():
                              "transmitters/{}".format(self.target),
                              path,
                              "reader")
+
         if source["height"] == reader["height"] and source["width"] == reader["width"]:
             RESULT = True
 
@@ -47,5 +48,6 @@ class Video():
 
 
 if __name__ == "__main__":
-    result = Video("Ubuntu", "1").set_response("..")
-    print(result)
+    v = Video("Ubuntu", "1")
+    v.set_response("..")
+    print(v.get_response())
