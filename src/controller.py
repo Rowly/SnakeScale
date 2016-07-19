@@ -92,7 +92,7 @@ class Jobs():
         """
         Record time at the end of each Job
         """
-        end_time = datetime.now().strftime(T_FORMAT)
+        end_time = datetime.now()
 
         """
         If 24hours (timedelta(1)) has passed between start_time
@@ -103,8 +103,8 @@ class Jobs():
             EmailNotifier(self.device,
                           self.host,
                           self.test_type,
-                          self.start,
-                          end_time,
+                          self.start.strftime(T_FORMAT),
+                          end_time.strftime(T_FORMAT),
                           self.execution,
                           response).send_update_email()
         if test_type == "view":
@@ -113,8 +113,8 @@ class Jobs():
                 EmailNotifier(self.device,
                               self.host,
                               self.test_type,
-                              self.start,
-                              end_time,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
                               self.execution,
                               response).send_failure_email()
                 sys.exit()
@@ -124,8 +124,8 @@ class Jobs():
                 EmailNotifier(self.device,
                               self.host,
                               self.test_type,
-                              self.start,
-                              end_time,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
                               self.execution,
                               response).send_failure_email()
                 sys.exit()
@@ -134,13 +134,13 @@ class Jobs():
 def main(device, test_type, resolution):
     logging_start()
 
-    start_time = datetime.now().strftime(T_FORMAT)
+    start_time = datetime.now()
 
     """
     TODO: Add in an API call to ensure that all Source Receivers are connected
     through to the HOSTs before tests start
     """
-    print(start_time)
+    print(start_time.strftime(T_FORMAT))
     counter = 0
     if device == "ddx30":
         while True:
