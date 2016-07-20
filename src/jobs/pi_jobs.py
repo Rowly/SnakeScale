@@ -62,8 +62,7 @@ class GetResult():
                 logging.info("Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
-                    return ("HOST {} gives:\n {}"
-                            .format(self.host, json.dumps(r.json(), indent=4)))
+                    return r.json()
                     break
                 else:
                     time.sleep(5)

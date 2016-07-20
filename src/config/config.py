@@ -118,4 +118,3 @@ if __name__ == "__main__":
     print(json.dumps(get_smtp_server_ip("..")))
     print("Email Recipients")
     print(json.dumps(get_email_recipients("..")))
-

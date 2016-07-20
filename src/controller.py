@@ -13,6 +13,7 @@ import logging
 import time
 import argparse
 from datetime import datetime, timedelta
+import json
 try:
     from config import config
     from jobs.pi_jobs import Notify, GetResult
@@ -87,7 +88,8 @@ class Jobs():
         """
         Result of the most recent test is logged
         """
-        logging.info("{}".format(response))
+        logging.info("HOST {} gives:\n {}"
+                     .format(self.host, json.dumps(response, indent=4)))
 
         """
         Record time at the end of each Job
