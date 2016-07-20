@@ -155,10 +155,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         styles = None
                         if DEBUG:
                             key = "1"
+                            print(DEBUG)
+                            print(key)
                         else:
                             key = str(random.randint(1, len(OSD_MBEDS)))
-                        print(DEBUG)
-                        print(key)
                         if test_type == "view":
                             style = "v"
                         elif test_type == "shared":
@@ -174,12 +174,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                                     "4", "5", "6",
                                                     "7", "8", "9",
                                                     "10"])
-                            print(target)
                         elif host == "Win7":
                             target = random.choice(["11", "12", "13",
                                                     "14", "15", "16",
                                                     "17", "18", "19",
                                                     "20"])
+                        if DEBUG:
                             print(target)
 
                         if styles is not None:
@@ -197,18 +197,84 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                 mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
                                 time.sleep(3)
                         else:
-                            mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                 resolution_x,
-                                                 resolution_y,
-                                                 style,
-                                                 target).run()
-                            time.sleep(15)
-                            mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                            mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                            mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                            test_video.Video().set_response(host, key)
-                            mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                            time.sleep(3)
+                            if style == "v":
+                                """
+                                View Connection:
+                                - Single connection in turn
+                                - Multiple connections
+                                """
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                                test_video.Video().set_response(host, key)
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                time.sleep(3)
+
+                                key_2 = self.get_second_key(key)
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(1)
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                video = test_video.Video()
+                                video.set_response(host, key)
+                                video.set_response(host, key_2)
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+                                time.sleep(3)
+
+                            elif style == "s":
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                                test_video.Video().set_response(host, key)
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                time.sleep(3)
+                            elif style == "e":
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                                test_video.Video().set_response(host, key)
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                time.sleep(3)
+                            elif style == "p":
+                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                                                     resolution_x,
+                                                     resolution_y,
+                                                     style,
+                                                     target).run()
+                                time.sleep(15)
+                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                                test_video.Video().set_response(host, key)
+                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+                                time.sleep(3)
 
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
@@ -236,7 +302,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.end_headers()
                         self.wfile.write(bytes("busy", "UTF-8"))
                     logging.info("Controller attempting to get results")
-                    if device == "ddx30" or device == "av4pro":
+                    if device == "ddx30":
                         mouse = test_usb.mouse()
                         keyb = test_usb.key_b()
                         video = test_video.Video().get_response()
@@ -247,6 +313,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.send_header("Content-type", "application/json")
                         self.end_headers()
                         self.wfile.write(bytes(data, "UTF-8"))
+
+    def get_second_key(self, key):
+        key_2 = key
+        while key_2 == key:
+            key_2 = str(random.randint(1, len(OSD_MBEDS)))
+        return key_2
 
 
 try:

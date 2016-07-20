@@ -7,6 +7,7 @@ import requests
 import logging
 import time
 from config import config
+import json
 
 HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()
@@ -61,8 +62,8 @@ class GetResult():
                 logging.info("Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
-                    return ("HOST {} gives: {}"
-                            .format(self.host, str(r.json())))
+                    return ("HOST {} gives:\n {}"
+                            .format(self.host, json.dumps(r.json(), indent=4)))
                     break
                 else:
                     time.sleep(5)

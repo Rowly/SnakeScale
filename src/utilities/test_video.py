@@ -11,7 +11,7 @@ except ImportError:
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from utilities import ddx_api
 
-RESULT = "FALSE"
+RESULT = []
 
 
 class Video():
@@ -37,7 +37,9 @@ class Video():
 
         if (source["height"] == reader["height"] and
                 source["width"] == reader["width"]):
-            RESULT = "TRUE"
+            RESULT.append("TRUE")
+        else:
+            RESULT.append("FALSE")
 
     def get_response(self):
         global RESULT
