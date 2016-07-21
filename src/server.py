@@ -195,7 +195,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                 self.ddx_view(host, key, resolution_x,
                                               resolution_y, target)
                             elif style == "s":
-                                pass
+                                self.ddx_shared(host, key, resolution_x,
+                                                resolution_y, target)
                             elif style == "e":
                                 pass
                             elif style == "p":
@@ -287,6 +288,37 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                       )
         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
         mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
+    def ddx_shared(self, host, key, resolution_x, resolution_y, target):
+        global RESULT
+        RESULT.clear()
+        style = "s"
+        """
+        Shared Connection:
+        - Single connection
+        - Multiple connections
+        """
+        RESULT.update({"Console": key,
+                       "Computer": target})
+        mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(15)
+        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+        single_video = Video()
+        single_video.set(host, key)
+        RESULT.update({"Single Connection": {"mouse": test_usb.mouse(),
+                                             "keyboard": test_usb.key_b(),
+                                             "video": single_video.get()
+                                             }
+                       }
+                      )
+        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
     def get_second_key(self, key):
