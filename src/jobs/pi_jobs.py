@@ -7,7 +7,6 @@ import requests
 import logging
 import time
 from config import config
-import json
 
 HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()

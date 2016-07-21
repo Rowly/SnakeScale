@@ -23,12 +23,14 @@ import platform
 try:
     from jobs import mbed_jobs
     from config import config
-    from utilities import test_video, test_usb, capture_gui
+    from utilities import test_usb
+    from utilities.test_video import Video
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
     from jobs import mbed_jobs
     from config import config
-    from utilities import test_video, test_usb, capture_gui
+    from utilities import test_usb
+    from utilities.test_video import Video
 
 
 HOST_PORT = config.get_host_port()
@@ -49,6 +51,7 @@ BODY_TEXT = ("<body>" +
              "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
              "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
              "</body></html>")
+RESULT = {}
 
 
 def logging_start():
@@ -73,6 +76,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     /get_result/<device>
     """
     def do_GET(self):
+        global RESULT
         global BUSY
         global DEBUG
 
@@ -142,7 +146,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                                 "{}utilities/capture_gui.py"
                                                 .format(path)])
                         if device == "ddx30" and test_type == "view":
-                            time.sleep(5)
+                            time.sleep(45)
                             gui.kill()
                     except SystemExit:
                         pass
@@ -184,97 +188,18 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
                         if styles is not None:
                             for style in styles:
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                                test_video.Video(host, key).set_response()
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                time.sleep(3)
+                                self.ddx_view(host, key, resolution_x,
+                                              resolution_y, target)
                         else:
                             if style == "v":
-                                """
-                                View Connection:
-                                - Single connection in turn
-                                - Multiple connections
-                                """
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                                test_video.Video().set_response(host, key)
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                time.sleep(3)
-
-                                key_2 = self.get_second_key(key)
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(1)
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                video = test_video.Video()
-                                video.set_response(host, key)
-                                video.set_response(host, key_2)
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
-                                time.sleep(3)
-
+                                self.ddx_view(host, key, resolution_x,
+                                              resolution_y, target)
                             elif style == "s":
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                                test_video.Video().set_response(host, key)
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                time.sleep(3)
+                                pass
                             elif style == "e":
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                                test_video.Video().set_response(host, key)
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                time.sleep(3)
+                                pass
                             elif style == "p":
-                                mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                                                     resolution_x,
-                                                     resolution_y,
-                                                     style,
-                                                     target).run()
-                                time.sleep(15)
-                                mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                                mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                                mbed_jobs.Exit(JOB_MBEDS[key]).run()
-                                test_video.Video().set_response(host, key)
-                                mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-                                time.sleep(3)
+                                pass
 
                     elif device == "av4pro":
                         mbed_jobs.Av4proConnect(test_type).run()
@@ -303,16 +228,72 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.wfile.write(bytes("busy", "UTF-8"))
                     logging.info("Controller attempting to get results")
                     if device == "ddx30":
-                        mouse = test_usb.mouse()
-                        keyb = test_usb.key_b()
-                        video = test_video.Video().get_response()
-                        data = json.dumps({"mouse": mouse,
-                                           "keyb": keyb,
-                                           "video": video}, indent=4)
+                        # mouse = test_usb.mouse()
+                        # keyb = test_usb.key_b()
+                        # video = test_video.Video().get()
+                        # data = json.dumps({"mouse": mouse,
+                        #                   "keyb": keyb,
+                        #                   "video": video}, indent=4)
+                        data = json.dumps(RESULT, indent=4)
                         self.send_response(200)
                         self.send_header("Content-type", "application/json")
                         self.end_headers()
                         self.wfile.write(bytes(data, "UTF-8"))
+
+    def ddx_view(self, host, key, resolution_x, resolution_y, target):
+        global RESULT
+        RESULT.clear()
+        """
+        View Connection:
+        - Single connection
+        - Multiple connections
+        """
+        style = "v"
+        mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(15)
+        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+        single_video = Video()
+        single_video.set(host, key)
+        RESULT.update({"Single Connection": {"mouse": test_usb.mouse(),
+                                             "keyboard": test_usb.key_b(),
+                                             "video": single_video.get()
+                                             }
+                       }
+                      )
+        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+        time.sleep(3)
+
+        key_2 = self.get_second_key(key)
+        mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(1)
+        mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(15)
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        RESULT.update({"Multi Connection": {"mouse": test_usb.mouse(),
+                                            "keyboard": test_usb.key_b(),
+                                            "video": mutli_video.get()
+                                            }
+                       }
+                      )
+        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+        mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
 
     def get_second_key(self, key):
         key_2 = key

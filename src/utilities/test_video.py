@@ -16,7 +16,7 @@ RESULT = []
 
 class Video():
 
-    def set_response(self, host, target, path="."):
+    def set(self, host, target, path="."):
         global RESULT
 
         if host == "Ubuntu":
@@ -41,12 +41,12 @@ class Video():
         else:
             RESULT.append("FALSE")
 
-    def get_response(self):
+    def get(self):
         global RESULT
         return RESULT
 
 
 if __name__ == "__main__":
     v = Video("Ubuntu", "1")
-    v.set_response("..")
-    print(v.get_response())
+    v.set("..")
+    print(v.get())
