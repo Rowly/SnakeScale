@@ -11,6 +11,7 @@ through the use of the pi_jobs modules.
 """
 import sys
 import os
+import platform
 import subprocess
 import logging
 import http.server
@@ -19,7 +20,7 @@ import time
 import json
 import argparse
 import random
-import platform
+from collections import OrderedDict
 try:
     from jobs import mbed_jobs
     from config import config
@@ -51,7 +52,7 @@ BODY_TEXT = ("<body>" +
              "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
              "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
              "</body></html>")
-RESULT = {}
+RESULT = OrderedDict()
 
 
 def logging_start():
