@@ -49,6 +49,10 @@ class Video():
 
 
 if __name__ == "__main__":
-    v = Video("Ubuntu", "1")
-    v.set("..")
-    print(v.get())
+    one = Video()
+    one.set("Ubuntu", "1", "..")
+    print(one.get())
+    two = Video()
+    two.set("Ubuntu", "1", "..")
+    two.set("Ubuntu", "2", "..")
+    print(two.get())
