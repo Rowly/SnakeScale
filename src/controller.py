@@ -14,6 +14,7 @@ import time
 import argparse
 from datetime import datetime, timedelta
 import json
+from collections import OrderedDict
 try:
     from config import config
     from jobs.pi_jobs import Notify, GetResult
@@ -29,6 +30,7 @@ PORT = config.get_host_port()
 ControlQ = Queue()
 T_FORMAT = "%H:%M %d-%m-%Y"
 DEBUG = False
+RESULT = OrderedDict()
 
 
 def logging_start():
@@ -73,6 +75,7 @@ class Jobs():
         self.start = start
 
     def run(self):
+        global RESULT
         """
         First notifies the target HOST PC that it is to
         carry out tests for the device under test.
@@ -83,13 +86,13 @@ class Jobs():
         Then fetches the results of the tests from the
         HOST PC.
         """
-        response = GetResult(self.device, self.host, self.test_type).run()
+        RESULT = GetResult(self.device, self.host, self.test_type).run()
 
         """
         Result of the most recent test is logged
         """
         logging.info("HOST {} gives:\n {}"
-                     .format(self.host, json.dumps(response, indent=4)))
+                     .format(self.host, json.dumps(RESULT, indent=4)))
 
         """
         Record time at the end of each Job
@@ -109,12 +112,12 @@ class Jobs():
                           self.start.strftime(T_FORMAT),
                           end_time.strftime(T_FORMAT),
                           self.execution,
-                          response).send_update_email()
+                          RESULT).send_update_email()
         if test_type == "view":
-            if ("TRUE" in response["Single Connection"]["mouse"] or
-                    "TRUE" in response["Single Connection"]["keyboard"] or
-                    "FALSE" in response["Single Connection"]["video"] or
-                    "FALSE" in response["Multi Connection"]["video"]):
+            if ("TRUE" in RESULT["Single Connection"]["mouse"] or
+                    "TRUE" in RESULT["Single Connection"]["keyboard"] or
+                    "FALSE" in RESULT["Single Connection"]["video"] or
+                    "FALSE" in RESULT["Multi Connection"]["video"]):
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
@@ -122,10 +125,10 @@ class Jobs():
                               self.start.strftime(T_FORMAT),
                               end_time.strftime(T_FORMAT),
                               self.execution,
-                              response).send_failure_email()
+                              RESULT).send_failure_email()
                 sys.exit()
         else:
-            if "FALSE" in response:
+            if "FALSE" in RESULT:
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
@@ -133,7 +136,7 @@ class Jobs():
                               self.start.strftime(T_FORMAT),
                               end_time.strftime(T_FORMAT),
                               self.execution,
-                              response).send_failure_email()
+                              RESULT).send_failure_email()
                 sys.exit()
 
 
