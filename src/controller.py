@@ -112,7 +112,7 @@ class Jobs():
                           response).send_update_email()
         if test_type == "view":
             if ("TRUE" in response["Single Connection"]["mouse"] or
-                    "TRUE" in response["Single Connection"]["keyb"] or
+                    "TRUE" in response["Single Connection"]["keyboard"] or
                     "FALSE" in response["Single Connection"]["video"] or
                     "FALSE" in response["Multi Connection"]["video"]):
                 time.sleep(2)
