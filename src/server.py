@@ -228,12 +228,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.wfile.write(bytes("busy", "UTF-8"))
                     logging.info("Controller attempting to get results")
                     if device == "ddx30":
-                        # mouse = test_usb.mouse()
-                        # keyb = test_usb.key_b()
-                        # video = test_video.Video().get()
-                        # data = json.dumps({"mouse": mouse,
-                        #                   "keyb": keyb,
-                        #                   "video": video}, indent=4)
                         data = json.dumps(RESULT, indent=4)
                         self.send_response(200)
                         self.send_header("Content-type", "application/json")
@@ -249,6 +243,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Multiple connections
         """
         style = "v"
+        RESULT.update({"Console": key,
+                       "Computer": target})
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
                              resolution_y,
