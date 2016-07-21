@@ -322,6 +322,40 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
+        key_2 = self.get_second_key(key)
+        mbed_jobs.OSDConnect(OSD_MBEDS[key],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(1)
+        mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
+                             resolution_x,
+                             resolution_y,
+                             style,
+                             target).run()
+        time.sleep(15)
+
+        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
+        mbed_jobs.MouseMove(JOB_MBEDS[key_2]).run()
+        mbed_jobs.SendKeys(JOB_MBEDS[key_2]).run()
+
+        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        RESULT.update({"Multi Connection": {"mouse": test_usb.mouse(),
+                                            "keyboard": test_usb.key_b(),
+                                            "video": mutli_video.get()
+                                            }
+                       }
+                      )
+        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+        mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
     def get_second_key(self, key):
         key_2 = key
         while key_2 == key:
