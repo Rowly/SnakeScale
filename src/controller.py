@@ -111,9 +111,10 @@ class Jobs():
                           self.execution,
                           response).send_update_email()
         if test_type == "view":
-            if ("TRUE" in response["mouse"] or
-                    "TRUE" in response["keyb"] or
-                    "FALSE" in response["video"]):
+            if ("TRUE" in response["Single Connect"]["mouse"] or
+                    "TRUE" in response["Single Connect"]["keyb"] or
+                    "FALSE" in response["Single Connect"]["video"] or
+                    "FALSE" in response["Multi Connect"]["video"]):
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,

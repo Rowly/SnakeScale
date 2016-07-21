@@ -43,7 +43,9 @@ class Video():
 
     def get(self):
         global RESULT
-        return RESULT
+        r = RESULT
+        RESULT.clear()
+        return r
 
 
 if __name__ == "__main__":

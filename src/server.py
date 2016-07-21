@@ -285,9 +285,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Connection": {"mouse": test_usb.mouse(),
-                                            "keyboard": test_usb.key_b(),
-                                            "video": mutli_video.get()
+        RESULT.update({"Multi Connection": {"video": mutli_video.get()
                                             }
                        }
                       )
