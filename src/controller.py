@@ -129,9 +129,13 @@ class Jobs():
                               RESULT).send_failure_email()
                 sys.exit()
         elif test_type == "shared":
-            if ("FALSE" in RESULT["Single"] or
-                    "FALSE" in RESULT["Multi Non Contention"] or
-                    "FALSE" in RESULT["Multi Contention"]):
+            if ("FALSE" in RESULT["Single"]["mouse"] or
+                    "FALSE" in RESULT["Single"]["keyboard"] or
+                    "FALSE" in RESULT["Single"]["video"] or
+                    "FALSE" in RESULT["Multi Non Contention"]["keyboard"] or
+                    "FALSE" in RESULT["Multi Non Contention"]["video"] or
+                    "FALSE" in RESULT["Multi Contention"]["keyboard"] or
+                    "FALSE" in RESULT["Multi Contention"]["video"]):
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
