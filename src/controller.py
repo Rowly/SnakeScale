@@ -103,8 +103,9 @@ class Jobs():
         If 24hours (timedelta(1)) has passed between start_time
         and end_time, send the update email
         """
-        if (self.start - end_time > timedelta(1) or
-                self.execution % 50 == 0):
+#         if (self.start - end_time > timedelta(1) or
+#                 self.execution % 50 == 0):
+        if self.start - end_time > timedelta(1):
             time.sleep(2)
             EmailNotifier(self.device,
                           self.host,

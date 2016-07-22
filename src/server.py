@@ -381,7 +381,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "video": mutli_video.get()
                          }
                         )
-        RESULT.update({"Mutli Non Contention": multi_nc
+        RESULT.update({"Multi Non Contention": multi_nc
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -411,7 +411,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         p1.join()
         p2.join()
 
-        CloseGui(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key_2]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
