@@ -304,6 +304,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- No contention
         -- With contention
         """
+        # single
         self.start_gui(device, test_type)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -327,8 +328,43 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
+        # multi
+        # no contention
         self.start_gui(device, test_type)
         key_2 = self.get_second_key(key)
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(1)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key_2]).run()
+        CloseGui(JOB_MBEDS[key]).run()
+
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        RESULT.update({"Multi No Contention": {"Console 1": key,
+                                               "Console 2": key_2,
+                                               "Computer": target,
+                                               "keyboard": test_usb.key_b(style="non-contention"),
+                                               "video": mutli_video.get()
+                                               }
+                       }
+                      )
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
+        # contention
+        self.start_gui(device, test_type)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -360,37 +396,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                             "keyboard": test_usb.key_b(style="contention"),
                                             "video": mutli_video.get()
                                             }
-                       }
-                      )
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
-
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(15)
-        SendKeys(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
-
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
-        RESULT.update({"Multi No Contention": {"Console 1": key,
-                                               "Console 2": key_2,
-                                               "Computer": target,
-                                               "keyboard": test_usb.key_b(style="non-contention"),
-                                               "video": mutli_video.get()
-                                               }
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
