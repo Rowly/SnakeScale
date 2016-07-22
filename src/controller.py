@@ -114,10 +114,23 @@ class Jobs():
                           self.execution,
                           RESULT).send_update_email()
         if test_type == "view":
-            if ("TRUE" in RESULT["Single Connection"]["mouse"] or
-                    "TRUE" in RESULT["Single Connection"]["keyboard"] or
-                    "FALSE" in RESULT["Single Connection"]["video"] or
-                    "FALSE" in RESULT["Multi Connection"]["video"]):
+            if ("TRUE" in RESULT["Single"]["mouse"] or
+                    "TRUE" in RESULT["Single"]["keyboard"] or
+                    "FALSE" in RESULT["Single"]["video"] or
+                    "FALSE" in RESULT["Multi"]["video"]):
+                time.sleep(2)
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_failure_email()
+                sys.exit()
+        elif test_type == "shared":
+            if ("FALSE" in RESULT["Single"] or
+                    "FALSE" in RESULT["Multi Non Contention"] or
+                    "FALSE" in RESULT["Multi Contention"]):
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
@@ -128,7 +141,7 @@ class Jobs():
                               RESULT).send_failure_email()
                 sys.exit()
         else:
-            if "FALSE" in RESULT.values():
+            if "FALSE" in RESULT:
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,

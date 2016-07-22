@@ -236,6 +236,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         device = "ddx30"
         test_type = "shared"
         style = "v"
+        single = OrderedDict()
+        multi = OrderedDict()
+        channel = OrderedDict()
         """
         View Connection:
         - Single connection
@@ -253,18 +256,24 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single": {"Channel": {"Console": key,
-                                              "Computer": target},
-                                  "mouse": test_usb.mouse(),
-                                  "keyboard": test_usb.key_b(),
-                                  "video": single_video.get()
-                                  }
+        channel.update({"Console": key,
+                        "Computer": target
+                        }
+                       )
+        single.update({"Channel": channel,
+                       "mouse": test_usb.mouse(),
+                       "keyboard": test_usb.key_b(),
+                       "video": single_video.get()
+                       }
+                      )
+        RESULT.update({"Single": single
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
+        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -280,11 +289,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi": {"Channel": {"Console 1": key,
-                                             "Console 2": key_2,
-                                             "Computer": target},
-                                 "video": mutli_video.get()
-                                 }
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target
+                        }
+                       )
+        multi.update({"Channel": channel,
+                      "video": mutli_video.get()
+                      }
+                     )
+        RESULT.update({"Multi": multi
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -294,6 +308,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
         RESULT.clear()
+        single = OrderedDict()
+        multi_nc = OrderedDict()
+        multi_c = OrderedDict()
+        channel = OrderedDict()
         device = "ddx30"
         test_type = "shared"
         style = "s"
@@ -317,12 +335,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single": {"Channel": {"Console": key,
-                                              "Computer": target},
-                                  "mouse": test_usb.mouse(),
-                                  "keyboard": test_usb.key_b(),
-                                  "video": single_video.get()
-                                  }
+        channel.update({"Console": key,
+                        "Computer": target})
+        single.update({"Channel": channel,
+                       "mouse": test_usb.mouse(),
+                       "keyboard": test_usb.key_b(),
+                       "video": single_video.get()
+                       }
+                      )
+        RESULT.update({"Single": single
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -332,6 +353,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # no contention
         self.start_gui(device, test_type)
         key_2 = self.get_second_key(key)
+        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -351,12 +373,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi No Contention": {"Channel": {"Console 1": key,
-                                                           "Console 2": key_2,
-                                                           "Computer": target,},
-                                               "keyboard": test_usb.key_b(style="non-contention"),
-                                               "video": mutli_video.get()
-                                               }
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_nc.update({"Channel": channel,
+                         "keyboard": test_usb.key_b(style="non-contention"),
+                         "video": mutli_video.get()
+                         }
+                        )
+        RESULT.update({"Mutli Non Contention": multi_nc
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -365,6 +390,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # contention
         self.start_gui(device, test_type)
+        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -390,12 +416,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Contention": {"Channel": {"Console 1": key,
-                                                        "Console 2": key_2,
-                                                        "Computer": target},
-                                            "keyboard": test_usb.key_b(style="contention"),
-                                            "video": mutli_video.get()
-                                            }
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target}
+                       )
+        multi_c.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(style="contention"),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Multi Contention": multi_c
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
