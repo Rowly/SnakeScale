@@ -21,6 +21,7 @@ import json
 import argparse
 import random
 from collections import OrderedDict
+from threading import Thread
 try:
     from jobs import mbed_jobs
     from config import config
@@ -188,9 +189,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             print(target)
 
                         if styles is not None:
-                            for style in styles:
-                                self.ddx_view(host, key, resolution_x,
-                                              resolution_y, target)
+                            self.ddx_view(host, key, resolution_x,
+                                          resolution_y, target)
+                            self.ddx_shared(host, key, resolution_x,
+                                            resolution_y, target)
                         else:
                             if style == "v":
                                 self.ddx_view(host, key, resolution_x,
@@ -245,8 +247,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Multiple connections
         """
         style = "v"
-        RESULT.update({"Console": key,
-                       "Computer": target})
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
                              resolution_y,
@@ -258,7 +258,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mbed_jobs.Exit(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single Connection": {"mouse": test_usb.mouse(),
+        RESULT.update({"Single Connection": {"Console": key,
+                                             "Computer": target,
+                                             "mouse": test_usb.mouse(),
                                              "keyboard": test_usb.key_b(),
                                              "video": single_video.get()
                                              }
@@ -283,7 +285,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Connection": {"video": mutli_video.get()
+        RESULT.update({"Multi Connection": {"Console 1": key,
+                                            "Console 2": key_2,
+                                            "Computer": target,
+                                            "video": mutli_video.get()
                                             }
                        }
                       )
@@ -300,8 +305,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Single connection
         - Multiple connections
         """
-        RESULT.update({"Console": key,
-                       "Computer": target})
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
                              resolution_y,
@@ -313,7 +316,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mbed_jobs.Exit(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single Connection": {"mouse": test_usb.mouse(),
+        RESULT.update({"Single Connection": {"Console": key,
+                                             "Computer": target,
+                                             "mouse": test_usb.mouse(),
                                              "keyboard": test_usb.key_b(),
                                              "video": single_video.get()
                                              }
@@ -336,17 +341,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                              target).run()
         time.sleep(15)
 
-        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-        mbed_jobs.MouseMove(JOB_MBEDS[key_2]).run()
-        mbed_jobs.SendKeys(JOB_MBEDS[key_2]).run()
+#         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
+        Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key]).run()).start()
+#         mbed_jobs.MouseMove(JOB_MBEDS[key_2]).run()
+        Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key_2]).run()).start()
 
         mbed_jobs.Exit(JOB_MBEDS[key]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Connection": {"mouse": test_usb.mouse(),
+        RESULT.update({"Multi Connection": {"Console 1": key,
+                                            "Console 2": key_2,
+                                            "Computer": target,
+                                            "mouse": test_usb.mouse(),
                                             "keyboard": test_usb.key_b(),
                                             "video": mutli_video.get()
                                             }
