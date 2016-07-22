@@ -346,14 +346,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         SendKeys(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key_2]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi No Contention": {"Console 1": key,
-                                               "Console 2": key_2,
-                                               "Computer": target,
+        RESULT.update({"Multi No Contention": {"channel": {"Console 1": key,
+                                                           "Console 2": key_2,
+                                                           "Computer": target,},
                                                "keyboard": test_usb.key_b(style="non-contention"),
                                                "video": mutli_video.get()
                                                }

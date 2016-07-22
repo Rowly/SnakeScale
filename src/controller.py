@@ -128,7 +128,7 @@ class Jobs():
                               RESULT).send_failure_email()
                 sys.exit()
         else:
-            if "FALSE" in RESULT:
+            if "FALSE" in RESULT.values():
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
