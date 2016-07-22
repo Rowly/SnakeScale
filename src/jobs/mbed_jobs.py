@@ -75,7 +75,7 @@ class SendKeys():
         send(self.mbed_ip, str.encode("keyboard\0"), path)
 
 
-class Exit():
+class CloseGui():
 
     def __init__(self, mbed_ip):
         self.mbed_ip = mbed_ip
@@ -130,5 +130,5 @@ if __name__ == "__main__":
         time.sleep(5)
         SendKeys("10.10.10.150").run("..")
         MouseMove("10.10.10.150").run("..")
-        Exit("10.10.10.150").run("..")
+        CloseGui("10.10.10.150").run("..")
         Disconnect("10.10.10.150").run("..")

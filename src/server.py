@@ -135,46 +135,35 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     self.end_headers()
 
                     BUSY = True
-
-                    system = platform.system()
-                    if system == "Win32" or system == "Windows":
-                        suffix = ""
-                        path = ""
-                    else:
-                        suffix = "3"
-                        path = "./"
-                    try:
-                        gui = subprocess.Popen(["python{}".format(suffix),
-                                                "{}utilities/capture_gui.py"
-                                                .format(path)])
-                        if device == "ddx30" and test_type == "view":
-                            time.sleep(45)
-                            gui.kill()
-                    except SystemExit:
-                        pass
-
-                    f = os.path.abspath("{}dump/test.txt".format(path))
-                    with open(f, "w"):
-                        pass
+#
+#                     system = platform.system()
+#                     if system == "Win32" or system == "Windows":
+#                         suffix = ""
+#                         path = ""
+#                     else:
+#                         suffix = "3"
+#                         path = "./"
+#                     try:
+#                         gui = subprocess.Popen(["python{}".format(suffix),
+#                                                 "{}utilities/capture_gui.py"
+#                                                 .format(path)])
+#                         if device == "ddx30" and test_type == "view":
+#                             time.sleep(45)
+#                             gui.kill()
+#                     except SystemExit:
+#                         pass
+#
+#                     f = os.path.abspath("{}dump/test.txt".format(path))
+#                     with open(f, "w"):
+#                         pass
 
                     if device == "ddx30":
-                        styles = None
                         if DEBUG:
                             key = "1"
                             print(DEBUG)
                             print(key)
                         else:
                             key = str(random.randint(1, len(OSD_MBEDS)))
-                        if test_type == "view":
-                            style = "v"
-                        elif test_type == "shared":
-                            style = "s"
-                        elif test_type == "exclusive":
-                            style = "e"
-                        elif test_type == "private":
-                            style = "p"
-                        elif test_type == "all":
-                            styles = ["v", "s", "e", "p"]
                         if host == "Ubuntu":
                             target = random.choice(["1", "2", "3",
                                                     "4", "5", "6",
@@ -188,29 +177,30 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         if DEBUG:
                             print(target)
 
-                        if styles is not None:
+                        if test_type == "view":
+                            self.ddx_view(host, key, resolution_x,
+                                          resolution_y, target)
+                        elif test_type == "shared":
+                            self.ddx_shared(host, key, resolution_x,
+                                            resolution_y, target)
+                        elif test_type == "exclusive":
+                            pass
+                        elif test_type == "private":
+                            pass
+                        elif test_type == "all":
                             self.ddx_view(host, key, resolution_x,
                                           resolution_y, target)
                             self.ddx_shared(host, key, resolution_x,
                                             resolution_y, target)
-                        else:
-                            if style == "v":
-                                self.ddx_view(host, key, resolution_x,
-                                              resolution_y, target)
-                            elif style == "s":
-                                self.ddx_shared(host, key, resolution_x,
-                                                resolution_y, target)
-                            elif style == "e":
-                                pass
-                            elif style == "p":
-                                pass
 
                     elif device == "av4pro":
-                        mbed_jobs.Av4proConnect(test_type).run()
+                        channel = test_type
+                        self.start_gui(device)
+                        mbed_jobs.Av4proConnect(channel).run()
                         time.sleep(15)
                         mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
                         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+                        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
                         time.sleep(3)
 
                     BUSY = False
@@ -241,12 +231,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     def ddx_view(self, host, key, resolution_x, resolution_y, target):
         global RESULT
         RESULT.clear()
+        device = "ddx30"
+        test_type = "shared"
+        style = "v"
         """
         View Connection:
         - Single connection
         - Multiple connections
         """
-        style = "v"
+        self.start_gui(device, test_type)
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
                              resolution_y,
@@ -255,7 +248,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
         mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
         RESULT.update({"Single Connection": {"Console": key,
@@ -299,12 +292,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
         RESULT.clear()
+        device = "ddx30"
+        test_type = "shared"
         style = "s"
         """
         Shared Connection:
         - Single connection
         - Multiple connections
         """
+        self.start_gui(device, test_type)
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
                              resolution_y,
@@ -313,7 +309,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
         mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
         RESULT.update({"Single Connection": {"Console": key,
@@ -327,6 +323,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
+        self.start_gui(device, test_type)
         key_2 = self.get_second_key(key)
         mbed_jobs.OSDConnect(OSD_MBEDS[key],
                              resolution_x,
@@ -341,12 +338,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                              target).run()
         time.sleep(15)
 
-#         mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
         Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key]).run()).start()
-#         mbed_jobs.MouseMove(JOB_MBEDS[key_2]).run()
         Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key_2]).run()).start()
 
-        mbed_jobs.Exit(JOB_MBEDS[key]).run()
+        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -363,6 +358,28 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
         mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
+
+    def start_gui(self, device, test_type="none"):
+        system = platform.system()
+        if system == "Win32" or system == "Windows":
+            suffix = ""
+            path = ""
+        else:
+            suffix = "3"
+            path = "./"
+        try:
+            gui = subprocess.Popen(["python{}".format(suffix),
+                                    "{}utilities/capture_gui.py"
+                                    .format(path)])
+            if device == "ddx30" and test_type == "view":
+                time.sleep(45)
+                gui.kill()
+        except SystemExit:
+            pass
+
+        f = os.path.abspath("{}dump/test.txt".format(path))
+        with open(f, "w"):
+            pass
 
     def get_second_key(self, key):
         key_2 = key
