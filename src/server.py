@@ -407,11 +407,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         p1 = Process(target=SendKeys(JOB_MBEDS[key]).run)
         p2 = Process(target=SendKeys(JOB_MBEDS[key_2]).run)
         p1.start()
+        time.sleep(0.5)
         p2.start()
         p1.join()
         p2.join()
 
-        CloseGui(JOB_MBEDS[key_2]).run()
+        time.sleep(0.5)
+        CloseGui(JOB_MBEDS[key]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
