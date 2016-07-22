@@ -253,8 +253,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single": {"Console": key,
-                                  "Computer": target,
+        RESULT.update({"Single": {"Channel": {"Console": key,
+                                              "Computer": target},
                                   "mouse": test_usb.mouse(),
                                   "keyboard": test_usb.key_b(),
                                   "video": single_video.get()
@@ -280,9 +280,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi": {"Console 1": key,
-                                 "Console 2": key_2,
-                                 "Computer": target,
+        RESULT.update({"Multi": {"Channel": {"Console 1": key,
+                                             "Console 2": key_2,
+                                             "Computer": target},
                                  "video": mutli_video.get()
                                  }
                        }
@@ -317,8 +317,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single": {"Console": key,
-                                  "Computer": target,
+        RESULT.update({"Single": {"Channel": {"Console": key,
+                                              "Computer": target},
                                   "mouse": test_usb.mouse(),
                                   "keyboard": test_usb.key_b(),
                                   "video": single_video.get()
@@ -351,7 +351,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi No Contention": {"channel": {"Console 1": key,
+        RESULT.update({"Multi No Contention": {"Channel": {"Console 1": key,
                                                            "Console 2": key_2,
                                                            "Computer": target,},
                                                "keyboard": test_usb.key_b(style="non-contention"),
@@ -390,9 +390,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Contention": {"Console 1": key,
-                                            "Console 2": key_2,
-                                            "Computer": target,
+        RESULT.update({"Multi Contention": {"Channel": {"Console 1": key,
+                                                        "Console 2": key_2,
+                                                        "Computer": target},
                                             "keyboard": test_usb.key_b(style="contention"),
                                             "video": mutli_video.get()
                                             }
