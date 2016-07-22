@@ -21,15 +21,17 @@ import json
 import argparse
 import random
 from collections import OrderedDict
-from threading import Thread
+from multiprocessing import Process
 try:
-    from jobs import mbed_jobs
+    from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
+        CloseGui, Disconnect, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
-    from jobs import mbed_jobs
+    from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
+        CloseGui, Disconnect, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
@@ -196,11 +198,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     elif device == "av4pro":
                         channel = test_type
                         self.start_gui(device)
-                        mbed_jobs.Av4proConnect(channel).run()
+                        Av4proConnect(channel).run()
                         time.sleep(15)
-                        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-                        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-                        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
+                        SendKeys(JOB_MBEDS[key]).run()
+                        MouseMove(JOB_MBEDS[key]).run()
+                        CloseGui(JOB_MBEDS[key]).run()
                         time.sleep(3)
 
                     BUSY = False
@@ -240,53 +242,53 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Multiple connections
         """
         self.start_gui(device, test_type)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(15)
-        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
+        MouseMove(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single Connection": {"Console": key,
-                                             "Computer": target,
-                                             "mouse": test_usb.mouse(),
-                                             "keyboard": test_usb.key_b(),
-                                             "video": single_video.get()
-                                             }
+        RESULT.update({"Single": {"Console": key,
+                                  "Computer": target,
+                                  "mouse": test_usb.mouse(),
+                                  "keyboard": test_usb.key_b(),
+                                  "video": single_video.get()
+                                  }
                        }
                       )
-        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(1)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(15)
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Connection": {"Console 1": key,
-                                            "Console 2": key_2,
-                                            "Computer": target,
-                                            "video": mutli_video.get()
-                                            }
+        RESULT.update({"Multi": {"Console 1": key,
+                                 "Console 2": key_2,
+                                 "Computer": target,
+                                 "video": mutli_video.get()
+                                 }
                        }
                       )
-        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-        mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
@@ -299,64 +301,100 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Shared Connection:
         - Single connection
         - Multiple connections
+        -- No contention
+        -- With contention
         """
         self.start_gui(device, test_type)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(15)
-        mbed_jobs.MouseMove(JOB_MBEDS[key]).run()
-        mbed_jobs.SendKeys(JOB_MBEDS[key]).run()
-        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
+        MouseMove(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update({"Single Connection": {"Console": key,
-                                             "Computer": target,
-                                             "mouse": test_usb.mouse(),
-                                             "keyboard": test_usb.key_b(),
-                                             "video": single_video.get()
-                                             }
+        RESULT.update({"Single": {"Console": key,
+                                  "Computer": target,
+                                  "mouse": test_usb.mouse(),
+                                  "keyboard": test_usb.key_b(),
+                                  "video": single_video.get()
+                                  }
                        }
                       )
-        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         self.start_gui(device, test_type)
         key_2 = self.get_second_key(key)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(1)
-        mbed_jobs.OSDConnect(OSD_MBEDS[key_2],
-                             resolution_x,
-                             resolution_y,
-                             style,
-                             target).run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
         time.sleep(15)
 
-        Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key]).run()).start()
-        Thread(target=mbed_jobs.SendKeys(JOB_MBEDS[key_2]).run()).start()
+        p1 = Process(target=SendKeys(JOB_MBEDS[key]).run())
+        p2 = Process(target=SendKeys(JOB_MBEDS[key_2]).run())
+        p1.start()
+        p2.start()
+        p1.join()
+        p2.join()
 
-        mbed_jobs.CloseGui(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key]).run()
 
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update({"Multi Connection": {"Console 1": key,
+        RESULT.update({"Multi Contention": {"Console 1": key,
                                             "Console 2": key_2,
                                             "Computer": target,
-                                            "mouse": test_usb.mouse(),
-                                            "keyboard": test_usb.key_b(),
+                                            "keyboard": test_usb.key_b(style="contention"),
                                             "video": mutli_video.get()
                                             }
                        }
                       )
-        mbed_jobs.Disconnect(JOB_MBEDS[key]).run()
-        mbed_jobs.Disconnect(JOB_MBEDS[key_2]).run()
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(1)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key_2]).run()
+        CloseGui(JOB_MBEDS[key]).run()
+
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        RESULT.update({"Multi No Contention": {"Console 1": key,
+                                               "Console 2": key_2,
+                                               "Computer": target,
+                                               "keyboard": test_usb.key_b(style="non-contention"),
+                                               "video": mutli_video.get()
+                                               }
+                       }
+                      )
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def start_gui(self, device, test_type="none"):

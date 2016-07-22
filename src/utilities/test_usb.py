@@ -12,13 +12,21 @@ import json
 TEST_STRING = "abcdefghijklmnopqrstuvwxyz"
 
 
-def key_b(path="./dump/test.txt"):
+def key_b(path="./dump/test.txt", style="single"):
     result = "FALSE"
     try:
         f = os.path.abspath(path)
         data = [line.strip() for line in open(f)]
-        if TEST_STRING in set(data):
-            result = "TRUE"
+        if style == "single":
+            # Use of set() to remove duplicates
+            if TEST_STRING in set(data):
+                result = "TRUE"
+        elif style == "non-contention":
+            if data.count(TEST_STRING) == 2:
+                result = "TRUE"
+        elif style == "contention":
+            if data.count(TEST_STRING) == 2:
+                result = "TRUE"
     except IOError as e:
         logging.info("Could not find test file.")
         logging.info("{}".format(e))
