@@ -41,7 +41,6 @@ HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
-ALIFS = config.get_alifs()
 AV4PRO_MBED = config.get_av4pro_mbed_ip()
 DEBUG = False
 BUSY = False
