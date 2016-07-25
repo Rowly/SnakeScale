@@ -30,7 +30,7 @@
                },
          "av4pro_mbed": "10.10.10.156",
          "bbc_mbed": 
-               {""
+               {"1": ""
                },
          "smtp_server": "192.168.42.115",
          "email_recipients" : ["mark.rowlands@adder.com", "simonh@adder.com"]

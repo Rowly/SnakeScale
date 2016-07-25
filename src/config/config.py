@@ -19,8 +19,6 @@ OSD_MBEDS = OrderedDict()
 
 JOB_MBEDS = OrderedDict()
 
-ALIFS = OrderedDict()
-
 
 def get_host_port(path="."):
     path = "{}/config/data.json".format(path)
@@ -56,14 +54,6 @@ def get_mbed_jobbers(path="."):
     jobbers = json.load(open(f), object_pairs_hook=OrderedDict)
     JOB_MBEDS.update(jobbers["data"]["job_mbeds"])
     return JOB_MBEDS
-
-
-def get_alifs(path="."):
-    path = "{}/config/data.json".format(path)
-    f = os.path.abspath(path)
-    alifs = json.load(open(f), object_pairs_hook=OrderedDict)
-    ALIFS.update(alifs["data"]["alifs"])
-    return ALIFS
 
 
 def get_ddx_ut_ip(path="."):
@@ -105,8 +95,6 @@ def get_av4pro_mbed_ip(path="."):
 if __name__ == "__main__":
     print("Rpis:")
     print(json.dumps(get_hosts(".."), indent=2))
-    print("Alifs:")
-    print(json.dumps(get_alifs(".."), indent=2))
     print("OSD Mbeds:")
     print(json.dumps(get_mbed_osders(".."), indent=2))
     print("Job Mbeds:")
@@ -125,3 +113,5 @@ if __name__ == "__main__":
     print(json.dumps(get_smtp_server_ip("..")))
     print("Email Recipients")
     print(json.dumps(get_email_recipients("..")))
+    print("AV4PRO Details")
+    print(json.dumps(get_av4pro_mbed_ip("..")))
