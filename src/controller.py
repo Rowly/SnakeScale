@@ -132,10 +132,10 @@ class Jobs():
             if ("FALSE" in RESULT["Single"]["mouse"] or
                     "FALSE" in RESULT["Single"]["keyboard"] or
                     "FALSE" in RESULT["Single"]["video"] or
-                    "FALSE" in RESULT["Multi Non Contention"]["keyboard"] or
-                    "FALSE" in RESULT["Multi Non Contention"]["video"] or
-                    "FALSE" in RESULT["Multi Contention"]["keyboard"] or
-                    "FALSE" in RESULT["Multi Contention"]["video"]):
+                    "FALSE" in RESULT["Non Contention"]["keyboard"] or
+                    "FALSE" in RESULT["Non Contention"]["video"] or
+                    "FALSE" in RESULT["Contention"]["keyboard"] or
+                    "FALSE" in RESULT["Contention"]["video"]):
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
