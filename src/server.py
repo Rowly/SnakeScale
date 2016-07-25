@@ -42,6 +42,7 @@ HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 ALIFS = config.get_alifs()
+AV4PRO_MBED = config.get_av4pro_mbed_ip()
 DEBUG = False
 BUSY = False
 HEADER_TEXT = ("<html>" +
@@ -59,7 +60,7 @@ RESULT = OrderedDict()
 
 
 def logging_start():
-    logging.basicConfig(filename="/var/log/snakescale-ddx/result.log",
+    logging.basicConfig(filename="/var/log/snakescale/logger.log",
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
     logging.info("==== Started Logging ====")
@@ -137,27 +138,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     self.end_headers()
 
                     BUSY = True
-#
-#                     system = platform.system()
-#                     if system == "Win32" or system == "Windows":
-#                         suffix = ""
-#                         path = ""
-#                     else:
-#                         suffix = "3"
-#                         path = "./"
-#                     try:
-#                         gui = subprocess.Popen(["python{}".format(suffix),
-#                                                 "{}utilities/capture_gui.py"
-#                                                 .format(path)])
-#                         if device == "ddx30" and test_type == "view":
-#                             time.sleep(45)
-#                             gui.kill()
-#                     except SystemExit:
-#                         pass
-#
-#                     f = os.path.abspath("{}dump/test.txt".format(path))
-#                     with open(f, "w"):
-#                         pass
 
                     if device == "ddx30":
                         if DEBUG:
@@ -196,13 +176,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                             resolution_y, target)
 
                     elif device == "av4pro":
+                        RESULT.clear()
                         channel = test_type
                         self.start_gui(device)
-                        Av4proConnect(channel).run()
+                        Av4proConnect(AV4PRO_MBED, channel).run()
                         time.sleep(15)
-                        SendKeys(JOB_MBEDS[key]).run()
-                        MouseMove(JOB_MBEDS[key]).run()
-                        CloseGui(JOB_MBEDS[key]).run()
+                        SendKeys(AV4PRO_MBED).run()
+                        MouseMove(AV4PRO_MBED).run()
+                        CloseGui(AV4PRO_MBED).run()
+                        RESULT.update({"channel": channel,
+                                       "mouse": test_usb.mouse(),
+                                       "keyboard": test_usb.key_b()})
                         time.sleep(3)
 
                     BUSY = False
@@ -210,20 +194,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     """
                     GET RESULT
                     """
-                    if "device" in query:
-                        device = query["device"][0].lower()
-                    else:
-                        self.send_response(400)
-                        self.send_header("Content-type", "text/html")
-                        self.end_headers()
-                        return
                     if BUSY is True:
                         self.send_response(200)
                         self.send_header("Content-type", "test/plain")
                         self.end_headers()
                         self.wfile.write(bytes("busy", "UTF-8"))
-                    logging.info("Controller attempting to get results")
-                    if device == "ddx30":
+                    else:
+                        logging.info("Controller attempting to get results")
                         data = json.dumps(RESULT, indent=4)
                         self.send_response(200)
                         self.send_header("Content-type", "application/json")

@@ -42,19 +42,12 @@ class Notify():
 
 class GetResult():
 
-    def __init__(self, device, host, test_type):
-        self.device = device
-        self.host = host
-        self.test_type = test_type
-
     def run(self):
         logging.info("Getting result from HOST {} @ {}"
                      .format(self.host, HOSTS[self.host]))
         while True:
             try:
-                payload = {"command": "get_result",
-                           "device": self.device,
-                           "test_type": self.test_type}
+                payload = {"command": "get_result"}
                 r = requests.get("http://" + HOSTS[self.host] +
                                  ":" + str(HOST_PORT) +
                                  "/api", params=payload)

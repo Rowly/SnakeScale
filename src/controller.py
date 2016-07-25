@@ -33,8 +33,9 @@ DEBUG = False
 RESULT = OrderedDict()
 
 
-def logging_start():
-    logging.basicConfig(filename="/var/log/snakescale-ddx/result.log",
+def logging_start(device):
+    location = "/var/log/snakescale-{}/result.log".format(device[0:3])
+    logging.basicConfig(filename=location,
                         format="%(asctime)s:%(levelname)s:%(message)s",
                         level=logging.INFO)
     logging.info("==== Started Logging ====")
@@ -86,7 +87,7 @@ class Jobs():
         Then fetches the results of the tests from the
         HOST PC.
         """
-        RESULT = GetResult(self.device, self.host, self.test_type).run()
+        RESULT = GetResult().run()
 
         """
         Result of the most recent test is logged
@@ -159,7 +160,7 @@ class Jobs():
 
 
 def main(device, test_type, resolution):
-    logging_start()
+    logging_start(device)
 
     start_time = datetime.now()
 
@@ -186,7 +187,7 @@ def main(device, test_type, resolution):
             for i in ["1", "2", "3", "4"]:
                 counter += 1
                 print(counter)
-                item = Jobs(device, "1", i, resolution, counter, start_time)
+                item = Jobs(device, "av4pro", i, resolution, counter, start_time)
                 ControlQ.put(item)
                 Executor().run()
                 time.sleep(1)
@@ -202,8 +203,9 @@ if __name__ == '__main__':
                         type=str,
                         choices=test_types,
                         help="Type of test to send_failure_email")
-    parser.add_argument("resolution",
+    parser.add_argument("--resolution",
                         type=str,
+                        default="1920x1080",
                         help="Resolution of display as 1920x1080")
     parser.add_argument("--debug", dest="debug", action="store_true",
                         help="Show count and HOST name to screen")

@@ -17,7 +17,7 @@ except:
 
 
 def send(mbed_ip, payload, path="."):
-    MBED_ECHO_PORT = config.get_mbed_echo_port("..")
+    MBED_ECHO_PORT = config.get_mbed_echo_port(path)
     end = b":"
     try:
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))

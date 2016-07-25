@@ -95,6 +95,13 @@ def get_email_recipients(path="."):
     f = os.path.abspath(path)
     return json.load(open(f))["data"]["email_recipients"]
 
+
+def get_av4pro_mbed_ip(path="."):
+    path = "{}/config/data.json".format(path)
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["av4pro_mbed"]
+
+
 if __name__ == "__main__":
     print("Rpis:")
     print(json.dumps(get_hosts(".."), indent=2))
