@@ -8,7 +8,7 @@ import os
 import logging
 import socket
 import time
-from multiprocessing.process import Process
+from multiprocessing import Process
 try:
     from config import config
 except:
