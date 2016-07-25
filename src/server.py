@@ -324,6 +324,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui(device, test_type)
+        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,

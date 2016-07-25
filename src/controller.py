@@ -171,7 +171,7 @@ def main(device, test_type, resolution):
     counter = 0
     if device == "ddx30":
         while True:
-            for host in ["Ubuntu", "Win7"]:
+            for host in ["Win7", "Ubuntu"]:
                 counter += 1
                 if DEBUG:
                     print(counter)
