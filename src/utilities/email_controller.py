@@ -69,7 +69,7 @@ class EmailNotifier():
                           self.start,
                           self.end,
                           self.execution,
-                          self.response)
+                          json.dumps(self.response, indent=4))
 
         commaspace = ", "
         sender = "ddx30soaktest@example.com"

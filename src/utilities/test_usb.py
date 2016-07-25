@@ -25,7 +25,7 @@ def key_b(path="./dump/test.txt", style="single"):
             if data.count(TEST_STRING) == 2:
                 result = "TRUE"
         elif style == "contention":
-            if data.count(TEST_STRING) == 2:
+            if data.count(TEST_STRING) == 1:
                 result = "TRUE"
     except IOError as e:
         logging.info("Could not find test file.")
