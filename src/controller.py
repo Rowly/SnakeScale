@@ -87,7 +87,7 @@ class Jobs():
         Then fetches the results of the tests from the
         HOST PC.
         """
-        RESULT = GetResult().run()
+        RESULT = GetResult(self.device, self.host).run()
 
         """
         Result of the most recent test is logged

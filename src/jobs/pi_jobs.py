@@ -42,6 +42,10 @@ class Notify():
 
 class GetResult():
 
+    def __init__(self, device, host):
+        self.device = device
+        self.host = host
+
     def run(self):
         logging.info("Getting result from HOST {} @ {}"
                      .format(self.host, HOSTS[self.host]))
