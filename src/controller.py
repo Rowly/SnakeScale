@@ -115,48 +115,60 @@ class Jobs():
                           end_time.strftime(T_FORMAT),
                           self.execution,
                           RESULT).send_update_email()
-        if test_type == "view":
-            if ("TRUE" in RESULT["Single"]["mouse"] or
-                    "TRUE" in RESULT["Single"]["keyboard"] or
-                    "FALSE" in RESULT["Single"]["video"] or
-                    "FALSE" in RESULT["Multi"]["video"]):
-                time.sleep(2)
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_failure_email()
-                sys.exit()
-        elif test_type == "shared":
-            if ("FALSE" in RESULT["Single"]["mouse"] or
-                    "FALSE" in RESULT["Single"]["keyboard"] or
-                    "FALSE" in RESULT["Single"]["video"] or
-                    "FALSE" in RESULT["Non Contention"]["keyboard"] or
-                    "FALSE" in RESULT["Non Contention"]["video"] or
-                    "FALSE" in RESULT["Contention"]["keyboard"] or
-                    "FALSE" in RESULT["Contention"]["video"]):
-                time.sleep(2)
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_failure_email()
-                sys.exit()
-        else:
-            if "FALSE" in RESULT:
-                time.sleep(2)
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_failure_email()
-                sys.exit()
+        if self.device == "ddx30":
+            if test_type == "view":
+                if ("TRUE" in RESULT["Single"]["mouse"] or
+                        "TRUE" in RESULT["Single"]["keyboard"] or
+                        "FALSE" in RESULT["Single"]["video"] or
+                        "FALSE" in RESULT["Multi"]["video"]):
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_failure_email()
+                    sys.exit()
+            elif test_type == "shared":
+                if ("FALSE" in RESULT["Single"]["mouse"] or
+                        "FALSE" in RESULT["Single"]["keyboard"] or
+                        "FALSE" in RESULT["Single"]["video"] or
+                        "FALSE" in RESULT["Non Contention"]["keyboard"] or
+                        "FALSE" in RESULT["Non Contention"]["video"] or
+                        "FALSE" in RESULT["Contention"]["keyboard"] or
+                        "FALSE" in RESULT["Contention"]["video"]):
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_failure_email()
+                    sys.exit()
+            else:
+                if "FALSE" in RESULT:
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_failure_email()
+                    sys.exit()
+        elif device == "av4pro":
+                if "FALSE" in RESULT:
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_failure_email()
+                    sys.exit()
 
 
 def main(device, test_type, resolution):

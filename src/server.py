@@ -180,8 +180,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.start_gui(device)
                         Av4proConnect(AV4PRO_MBED, channel).run()
                         time.sleep(15)
-                        SendKeys(AV4PRO_MBED).run()
                         MouseMove(AV4PRO_MBED).run()
+                        SendKeys(AV4PRO_MBED).run()
                         CloseGui(AV4PRO_MBED).run()
                         RESULT.update({"channel": channel,
                                        "mouse": test_usb.mouse(),
