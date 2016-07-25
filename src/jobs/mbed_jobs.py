@@ -8,6 +8,7 @@ import os
 import logging
 import socket
 import time
+from multiprocessing.process import Process
 try:
     from config import config
 except:
@@ -16,7 +17,7 @@ except:
 
 
 def send(mbed_ip, payload, path="."):
-    MBED_ECHO_PORT = config.get_mbed_echo_port(path)
+    MBED_ECHO_PORT = config.get_mbed_echo_port("..")
     end = b":"
     try:
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
@@ -122,13 +123,17 @@ class Av4proConnect():
 
 if __name__ == "__main__":
     time.sleep(3)
-    for i in ["1", "2", "3", "4", "5",
-              "6", "7", "8", "9", "10",
-              "11", "12", "13", "14", "15",
-              "16", "17", "18", "19", "20"]:
-        OSDConnect("10.10.10.50", "1920", "1080", "e", i).run("..")
-        time.sleep(5)
-        SendKeys("10.10.10.150").run("..")
-        MouseMove("10.10.10.150").run("..")
-        CloseGui("10.10.10.150").run("..")
-        Disconnect("10.10.10.150").run("..")
+    ips = ["10.10.10.150", "10.10.10.151",
+           "10.10.10.152", "10.10.10.153"]
+    for ip in ips:
+        Process(target=SendKeys(ip).run).start()
+#     for i in ["1", "2", "3", "4", "5",
+#               "6", "7", "8", "9", "10",
+#               "11", "12", "13", "14", "15",
+#               "16", "17", "18", "19", "20"]:
+#         OSDConnect("10.10.10.50", "1920", "1080", "e", i).run("..")
+#         time.sleep(5)
+#         SendKeys("10.10.10.150").run("..")
+#         MouseMove("10.10.10.150").run("..")
+#         CloseGui("10.10.10.150").run("..")
+#         Disconnect("10.10.10.150").run("..")
