@@ -408,6 +408,91 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             Disconnect(JOB_MBEDS[key_2]).run()
             time.sleep(3)
 
+    def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
+        global RESULT
+        RESULT.clear()
+        channel = OrderedDict()
+        single = OrderedDict()
+        device = "ddx30"
+        test_type = "exclusive"
+        style = "e"
+        """
+        Exclusive Connection:
+        - Single connection
+        - Multiple connections
+        -- View, video only
+        -- Shared, Exlusive, Private, nothing
+        """
+        # single
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(15)
+        MouseMove(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key]).run()
+        single_video = Video()
+        single_video.set(host, key)
+        channel.update({"Console": key,
+                        "Computer": target})
+        single.update({"Channel": channel,
+                       "mouse": test_usb.mouse(),
+                       "keyboard": test_usb.key_b(),
+                       "video": single_video.get()
+                       }
+                      )
+        RESULT.update({"Single": single
+                       }
+                      )
+        Disconnect(JOB_MBEDS[key]).run()
+        time.sleep(3)
+
+    def ddx_private(self, host, key, resolution_x, resolution_y, target):
+        global RESULT
+        RESULT.clear()
+        channel = OrderedDict()
+        single = OrderedDict()
+        device = "ddx30"
+        test_type = "private"
+        style = "p"
+        """
+        Private Connection:
+        - Single connection
+        - Multiple connections
+        -- View, Shared, Exlusive, Private, nothing
+        """
+        # single
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(15)
+        MouseMove(JOB_MBEDS[key]).run()
+        SendKeys(JOB_MBEDS[key]).run()
+        CloseGui(JOB_MBEDS[key]).run()
+        single_video = Video()
+        single_video.set(host, key)
+        channel.update({"Console": key,
+                        "Computer": target})
+        single.update({"Channel": channel,
+                       "mouse": test_usb.mouse(),
+                       "keyboard": test_usb.key_b(),
+                       "video": single_video.get()
+                       }
+                      )
+        RESULT.update({"Single": single
+                       }
+                      )
+        Disconnect(JOB_MBEDS[key]).run()
+        time.sleep(3)
+
     def start_gui(self, device, test_type="none"):
         system = platform.system()
         if system == "Win32" or system == "Windows":
