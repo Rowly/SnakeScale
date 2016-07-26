@@ -131,12 +131,11 @@ if __name__ == "__main__":
                                 "../utilities/capture_gui.py"])
     except SystemExit:
         pass
-    ips = ["10.10.10.50", "10.10.10.51", "10.10.10.52", "10.10.10.53"]
+    ips = ["10.10.10.51", "10.10.10.52", "10.10.10.53"]
     for ip in ips:
-        Process(target=OSDConnect(ip, "1920", "1080", "s", "1").run).start()
+        Process(target=OSDConnect(ip, "1920", "1080", "s", "11").run).start()
     time.sleep(3)
-    ips = ["10.10.10.150", "10.10.10.151",
-           "10.10.10.152", "10.10.10.153"]
+    ips = ["10.10.10.151", "10.10.10.152", "10.10.10.153"]
     for ip in ips:
         Process(target=SendKeys(ip).run).start()
     time.sleep(2)
