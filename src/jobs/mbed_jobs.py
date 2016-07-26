@@ -17,7 +17,10 @@ except:
 
 
 def send(mbed_ip, payload, path="."):
-    MBED_ECHO_PORT = config.get_mbed_echo_port(path)
+    try:
+        MBED_ECHO_PORT = config.get_mbed_echo_port(path)
+    except Exception:
+        MBED_ECHO_PORT = 7
     end = b":"
     try:
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
@@ -122,18 +125,21 @@ class Av4proConnect():
         send(self.mbed_ip, str.encode("channel{}\0".format(self.channel)))
 
 if __name__ == "__main__":
+    import subprocess
+    try:
+        gui = subprocess.Popen(["python",
+                                "../utilities/capture_gui.py"])
+    except SystemExit:
+        pass
+    ips = ["10.10.10.50", "10.10.10.51", "10.10.10.52", "10.10.10.53"]
+    for ip in ips:
+        Process(OSDConnect(ip, "1920", "1080", "s", "1").run).start()
     time.sleep(3)
     ips = ["10.10.10.150", "10.10.10.151",
            "10.10.10.152", "10.10.10.153"]
     for ip in ips:
         Process(target=SendKeys(ip).run).start()
-#     for i in ["1", "2", "3", "4", "5",
-#               "6", "7", "8", "9", "10",
-#               "11", "12", "13", "14", "15",
-#               "16", "17", "18", "19", "20"]:
-#         OSDConnect("10.10.10.50", "1920", "1080", "e", i).run("..")
-#         time.sleep(5)
-#         SendKeys("10.10.10.150").run("..")
-#         MouseMove("10.10.10.150").run("..")
-#         CloseGui("10.10.10.150").run("..")
-#         Disconnect("10.10.10.150").run("..")
+    time.sleep(2)
+    CloseGui("10.10.10.150").run()
+    for ip in ips:
+        Process(target=Disconnect(ip).run).start()

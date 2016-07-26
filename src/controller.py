@@ -92,8 +92,8 @@ class Jobs():
         """
         Result of the most recent test is logged
         """
-        logging.info("HOST {} gives:\n {}"
-                     .format(self.host, json.dumps(RESULT, indent=4)))
+        logging.info("Execution {} HOST {} gives:\n{}"
+                     .format(self.execution, self.host, json.dumps(RESULT, indent=4)))
 
         """
         Record time at the end of each Job
@@ -199,7 +199,8 @@ def main(device, test_type, resolution):
             for i in ["1", "2", "3", "4"]:
                 counter += 1
                 print(counter)
-                item = Jobs(device, "av4pro", i, resolution, counter, start_time)
+                item = Jobs(device, "av4pro", i, resolution,
+                            counter, start_time)
                 ControlQ.put(item)
                 Executor().run()
                 time.sleep(1)
