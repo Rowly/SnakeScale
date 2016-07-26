@@ -117,10 +117,10 @@ class Jobs():
                           RESULT).send_update_email()
         if self.device == "ddx30":
             if test_type == "view":
-                if ("TRUE" in RESULT["Single"]["mouse"] or
-                        "TRUE" in RESULT["Single"]["keyboard"] or
-                        "FALSE" in RESULT["Single"]["video"] or
-                        "FALSE" in RESULT["Multi"]["video"]):
+                if ("TRUE" in RESULT["View Single"]["mouse"] or
+                        "TRUE" in RESULT["View Single"]["keyboard"] or
+                        "FALSE" in RESULT["View Single"]["video"] or
+                        "FALSE" in RESULT["View Multi"]["video"]):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -132,13 +132,13 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "shared":
-                if ("FALSE" in RESULT["Single"]["mouse"] or
-                        "FALSE" in RESULT["Single"]["keyboard"] or
-                        "FALSE" in RESULT["Single"]["video"] or
-                        "FALSE" in RESULT["Non Contention"]["keyboard"] or
-                        "FALSE" in RESULT["Non Contention"]["video"] or
-                        "FALSE" in RESULT["Contention"]["keyboard"] or
-                        "FALSE" in RESULT["Contention"]["video"]):
+                if ("FALSE" in RESULT["Shared Single"]["mouse"] or
+                        "FALSE" in RESULT["Shared Single"]["keyboard"] or
+                        "FALSE" in RESULT["Shared Single"]["video"] or
+                        "FALSE" in RESULT["Shared Non Contention"]["keyboard"] or
+                        "FALSE" in RESULT["Shared Non Contention"]["video"] or
+                        "FALSE" in RESULT["Shared Contention"]["keyboard"] or
+                        "FALSE" in RESULT["Shared Contention"]["video"]):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -149,8 +149,44 @@ class Jobs():
                                   RESULT).send_failure_email()
                     logging_stop()
                     sys.exit()
-            else:
-                if "FALSE" in RESULT:
+            elif test_type == "exclusive":
+                if ("FALSE" in RESULT["Exclusive Single"]["mouse"] or
+                        "FALSE" in RESULT["Exclusive Single"]["keyboard"] or
+                        "FALSE" in RESULT["Exclusive Single"]["mouse"] or
+                        "FALSE" in RESULT["Exclusive Single"]["video"] or
+                        "FALSE"in RESULT["Exclusive and View"]["video"] or
+                        "TRUE" in RESULT["Exclusive and View"]["keyboard"] or
+                        "TRUE" in RESULT["Exclusive and View"]["mouse"] or
+                        RESULT["Exclusive and Shared"]["video"] == ["TRUE", "TRUE"] or
+                        "TRUE" in RESULT["Exclusive and Shared"]["keyboard"] or
+                        "TRUE" in RESULT["Exclusive and Shared"]["mouse"] or
+                        RESULT["Exclusive and Private"]["video"] == ["TRUE", "TRUE"] or
+                        "TRUE" in RESULT["Exclusive and Private"]["keyboard"] or
+                        "TRUE" in RESULT["Exclusive and Private"]["mouse"]):
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_failure_email()
+                    logging_stop()
+                    sys.exit()
+            elif test_type == "private":
+                if ("FALSE" in RESULT["Private Single"]["mouse"] or
+                        "FALSE" in RESULT["Private Single"]["keyboard"] or
+                        "FALSE" in RESULT["Private Single"]["mouse"] or
+                        "FALSE" in RESULT["Private Single"]["video"] or
+                        RESULT["Private and View"]["video"] == ["TRUE", "TRUE"] or
+                        "TRUE" in RESULT["Private and View"]["keyboard"] or
+                        "TRUE" in RESULT["Private and View"]["mouse"] or
+                        RESULT["Private and Shared"]["video"] == ["TRUE", "TRUE"] or
+                        "TRUE" in RESULT["Private and Shared"]["keyboard"] or
+                        "TRUE" in RESULT["Private and Shared"]["mouse"] or
+                        RESULT["Private and Exclusive"]["video"] == ["TRUE", "TRUE"] or
+                        "TRUE" in RESULT["Private and Exclusive"]["keyboard"] or
+                        "TRUE" in RESULT["Private and Exclusive"]["mouse"]):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,

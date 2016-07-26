@@ -165,14 +165,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             self.ddx_shared(host, key, resolution_x,
                                             resolution_y, target)
                         elif test_type == "exclusive":
-                            pass
+                            self.ddx_exclusive(host, key, resolution_x,
+                                               resolution_y, target)
                         elif test_type == "private":
-                            pass
+                            self.ddx_private(host, key, resolution_x,
+                                             resolution_y, target)
                         elif test_type == "all":
                             self.ddx_view(host, key, resolution_x,
                                           resolution_y, target)
                             self.ddx_shared(host, key, resolution_x,
                                             resolution_y, target)
+                            self.ddx_exclusive(host, key, resolution_x,
+                                               resolution_y, target)
+                            self.ddx_private(host, key, resolution_x,
+                                             resolution_y, target)
 
                     elif device == "av4pro":
                         RESULT.clear()
@@ -210,7 +216,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         global RESULT
         RESULT.clear()
         device = "ddx30"
-        test_type = "shared"
+        test_type = "view"
         style = "v"
         single = OrderedDict()
         multi = OrderedDict()
@@ -242,7 +248,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        "video": single_video.get()
                        }
                       )
-        RESULT.update({"Single": single
+        RESULT.update({"View Single": single
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -274,7 +280,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                       "video": mutli_video.get()
                       }
                      )
-        RESULT.update({"Multi": multi
+        RESULT.update({"View Multi": multi
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -320,7 +326,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        "video": single_video.get()
                        }
                       )
-        RESULT.update({"Single": single
+        RESULT.update({"Shared Single": single
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -358,7 +364,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "video": mutli_video.get()
                          }
                         )
-        RESULT.update({"Non Contention": multi_nc
+        RESULT.update({"Shared Non Contention": multi_nc
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -401,7 +407,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             "video": mutli_video.get()
                             }
                            )
-            RESULT.update({"Contention": multi_c
+            RESULT.update({"Shared Contention": multi_c
                            }
                           )
             Disconnect(JOB_MBEDS[key]).run()
@@ -413,6 +419,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         RESULT.clear()
         channel = OrderedDict()
         single = OrderedDict()
+        multi_v = OrderedDict()
+        multi_s = OrderedDict()
         device = "ddx30"
         test_type = "exclusive"
         style = "e"
@@ -445,17 +453,126 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        "video": single_video.get()
                        }
                       )
-        RESULT.update({"Single": single
+        RESULT.update({"Exclusive Single": single
                        }
                       )
-        Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
+        Disconnect(JOB_MBEDS[key]).run()
+
+        # exclusive with view
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "v",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_v.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Exclusive and View": multi_v
+                       }
+                      )
+        time.sleep(3)
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+
+        # exclusive with shared
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "s",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_s.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Exclusive and Shared": multi_s
+                       }
+                      )
+        time.sleep(3)
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+
+        # exclusive with shared
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "p",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_s.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Exclusive and Private": multi_s
+                       }
+                      )
+        time.sleep(3)
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
         RESULT.clear()
         channel = OrderedDict()
         single = OrderedDict()
+        multi_v = OrderedDict()
         device = "ddx30"
         test_type = "private"
         style = "p"
@@ -487,11 +604,109 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        "video": single_video.get()
                        }
                       )
-        RESULT.update({"Single": single
+        RESULT.update({"Private Single": single
                        }
                       )
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
+
+        # private and view
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "v",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_v.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Private and View": multi_v
+                       }
+                      )
+        # private and shared
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "s",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_v.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Private and Shared": multi_v
+                       }
+                      )
+
+        # private and exclusive
+        key_2 = self.get_second_key(key)
+        self.start_gui(device, test_type)
+        channel.clear()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   target).run()
+        time.sleep(0.5)
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   "e",
+                   target).run()
+        time.sleep(15)
+        SendKeys(JOB_MBEDS[key_2]).run()
+        mutli_video = Video()
+        mutli_video.set(host, key)
+        mutli_video.set(host, key_2)
+        CloseGui(JOB_MBEDS[key]).run()
+        channel.update({"Console 1": key,
+                        "Console 2": key_2,
+                        "Computer": target})
+        multi_v.update({"Channel": channel,
+                        "keyboard": test_usb.key_b(),
+                        "video": mutli_video.get()
+                        }
+                       )
+        RESULT.update({"Private and Exclusive": multi_v
+                       }
+                      )
 
     def start_gui(self, device, test_type="none"):
         system = platform.system()
