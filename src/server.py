@@ -372,7 +372,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         # contention
-        if self.host == "Win7":
+        if host == "Win7":
             pass
         else:
             self.start_gui(device, test_type)
