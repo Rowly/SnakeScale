@@ -133,7 +133,7 @@ if __name__ == "__main__":
         pass
     ips = ["10.10.10.50", "10.10.10.51", "10.10.10.52", "10.10.10.53"]
     for ip in ips:
-        Process(OSDConnect(ip, "1920", "1080", "s", "1").run).start()
+        Process(target=OSDConnect(ip, "1920", "1080", "s", "1").run).start()
     time.sleep(3)
     ips = ["10.10.10.150", "10.10.10.151",
            "10.10.10.152", "10.10.10.153"]
