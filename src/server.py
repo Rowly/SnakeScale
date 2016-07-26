@@ -366,52 +366,47 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         # contention
-        self.start_gui(device, test_type)
-        channel.clear()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(15)
+        if self.host == "Win7":
+            pass
+        else:
+            self.start_gui(device, test_type)
+            channel.clear()
+            OSDConnect(OSD_MBEDS[key],
+                       resolution_x,
+                       resolution_y,
+                       style,
+                       target).run()
+            time.sleep(1)
+            OSDConnect(OSD_MBEDS[key_2],
+                       resolution_x,
+                       resolution_y,
+                       style,
+                       target).run()
+            time.sleep(15)
 
-        for k in [key, key_2]:
-            Process(target=SendKeys(JOB_MBEDS[k]).run).start()
-#         p1 = Process(target=SendKeys(JOB_MBEDS[key]).run)
-#         p2 = Process(target=SendKeys(JOB_MBEDS[key_2]).run)
-#         p1.start()
-#         time.sleep(0.5)
-#         p2.start()
-#         p1.join()
-#         p2.join()
+            for k in [key, key_2]:
+                Process(target=SendKeys(JOB_MBEDS[k]).run).start()
+            time.sleep(0.5)
+            CloseGui(JOB_MBEDS[key]).run()
 
-        time.sleep(0.5)
-        CloseGui(JOB_MBEDS[key]).run()
-
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target}
-                       )
-        multi_c.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(style="contention"),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Contention": multi_c
-                       }
-                      )
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
+            mutli_video = Video()
+            mutli_video.set(host, key)
+            mutli_video.set(host, key_2)
+            channel.update({"Console 1": key,
+                            "Console 2": key_2,
+                            "Computer": target}
+                           )
+            multi_c.update({"Channel": channel,
+                            "keyboard": test_usb.key_b(style="contention"),
+                            "video": mutli_video.get()
+                            }
+                           )
+            RESULT.update({"Contention": multi_c
+                           }
+                          )
+            Disconnect(JOB_MBEDS[key]).run()
+            Disconnect(JOB_MBEDS[key_2]).run()
+            time.sleep(3)
 
     def start_gui(self, device, test_type="none"):
         system = platform.system()

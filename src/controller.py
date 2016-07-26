@@ -129,6 +129,7 @@ class Jobs():
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
                                   RESULT).send_failure_email()
+                    logging_stop()
                     sys.exit()
             elif test_type == "shared":
                 if ("FALSE" in RESULT["Single"]["mouse"] or
@@ -146,6 +147,7 @@ class Jobs():
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
                                   RESULT).send_failure_email()
+                    logging_stop()
                     sys.exit()
             else:
                 if "FALSE" in RESULT:
@@ -157,6 +159,7 @@ class Jobs():
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
                                   RESULT).send_failure_email()
+                    logging_stop()
                     sys.exit()
         elif device == "av4pro":
                 if "FALSE" in RESULT:
@@ -168,6 +171,7 @@ class Jobs():
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
                                   RESULT).send_failure_email()
+                    logging_stop()
                     sys.exit()
 
 
