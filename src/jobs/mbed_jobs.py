@@ -137,8 +137,9 @@ if __name__ == "__main__":
     time.sleep(3)
     ips = ["10.10.10.151", "10.10.10.152", "10.10.10.153"]
     for ip in ips:
+        Process(target=MouseMove(ip).run).start()
         Process(target=SendKeys(ip).run).start()
     time.sleep(2)
-    CloseGui("10.10.10.150").run()
+    CloseGui("10.10.10.151").run()
     for ip in ips:
         Process(target=Disconnect(ip).run).start()
