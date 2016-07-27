@@ -92,9 +92,9 @@ class Jobs():
         """
         Result of the most recent test is logged
         """
-        logging.info("Execution {} HOST {} gives:\n{}"
-                     .format(self.execution, self.host,
-                             json.dumps(RESULT, indent=4)))
+        logging.info("Execution {} HOST {} gives:"
+                     .format(self.execution, self.host))
+        logging.info("{}".format(json.dumps(RESULT, indent=2)))
 
         """
         Record time at the end of each Job
