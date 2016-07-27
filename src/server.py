@@ -242,19 +242,32 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        channel.update({"Console": key,
-                        "Computer": target
-                        }
+        channel.update([("Console", key),
+                        ("Computer", target)
+                        ]
                        )
-        single.update({"Channel": channel,
-                       "mouse": test_usb.mouse(),
-                       "keyboard": test_usb.key_b(),
-                       "video": single_video.get()
-                       }
+#         channel.update({"Console": key,
+#                         "Computer": target
+#                         }
+#                        )
+        single.update([("Channel", channel),
+                       ("mouse", test_usb.mouse()),
+                       ("keyboard", test_usb.key_b()),
+                       ("video", single_video.get())
+                       ]
                       )
-        RESULT.update({"View Single": single
-                       }
+#         single.update({"Channel": channel,
+#                        "mouse": test_usb.mouse(),
+#                        "keyboard": test_usb.key_b(),
+#                        "video": single_video.get()
+#                        }
+#                       )
+        RESULT.update(["View Single", single
+                       ]
                       )
+#         RESULT.update({"View Single": single
+#                        }
+#                       )
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -275,17 +288,26 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target
-                        }
+        channel.update([("Console 1", key),
+                        ("Console 2", key_2),
+                        ("Computer", target)
+                        ]
                        )
-        multi.update({"Channel": channel,
-                      "video": mutli_video.get()
-                      }
+#         channel.update({"Console 1": key,
+#                         "Console 2": key_2,
+#                         "Computer": target
+#                         }
+#                        )
+        multi.update([("Channel", channel),
+                      ("video", mutli_video.get())
+                      ]
                      )
-        RESULT.update({"View Multi": multi
-                       }
+#         multi.update({"Channel": channel,
+#                       "video": mutli_video.get()
+#                       }
+#                      )
+        RESULT.update(["View Multi", multi
+                       ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
