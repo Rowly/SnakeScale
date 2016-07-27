@@ -260,8 +260,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                        "video": single_video.get()
 #                        }
 #                       )
-        RESULT.update(["View Single", single
-                       ]
+        RESULT.update([("View Single", single
+                       )]
                       )
 #         RESULT.update({"View Single": single
 #                        }
@@ -305,7 +305,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                       "video": mutli_video.get()
 #                       }
 #                      )
-        RESULT.update(["View Multi", multi
+        RESULT.update([("View Multi", multi)
                        ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
