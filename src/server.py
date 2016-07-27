@@ -308,7 +308,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- With contention
         """
         # single
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -337,7 +337,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # multi
         # no contention
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         key_2 = self.get_second_key(key)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
@@ -378,7 +378,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         if host == "Win7":
             pass
         else:
-            self.start_gui(device, test_type)
+            self.start_gui(device)
             channel.clear()
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
@@ -434,7 +434,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- Shared, Exlusive, Private, nothing
         """
         # single
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -463,7 +463,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # exclusive with view
         key_2 = self.get_second_key(key)
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -498,7 +498,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -533,7 +533,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -582,7 +582,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- View, Shared, Exlusive, Private, nothing
         """
         # single
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -611,7 +611,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # private and view
         key_2 = self.get_second_key(key)
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -642,7 +642,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        }
                       )
         # private and shared
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -674,7 +674,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                       )
 
         # private and exclusive
-        self.start_gui(device, test_type)
+        self.start_gui(device)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,

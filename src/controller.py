@@ -88,12 +88,14 @@ class Jobs():
         HOST PC.
         """
         RESULT = GetResult(self.device, self.host).run()
+        RESULT = json.load(RESULT, object_pairs_hook=OrderedDict)
 
         """
         Result of the most recent test is logged
         """
         logging.info("Execution {} HOST {} gives:\n{}"
-                     .format(self.execution, self.host, json.dumps(RESULT, indent=4)))
+                     .format(self.execution, self.host,
+                             json.dumps(RESULT, indent=4)))
 
         """
         Record time at the end of each Job
