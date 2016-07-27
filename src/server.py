@@ -230,16 +230,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Single connection
         - Multiple connections
         """
-        self.start_gui(device, test_type)
+#         self.start_gui(device, test_type)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+#         MouseMove(JOB_MBEDS[key]).run()
+#         SendKeys(JOB_MBEDS[key]).run()
+#         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
         channel.update([("Console", key),
@@ -251,8 +251,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         }
 #                        )
         single.update([("Channel", channel),
-                       ("mouse", test_usb.mouse()),
-                       ("keyboard", test_usb.key_b()),
                        ("video", single_video.get())
                        ]
                       )
@@ -269,6 +267,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                        }
 #                       )
         Disconnect(JOB_MBEDS[key]).run()
+        print(RESULT)
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
