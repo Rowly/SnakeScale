@@ -63,7 +63,6 @@ class OSDConnect():
                                          self.resy,
                                          self.style,
                                          self.host)
-        print("DEBUG {}".format(payload))
         send(self.mbed_ip, str.encode(payload), path)
 
 

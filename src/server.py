@@ -222,56 +222,31 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         device = "ddx30"
         test_type = "view"
         style = "v"
-        single = OrderedDict()
-        multi = OrderedDict()
-        channel = OrderedDict()
         """
         View Connection:
         - Single connection
         - Multiple connections
         """
-#         self.start_gui(device, test_type)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-#         MouseMove(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key]).run()
-#         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        channel.update([("Console", key),
-                        ("Computer", target)
-                        ]
-                       )
-#         channel.update({"Console": key,
-#                         "Computer": target
-#                         }
-#                        )
-        single.update([("Channel", channel),
-                       ("video", single_video.get())
+        RESULT.update([("View Single",
+                        (
+                         ("Channel", (("Console", key), ("Computer", target))),
+                         ("video", single_video.get())
+                         )
+                        )
                        ]
                       )
-#         single.update({"Channel": channel,
-#                        "mouse": test_usb.mouse(),
-#                        "keyboard": test_usb.key_b(),
-#                        "video": single_video.get()
-#                        }
-#                       )
-        RESULT.update([("View Single", single
-                       )]
-                      )
-#         RESULT.update({"View Single": single
-#                        }
-#                       )
         Disconnect(JOB_MBEDS[key]).run()
-        print(RESULT)
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -287,25 +262,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        channel.update([("Console 1", key),
-                        ("Console 2", key_2),
-                        ("Computer", target)
-                        ]
-                       )
-#         channel.update({"Console 1": key,
-#                         "Console 2": key_2,
-#                         "Computer": target
-#                         }
-#                        )
-        multi.update([("Channel", channel),
-                      ("video", mutli_video.get())
-                      ]
-                     )
-#         multi.update({"Channel": channel,
-#                       "video": mutli_video.get()
-#                       }
-#                      )
-        RESULT.update([("View Multi", multi)
+        RESULT.update([("View Multi",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          "video", single_video.get()
+                          )
+                         )
+                        )
                        ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
@@ -314,10 +278,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        single = OrderedDict()
-        multi_nc = OrderedDict()
-        multi_c = OrderedDict()
-        channel = OrderedDict()
         device = "ddx30"
         test_type = "shared"
         style = "s"
@@ -330,7 +290,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -342,16 +301,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        channel.update({"Console": key,
-                        "Computer": target})
-        single.update({"Channel": channel,
-                       "mouse": test_usb.mouse(),
-                       "keyboard": test_usb.key_b(),
-                       "video": single_video.get()
-                       }
-                      )
-        RESULT.update({"Shared Single": single
-                       }
+        RESULT.update([("Shared Single",
+                        (
+                         ("Channel", (("Console", key), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
@@ -360,7 +320,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # no contention
         self.start_gui(device)
         key_2 = self.get_second_key(key)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -380,16 +339,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_nc.update({"Channel": channel,
-                         "keyboard": test_usb.key_b(style="non-contention"),
-                         "video": mutli_video.get()
-                         }
+        RESULT.update([("Shared Non Contention",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
                         )
-        RESULT.update({"Shared Non Contention": multi_nc
-                       }
+                       ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
@@ -400,7 +360,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             pass
         else:
             self.start_gui(device)
-            channel.clear()
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
                        resolution_y,
@@ -422,17 +381,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             mutli_video = Video()
             mutli_video.set(host, key)
             mutli_video.set(host, key_2)
-            channel.update({"Console 1": key,
-                            "Console 2": key_2,
-                            "Computer": target}
-                           )
-            multi_c.update({"Channel": channel,
-                            "keyboard": test_usb.key_b(style="contention"),
-                            "video": mutli_video.get()
-                            }
-                           )
-            RESULT.update({"Shared Contention": multi_c
-                           }
+            RESULT.update([("Shared Contention",
+                            (
+                             ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                             (
+                              ("video", single_video.get(),
+                               "mouse", test_usb.mouse(),
+                               "keyboard", test_usb.key_b())
+                              )
+                             )
+                            )
+                           ]
                           )
             Disconnect(JOB_MBEDS[key]).run()
             Disconnect(JOB_MBEDS[key_2]).run()
@@ -440,10 +399,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        channel = OrderedDict()
-        single = OrderedDict()
-        multi_v = OrderedDict()
-        multi_s = OrderedDict()
         device = "ddx30"
         test_type = "exclusive"
         style = "e"
@@ -456,7 +411,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -468,16 +422,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        channel.update({"Console": key,
-                        "Computer": target})
-        single.update({"Channel": channel,
-                       "mouse": test_usb.mouse(),
-                       "keyboard": test_usb.key_b(),
-                       "video": single_video.get()
-                       }
-                      )
-        RESULT.update({"Exclusive Single": single
-                       }
+        RESULT.update([("Exclusive Single",
+                        (
+                         ("Channel", (("Console", key), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
@@ -485,7 +440,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # exclusive with view
         key_2 = self.get_second_key(key)
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -503,16 +457,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_v.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Exclusive and View": multi_v
-                       }
+        RESULT.update([("Exclusive and View",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
@@ -520,7 +475,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # exclusive with shared
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -538,16 +492,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_s.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Exclusive and Shared": multi_s
-                       }
+        RESULT.update([("Exclusive and Shared",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
@@ -555,7 +510,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # exclusive with shared
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -573,16 +527,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_s.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Exclusive and Private": multi_s
-                       }
+        RESULT.update([("Exclusive and Private",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
@@ -590,9 +545,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        channel = OrderedDict()
-        single = OrderedDict()
-        multi_v = OrderedDict()
         device = "ddx30"
         test_type = "private"
         style = "p"
@@ -604,7 +556,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -616,16 +567,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        channel.update({"Console": key,
-                        "Computer": target})
-        single.update({"Channel": channel,
-                       "mouse": test_usb.mouse(),
-                       "keyboard": test_usb.key_b(),
-                       "video": single_video.get()
-                       }
-                      )
-        RESULT.update({"Private Single": single
-                       }
+        RESULT.update([("Private Single",
+                        (
+                         ("Channel", (("Console", key), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
@@ -633,7 +585,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # private and view
         key_2 = self.get_second_key(key)
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -651,20 +602,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_v.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Private and View": multi_v
-                       }
+        RESULT.update([("Private and View",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
         # private and shared
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -682,21 +633,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_v.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Private and Shared": multi_v
-                       }
+        RESULT.update([("Private and Shared",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
-
         # private and exclusive
         self.start_gui(device)
-        channel.clear()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -714,16 +664,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        channel.update({"Console 1": key,
-                        "Console 2": key_2,
-                        "Computer": target})
-        multi_v.update({"Channel": channel,
-                        "keyboard": test_usb.key_b(),
-                        "video": mutli_video.get()
-                        }
-                       )
-        RESULT.update({"Private and Exclusive": multi_v
-                       }
+        RESULT.update([("Private and Exclusive",
+                        (
+                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                         (
+                          ("video", single_video.get(),
+                           "mouse", test_usb.mouse(),
+                           "keyboard", test_usb.key_b())
+                          )
+                         )
+                        )
+                       ]
                       )
 
     def start_gui(self, device, test_type="none"):
@@ -735,12 +686,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             suffix = "3"
             path = "./"
         try:
-            gui = subprocess.Popen(["python{}".format(suffix),
-                                    "{}utilities/capture_gui.py"
-                                    .format(path)])
-            if device == "ddx30" and test_type == "view":
-                time.sleep(45)
-                gui.kill()
+            subprocess.Popen(["python{}".format(suffix),
+                              "{}utilities/capture_gui.py"
+                              .format(path)])
         except SystemExit:
             pass
 
