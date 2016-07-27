@@ -159,18 +159,23 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             print(target)
 
                         if test_type == "view":
+                            RESULT.clear()
                             self.ddx_view(host, key, resolution_x,
                                           resolution_y, target)
                         elif test_type == "shared":
+                            RESULT.clear()
                             self.ddx_shared(host, key, resolution_x,
                                             resolution_y, target)
                         elif test_type == "exclusive":
+                            RESULT.clear()
                             self.ddx_exclusive(host, key, resolution_x,
                                                resolution_y, target)
                         elif test_type == "private":
+                            RESULT.clear()
                             self.ddx_private(host, key, resolution_x,
                                              resolution_y, target)
                         elif test_type == "all":
+                            RESULT.clear()
                             self.ddx_view(host, key, resolution_x,
                                           resolution_y, target)
                             self.ddx_shared(host, key, resolution_x,
@@ -214,7 +219,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_view(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        RESULT.clear()
         device = "ddx30"
         test_type = "view"
         style = "v"
@@ -289,7 +293,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        RESULT.clear()
         single = OrderedDict()
         multi_nc = OrderedDict()
         multi_c = OrderedDict()
@@ -416,7 +419,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        RESULT.clear()
         channel = OrderedDict()
         single = OrderedDict()
         multi_v = OrderedDict()
@@ -569,7 +571,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        RESULT.clear()
         channel = OrderedDict()
         single = OrderedDict()
         multi_v = OrderedDict()
