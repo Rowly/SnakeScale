@@ -6,12 +6,16 @@ Created on Jun 29, 2016
 import sys
 import os
 import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import time
 try:
     from config import config
 except ImportError:
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from config import config
+
+
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 def login(retry=0, path=".", target="dut"):
