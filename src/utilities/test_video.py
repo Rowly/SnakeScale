@@ -38,10 +38,8 @@ class Video():
         if (source["height"] == reader["height"] and
                 source["width"] == reader["width"]):
             RESULT.append("TRUE")
-            print("TRUE")
         else:
             RESULT.append("FALSE")
-            print("FALSE")
 
     def get(self):
         global RESULT
