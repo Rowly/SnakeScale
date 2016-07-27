@@ -88,7 +88,6 @@ class Jobs():
         HOST PC.
         """
         RESULT = GetResult(self.device, self.host).run()
-        RESULT = json.loads(RESULT, object_pairs_hook=OrderedDict)
 
         """
         Result of the most recent test is logged
