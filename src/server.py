@@ -141,7 +141,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     if device == "ddx30":
                         if DEBUG:
                             key = "1"
-                            print(DEBUG)
                             print(key)
                         else:
                             key = str(random.randint(1, len(OSD_MBEDS)))
@@ -239,6 +238,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         single_video = Video()
         single_video.set(host, key)
         Disconnect(JOB_MBEDS[key]).run()
+        RESULT.update({"View Single":
+                       {
+                        "Channel": {"Console": key,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        }
+                       })
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
