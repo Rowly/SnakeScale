@@ -212,6 +212,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     else:
                         logging.info("Controller attempting to get results")
                         data = json.dumps(RESULT)
+                        if DEBUG:
+                            print(">>>>>RESULT ")
+                            print(RESULT)
+                            print(">>>>>data")
+                            print(data)
                         self.send_response(200)
                         self.send_header("Content-type", "application/json")
                         self.end_headers()
