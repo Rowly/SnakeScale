@@ -498,7 +498,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        key_2 = self.get_second_key(key)
         self.start_gui(device, test_type)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
@@ -534,7 +533,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        key_2 = self.get_second_key(key)
         self.start_gui(device, test_type)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
@@ -644,7 +642,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        }
                       )
         # private and shared
-        key_2 = self.get_second_key(key)
         self.start_gui(device, test_type)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
@@ -677,7 +674,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                       )
 
         # private and exclusive
-        key_2 = self.get_second_key(key)
         self.start_gui(device, test_type)
         channel.clear()
         OSDConnect(OSD_MBEDS[key],
