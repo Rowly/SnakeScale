@@ -58,6 +58,8 @@ class GetResult():
                 logging.info("Assert Get Result response is 200")
                 assert(r.status_code == 200)
                 if r.content is not "busy":
+                    print(">>>>r.json()")
+                    print(r.json())
                     return r.json()
                     break
                 else:
