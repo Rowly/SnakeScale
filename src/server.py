@@ -276,7 +276,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         }
 #                        })
         collector = (("Test Type", "View Multi"),
-                     ("Console", key),
+                     ("Console 1", key),
+                     ("Console 2", key_2)
                      ("Computer", target),
                      ("video", single_video.get()),
                      )
