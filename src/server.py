@@ -241,15 +241,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         "video": single_video.get(),
 #                         }
 #                        })
-        collector = (
-                     ("View Single", (
-                                      ("Channel", (
-                                                   ("Console", key), ("Computer", target)
-                                                   )
-                                       ),
-                                      ("video", single_video.get()),
-                                      )
-                      )
+        collector = (("Test Type", "View Single"),
+                     ("Console", key),
+                     ("Computer", target),
+                     ("video", single_video.get()),
                      )
         RESULT.update(collector)
         Disconnect(JOB_MBEDS[key]).run()
@@ -280,17 +275,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         "video": single_video.get(),
 #                         }
 #                        })
-        collector = (
-                     ("View Multi", (
-                                      ("Channel", (
-                                                   ("Console 1", key),
-                                                   ("Console 2", key_2),
-                                                   ("Computer", target)
-                                                   )
-                                       ),
-                                      ("video", single_video.get())
-                                      )
-                      )
+        collector = (("Test Type", "View Multi"),
+                     ("Console", key),
+                     ("Computer", target),
+                     ("video", single_video.get()),
                      )
         RESULT.update(collector)
         Disconnect(JOB_MBEDS[key]).run()
