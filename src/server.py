@@ -233,21 +233,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         single_video = Video()
         single_video.set(host, key)
-        collect = ("View Single",
-                   (
-                    ("Channel", (("Console", key), ("Computer", target))),
-                    ("video", single_video.get())
-                    )
-                   )
-#         RESULT.update([("View Single",
-#                         (
-#                          ("Channel", (("Console", key), ("Computer", target))),
-#                          ("video", single_video.get())
-#                          )
-#                         )
-#                        ]
-#                       )
-        RESULT.update(dict([collect]))
+        RESULT.update({"View Single":
+                      {
+                        "Channel": {"Console": key,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        }
+                       })
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -267,23 +260,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        collect = ("View Multi",
-                   (
-                    ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                    ("video", single_video.get())
-                    )
-                   )
-#         RESULT.update([("View Multi",
-#                         (
-#                          ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-#                          (
-#                           "video", single_video.get()
-#                           )
-#                          )
-#                         )
-#                        ]
-#                       )
-        RESULT.update(dict([collect]))
+        RESULT.update({"View Multi":
+                      {
+                        "Channel": {"Console 1": key,
+                                    "Console 2": key_2,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        }
+                       })
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
@@ -311,18 +296,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update([("Shared Single",
-                        (
-                         ("Channel", (("Console", key), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Shared Single":
+                       {
+                         "Channel": {"Console": key,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -349,18 +332,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update([("Shared Non Contention",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Shared Non Contention":
+                      {
+                        "Channel": {"Console 1": key,
+                                    "Console 2": key_2,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        "mouse": test_usb.mouse(),
+                        "keyboard": test_usb.key_b()
+                        }
+                       })
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
@@ -391,18 +373,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             mutli_video = Video()
             mutli_video.set(host, key)
             mutli_video.set(host, key_2)
-            RESULT.update([("Shared Contention",
-                            (
-                             ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                             (
-                              ("video", single_video.get(),
-                               "mouse", test_usb.mouse(),
-                               "keyboard", test_usb.key_b())
-                              )
-                             )
-                            )
-                           ]
-                          )
+            RESULT.update({"Shared Contention":
+                      {
+                        "Channel": {"Console 1": key,
+                                    "Console 2": key_2,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        "mouse": test_usb.mouse(),
+                        "keyboard": test_usb.key_b()
+                        }
+                       })
             Disconnect(JOB_MBEDS[key]).run()
             Disconnect(JOB_MBEDS[key_2]).run()
             time.sleep(3)
@@ -430,18 +411,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update([("Exclusive Single",
-                        (
-                         ("Channel", (("Console", key), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Exclusive Single":
+                       {
+                         "Channel": {"Console": key,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
 
@@ -465,18 +444,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update([("Exclusive and View",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Exclusive and View":
+                      {
+                        "Channel": {"Console 1": key,
+                                    "Console 2": key_2,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        "mouse": test_usb.mouse(),
+                        "keyboard": test_usb.key_b()
+                        }
+                       })
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
@@ -500,18 +478,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update([("Exclusive and Shared",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Exclusive and Shared":
+                      {
+                        "Channel": {"Console 1": key,
+                                    "Console 2": key_2,
+                                    "Computer": target
+                                    },
+                        "video": single_video.get(),
+                        "mouse": test_usb.mouse(),
+                        "keyboard": test_usb.key_b()
+                        }
+                       })
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
@@ -535,18 +512,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update([("Exclusive and Private",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Exclusive and Private":
+                       {
+                         "Channel": {"Console 1": key,
+                                     "Console 2": key_2,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
@@ -573,18 +549,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         CloseGui(JOB_MBEDS[key]).run()
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update([("Private Single",
-                        (
-                         ("Channel", (("Console", key), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Private Single":
+                       {
+                         "Channel": {"Console": key,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -608,18 +582,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update([("Private and View",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Private and View":
+                       {
+                         "Channel": {"Console 1": key,
+                                     "Console 2": key_2,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         # private and shared
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
@@ -639,18 +612,17 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update([("Private and Shared",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          ("video", single_video.get(),
-                           "mouse", test_usb.mouse(),
-                           "keyboard", test_usb.key_b())
-                          )
-                         )
-                        )
-                       ]
-                      )
+        RESULT.update({"Private and Shared":
+                       {
+                         "Channel": {"Console 1": key,
+                                     "Console 2": key_2,
+                                     "Computer": target
+                                     },
+                         "video": single_video.get(),
+                         "mouse": test_usb.mouse(),
+                         "keyboard": test_usb.key_b()
+                         }
+                       })
         # private and exclusive
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
