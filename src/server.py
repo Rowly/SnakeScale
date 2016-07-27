@@ -280,13 +280,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         "video": single_video.get(),
 #                         }
 #                        })
-        collector = (("Test Type", "View Multi"),
-                     ("Console 1", key),
-                     ("Console 2", key_2),
-                     ("Computer", target),
-                     ("video", single_video.get()),
-                     )
-        RESULT.update(collector)
+        collector2 = (("Test Type", "View Multi"),
+                      ("Console 1", key),
+                      ("Console 2", key_2),
+                      ("Computer", target),
+                      ("video", single_video.get()),
+                      )
+        RESULT.update(collector2)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
