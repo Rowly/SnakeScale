@@ -59,7 +59,9 @@ class EmailNotifier():
                Execution number {}
                Response from most recent test:
                {}
-               Location of test log /var/log/snakescale-ddx/result.log
+               Location of test log:
+               vnc to 192.168.42.179
+               directory /var/log/snakescale-ddx/result.log
                """.format(self.device,
                           config.get_ddx_ut_ip(path),
                           name,
