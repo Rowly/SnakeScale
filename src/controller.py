@@ -120,10 +120,6 @@ class Jobs():
             if test_type == "view":
                 if ("FALSE" in RESULT["View Single"]["video"] or
                         "FALSE" in RESULT["View Multi"]["video"]):
-#                 if ("TRUE" in RESULT["View Single"]["mouse"] or
-#                         "TRUE" in RESULT["View Single"]["keyboard"] or
-#                         "FALSE" in RESULT["View Single"]["video"] or
-#                         "FALSE" in RESULT["View Multi"]["video"]):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
