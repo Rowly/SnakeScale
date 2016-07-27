@@ -219,8 +219,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_view(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        device = "ddx30"
-        test_type = "view"
         style = "v"
         """
         View Connection:
@@ -235,14 +233,21 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         single_video = Video()
         single_video.set(host, key)
-        RESULT.update([("View Single",
-                        (
-                         ("Channel", (("Console", key), ("Computer", target))),
-                         ("video", single_video.get())
-                         )
-                        )
-                       ]
-                      )
+        collect = ("View Single",
+                   (
+                    ("Channel", (("Console", key), ("Computer", target))),
+                    ("video", single_video.get())
+                    )
+                   )
+#         RESULT.update([("View Single",
+#                         (
+#                          ("Channel", (("Console", key), ("Computer", target))),
+#                          ("video", single_video.get())
+#                          )
+#                         )
+#                        ]
+#                       )
+        RESULT.update(dict(collect))
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -262,24 +267,29 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
-        RESULT.update([("View Multi",
-                        (
-                         ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
-                         (
-                          "video", single_video.get()
-                          )
-                         )
-                        )
-                       ]
-                      )
+        collect = ("View Multi",
+                   (
+                    ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+                    ("video", single_video.get())
+                    )
+                   )
+#         RESULT.update([("View Multi",
+#                         (
+#                          ("Channel", (("Console 1", key), ("Console 2", key_2), ("Computer", target))),
+#                          (
+#                           "video", single_video.get()
+#                           )
+#                          )
+#                         )
+#                        ]
+#                       )
+        RESULT.update(dict(collect))
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        device = "ddx30"
-        test_type = "shared"
         style = "s"
         """
         Shared Connection:
@@ -289,7 +299,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- With contention
         """
         # single
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -318,7 +328,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # multi
         # no contention
-        self.start_gui(device)
+        self.start_gui()
         key_2 = self.get_second_key(key)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -359,7 +369,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         if host == "Win7":
             pass
         else:
-            self.start_gui(device)
+            self.start_gui()
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
                        resolution_y,
@@ -399,8 +409,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        device = "ddx30"
-        test_type = "exclusive"
         style = "e"
         """
         Exclusive Connection:
@@ -410,7 +418,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- Shared, Exlusive, Private, nothing
         """
         # single
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -439,7 +447,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # exclusive with view
         key_2 = self.get_second_key(key)
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -474,7 +482,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -509,7 +517,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         Disconnect(JOB_MBEDS[key_2]).run()
 
         # exclusive with shared
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -545,8 +553,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
-        device = "ddx30"
-        test_type = "private"
         style = "p"
         """
         Private Connection:
@@ -555,7 +561,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- View, Shared, Exlusive, Private, nothing
         """
         # single
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -584,7 +590,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # private and view
         key_2 = self.get_second_key(key)
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -615,7 +621,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        ]
                       )
         # private and shared
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -646,7 +652,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        ]
                       )
         # private and exclusive
-        self.start_gui(device)
+        self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -677,7 +683,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        ]
                       )
 
-    def start_gui(self, device, test_type="none"):
+    def start_gui(self, test_type="none"):
         system = platform.system()
         if system == "Win32" or system == "Windows":
             suffix = ""
