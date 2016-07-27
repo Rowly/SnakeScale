@@ -247,7 +247,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         )
 #                        ]
 #                       )
-        RESULT.update(dict(collect))
+        RESULT.update(dict([collect]))
         Disconnect(JOB_MBEDS[key]).run()
         time.sleep(3)
 
@@ -283,7 +283,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 #                         )
 #                        ]
 #                       )
-        RESULT.update(dict(collect))
+        RESULT.update(dict([collect]))
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
         time.sleep(3)
