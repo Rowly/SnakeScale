@@ -24,14 +24,14 @@ from collections import OrderedDict
 from multiprocessing import Process
 try:
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, Disconnect, Av4proConnect
+        CloseGui, MouseClick, Disconnect, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, Disconnect, Av4proConnect
+        CloseGui, MouseClick, Disconnect, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
@@ -329,6 +329,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    style,
                    target).run()
         time.sleep(15)
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         CloseGui(JOB_MBEDS[key_2]).run()
@@ -368,7 +369,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        style,
                        target).run()
             time.sleep(15)
-
+            MouseClick(JOB_MBEDS[key]).run()
             for k in [key, key_2]:
                 Process(target=SendKeys(JOB_MBEDS[k]).run).start()
             time.sleep(0.5)
@@ -443,6 +444,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "v",
                    target).run()
         time.sleep(15)
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -477,6 +479,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "s",
                    target).run()
         time.sleep(15)
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -511,6 +514,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "p",
                    target).run()
         time.sleep(15)
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -581,8 +585,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "v",
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -613,8 +616,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "s",
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
@@ -645,8 +647,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "e",
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)

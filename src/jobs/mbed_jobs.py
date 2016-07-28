@@ -90,6 +90,18 @@ class CloseGui():
         send(self.mbed_ip, str.encode("close\0"), path)
 
 
+class MouseClick():
+
+    def __init__(self, mbed_ip):
+        self.mbed_ip = mbed_ip
+
+    def run(self, path="."):
+        logging.info("MBED {} instructed to click left mouse"
+                     .format(self.mbed_ip))
+        time.sleep(1)
+        send(self.mbed_ip, str.encode("click\0"), path)
+
+
 class MouseMove():
 
     def __init__(self, mbed_ip):
