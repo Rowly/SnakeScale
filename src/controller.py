@@ -147,8 +147,10 @@ class Jobs():
                         "FALSE" in RESULT["Shared Single"]["video"] or
                         "FALSE" in RESULT["Shared Single"]["mouse"] or
                         RESULT["Shared Single"]["keyboard"] == "FALSE" or
+
                         "FALSE" in RESULT["Shared Non Contention"]["video"] or
                         RESULT["Shared Non Contention"]["keyboard"] == "TRUE" or
+
                         "FALSE" in RESULT["Shared Contention"]["video"] or
                         RESULT["Shared Contention"]["keyboard"] == "TRUE"
                         ):
