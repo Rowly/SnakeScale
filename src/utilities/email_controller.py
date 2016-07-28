@@ -30,7 +30,7 @@ class EmailNotifier():
                  execution, response):
         self.device = device
         self.host = host,
-        self.test_type = test_type
+        self.test_type = test_type.upper()
         self.start = start
         self.end = end
         self.execution = execution

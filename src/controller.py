@@ -179,15 +179,17 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "private":
-                if ("FALSE" in RESULT["Private Single"]["video"] or
+                if (
+                        "FALSE" in RESULT["Private Single"]["video"] or
                         RESULT["Private Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Private Single"]["mouse"] or
                         RESULT["Private and View"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and View"]["keyboard"] == "FALSE" or
+                        RESULT["Private and View"]["keyboard"] == "TRUE" or
                         RESULT["Private and Shared"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and Shared"]["keyboard"] == "FALSE" or
+                        RESULT["Private and Shared"]["keyboard"] == "TRUE" or
                         RESULT["Private and Exclusive"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and Exclusive"]["keyboard"] == "FALSE"):
+                        RESULT["Private and Exclusive"]["keyboard"] == "TRUE"
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
