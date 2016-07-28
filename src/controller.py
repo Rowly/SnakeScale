@@ -141,9 +141,9 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "shared":
-                if (RESULT["Shared Single"]["mouse"] == "FALSE" or
+                if ("FALSE" in RESULT["Shared Single"]["video"] or
+                        "FALSE" in RESULT["Shared"]["mouse"] or
                         RESULT["Shared Single"]["keyboard"] == "FALSE" or
-                        "FALSE" in RESULT["Shared Single"]["video"] or
                         RESULT["Shared Non Contention"]["keyboard"] == "FALSE" or
                         RESULT["Shared Non Contention"]["video"] == "FALSE" or
                         RESULT["Shared Contention"]["keyboard"] == "FALSE" or
@@ -159,19 +159,15 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "exclusive":
-                if (RESULT["Exclusive Single"]["mouse"] == "FALSE" or
+                if ("FALSE" in RESULT["Exclusive Single"]["video"] or
                         RESULT["Exclusive Single"]["keyboard"] == "FALSE" or
-                        RESULT["Exclusive Single"]["mouse"] == "FALSE" or
-                        "FALSE" in RESULT["Exclusive Single"]["video"] or
-                        RESULT["Exclusive and View"]["video"] == "FALSE" or
+                        "FALSE" in RESULT["Exclusive Single"]["mouse"] or
+                        "FALSE" in RESULT["Exclusive and View"]["video"] or
                         RESULT["Exclusive and View"]["keyboard"] == "TRUE" or
-                        RESULT["Exclusive and View"]["mouse"] == "TRUE" or
                         RESULT["Exclusive and Shared"]["video"] == ["TRUE", "TRUE"] or
                         RESULT["Exclusive and Shared"]["keyboard"] == "TRUE" or
-                        RESULT["Exclusive and Shared"]["mouse"] == "TRUE" or
                         RESULT["Exclusive and Private"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Exclusive and Private"]["keyboard"] == "TRUE" or
-                        RESULT["Exclusive and Private"]["mouse"] == "TRUE"):
+                        RESULT["Exclusive and Private"]["keyboard"] == "TRUE"):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -183,19 +179,15 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "private":
-                if (RESULT["Private Single"]["mouse"] == "FALSE" or
+                if ("FALSE" in RESULT["Private Single"]["video"] or
                         RESULT["Private Single"]["keyboard"] == "FALSE" or
-                        RESULT["Private Single"]["mouse"] == "FALSE" or
-                        "FALSE" in RESULT["Private Single"]["video"] or
+                        "FALSE" in RESULT["Private Single"]["mouse"] or
                         RESULT["Private and View"]["video"] == ["TRUE", "TRUE"] or
                         RESULT["Private and View"]["keyboard"] == "TRUE" or
-                        RESULT["Private and View"]["mouse"] == "TRUE" or
                         RESULT["Private and Shared"]["video"] == ["TRUE", "TRUE"] or
                         RESULT["Private and Shared"]["keyboard"] == "TRUE" or
-                        RESULT["Private and Shared"]["mouse"] == "TRUE" or
                         RESULT["Private and Exclusive"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and Exclusive"]["keyboard"] == "TRUE" or
-                        RESULT["Private and Exclusive"]["mouse"] == "TRUE"):
+                        RESULT["Private and Exclusive"]["keyboard"] == "TRUE"):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,

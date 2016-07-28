@@ -457,7 +457,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                     "Computer": target
                                     },
                         "video": mutli_video.get(),
-                        "mouse": test_usb.mouse(),
                         "keyboard": test_usb.key_b()
                         }
                        })
@@ -492,7 +491,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                     "Computer": target
                                     },
                         "video": mutli_video.get(),
-                        "mouse": test_usb.mouse(),
                         "keyboard": test_usb.key_b()
                         }
                        })
@@ -527,7 +525,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Computer": target
                                      },
                          "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
                        })
@@ -563,8 +560,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Computer": target
                                      },
                          "video": single_video.get(),
-                         "mouse": test_usb.mouse(),
-                         "keyboard": test_usb.key_b()
+                         "keyboard": test_usb.key_b(),
+                         "mouse": test_usb.mouse()
                          }
                        })
         Disconnect(JOB_MBEDS[key]).run()
@@ -598,7 +595,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Computer": target
                                      },
                          "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
                        })
@@ -633,7 +629,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Computer": target
                                      },
                          "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
                        })
@@ -668,7 +663,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Computer": target
                                      },
                          "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
                        })
