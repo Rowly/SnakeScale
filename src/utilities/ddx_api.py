@@ -15,15 +15,15 @@ except ImportError:
     from config import config
 
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # @UndefinedVariable
 
 
-def login(retry=0, path=".", target="dut"):
-    if target == "dut":
+def login(retry=0, path=".", unit="dut"):
+    if unit == "dut":
         ip = config.get_ddx_ut_ip(path)
-    elif target == "source":
+    elif unit == "source":
         ip = config.get_ddx_source_ip(path)
-    elif target == "reader":
+    elif unit == "reader":
         ip = config.get_ddx_reader_ip(path)
     target = "api/auth/local"
     payload = {"username": "admin",

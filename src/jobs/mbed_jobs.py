@@ -10,10 +10,10 @@ import socket
 import time
 from multiprocessing import Process
 try:
-    from config import config
+    from config import config  # @UnusedImport
 except:
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-    from config import config
+    from config import config  # @Reimport
 
 
 def send(mbed_ip, payload, path="."):

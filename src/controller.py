@@ -109,13 +109,23 @@ class Jobs():
 #                 self.execution % 50 == 0):
         if self.start - end_time > timedelta(1):
             time.sleep(2)
-            EmailNotifier(self.device,
-                          self.host,
-                          self.test_type,
-                          self.start.strftime(T_FORMAT),
-                          end_time.strftime(T_FORMAT),
-                          self.execution,
-                          RESULT).send_update_email()
+            if self.device == "ddx30":
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_ddx_update_email()
+            elif self.device == "av4pro":
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_av4pro_update_email()
+
         if self.device == "ddx30":
             if test_type == "view":
                 if ("FALSE" in RESULT["View Single"]["video"] or
@@ -127,7 +137,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_failure_email()
+                                  RESULT).send_ddx_failure_email()
                     logging_stop()
                     sys.exit()
             elif test_type == "shared":
@@ -145,7 +155,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_failure_email()
+                                  RESULT).send_ddx_failure_email()
                     logging_stop()
                     sys.exit()
             elif test_type == "exclusive":
@@ -169,7 +179,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_failure_email()
+                                  RESULT).send_ddx_failure_email()
                     logging_stop()
                     sys.exit()
             elif test_type == "private":
@@ -193,7 +203,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_failure_email()
+                                  RESULT).send_ddx_failure_email()
                     logging_stop()
                     sys.exit()
         elif device == "av4pro":
@@ -205,7 +215,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_failure_email()
+                                  RESULT).send_av4pro_failure_email()
                     logging_stop()
                     sys.exit()
 
@@ -254,7 +264,7 @@ if __name__ == '__main__':
     parser.add_argument("test_type",
                         type=str,
                         choices=test_types,
-                        help="Type of test to send_failure_email")
+                        help="Type of test to send_ddx_failure_email")
     parser.add_argument("--resolution",
                         type=str,
                         default="1920x1080",

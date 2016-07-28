@@ -37,7 +37,71 @@ class EmailNotifier():
         self.response = response
         self.recipients = config.get_email_recipients(".")
 
-    def send_failure_email(self, path="."):
+    def send_av4pro_failure_email(self, path="."):
+        fail_body = """
+               Test for {}
+               Begun {}
+               Ended {}
+               Execution number {}
+               Response from most recent test:
+               {}
+               Location of test log:
+               vnc to 192.168.42.179
+               directory /var/log/snakescale-av4/result.log
+               """.format(self.device,
+                          self.start,
+                          self.end,
+                          self.execution,
+                          json.dumps(self.response, indent=4))
+        commaspace = ", "
+
+        msg = MIMEText(fail_body)
+
+        msg["Subject"] = "AV4Pro Failure"
+        msg["From"] = "ddx30soaktest@example.com"
+        msg["To"] = commaspace.join(self.recipients)
+
+        try:
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
+            smtpObj.send_message(msg)
+            smtpObj.quit()
+        except SMTPException:
+            logging.info("Failed to send send_av4pro_failure_email email")
+
+    def send_av4pro_update_email(self, path="."):
+        fail_body = """
+               Test for {}
+               Begun {}
+               Ended {}
+               Execution number {}
+               Response from most recent test:
+               {}
+               Location of test log:
+               vnc to 192.168.42.179
+               directory /var/log/snakescale-av4/result.log
+               """.format(self.device,
+                          self.start,
+                          self.end,
+                          self.execution,
+                          json.dumps(self.response, indent=4))
+        commaspace = ", "
+
+        msg = MIMEText(fail_body)
+
+        msg["Subject"] = "AV4Pro Update Email"
+        msg["From"] = "ddx30soaktest@example.com"
+        msg["To"] = commaspace.join(self.recipients)
+
+        try:
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
+            smtpObj.send_message(msg)
+            smtpObj.quit()
+        except SMTPException:
+            logging.info("Failed to send send_av4pro_failure_email email")
+
+    def send_ddx_failure_email(self, path="."):
         token = ddx_api.login(3, path)
         info = ddx_api.get(token, "systemInfo", path)
         version = info["firmwareVersion"]
@@ -114,9 +178,9 @@ class EmailNotifier():
             smtpObj.sendmail(sender, self.recipients, outer.as_string())
             smtpObj.quit()
         except SMTPException:
-            logging.info("Failed to send send_failure_email email")
+            logging.info("Failed to send send_ddx_failure_email email")
 
-    def send_update_email(self, path="."):
+    def send_ddx_update_email(self, path="."):
         token = ddx_api.login(3)
         info = ddx_api.get(token, "systemInfo")
         version = info["firmwareVersion"]
@@ -156,7 +220,7 @@ class EmailNotifier():
             smtpObj.send_message(msg)
             smtpObj.quit()
         except SMTPException:
-            logging.info("Failed to send send_failure_email email")
+            logging.info("Failed to send send_ddx_failure_email email")
 
     def get_dump_as_file(self, token, endpoint, path):
         content = ddx_api.get(token, endpoint, path)
@@ -171,4 +235,4 @@ if __name__ == "__main__":
     end = datetime.datetime.now().strftime(T_FORMAT)
     em = EmailNotifier("ddx30", "Ubuntu", "exclusive",
                        start, end, 1, "testing")
-    em.send_failure_email("..")
+    em.send_ddx_failure_email("..")
