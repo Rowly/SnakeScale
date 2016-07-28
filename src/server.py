@@ -581,6 +581,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    "v",
                    target).run()
         time.sleep(15)
+        SendKeys(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
