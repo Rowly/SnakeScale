@@ -599,67 +599,67 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          }
                        })
         # private and shared
-        self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(0.5)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   "s",
-                   target).run()
-        time.sleep(15)
-        SendKeys(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
-        CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update({"Private and Shared":
-                       {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
-                                     "Computer": target
-                                     },
-                         "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
-                         "keyboard": test_usb.key_b()
-                         }
-                       })
+#         self.start_gui()
+#         OSDConnect(OSD_MBEDS[key],
+#                    resolution_x,
+#                    resolution_y,
+#                    style,
+#                    target).run()
+#         time.sleep(0.5)
+#         OSDConnect(OSD_MBEDS[key_2],
+#                    resolution_x,
+#                    resolution_y,
+#                    "s",
+#                    target).run()
+#         time.sleep(15)
+#         SendKeys(JOB_MBEDS[key]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+#         mutli_video = Video()
+#         mutli_video.set(host, key)
+#         mutli_video.set(host, key_2)
+#         CloseGui(JOB_MBEDS[key]).run()
+#         RESULT.update({"Private and Shared":
+#                        {
+#                          "Channel": {"Console 1": key,
+#                                      "Console 2": key_2,
+#                                      "Computer": target
+#                                      },
+#                          "video": mutli_video.get(),
+#                          "mouse": test_usb.mouse(),
+#                          "keyboard": test_usb.key_b()
+#                          }
+#                        })
         # private and exclusive
-        self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   target).run()
-        time.sleep(0.5)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   "e",
-                   target).run()
-        time.sleep(15)
-        SendKeys(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
-        CloseGui(JOB_MBEDS[key]).run()
-        RESULT.update({"Private and Exclusive":
-                       {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
-                                     "Computer": target
-                                     },
-                         "video": mutli_video.get(),
-                         "mouse": test_usb.mouse(),
-                         "keyboard": test_usb.key_b()
-                         }
-                       })
+#         self.start_gui()
+#         OSDConnect(OSD_MBEDS[key],
+#                    resolution_x,
+#                    resolution_y,
+#                    style,
+#                    target).run()
+#         time.sleep(0.5)
+#         OSDConnect(OSD_MBEDS[key_2],
+#                    resolution_x,
+#                    resolution_y,
+#                    "e",
+#                    target).run()
+#         time.sleep(15)
+#         SendKeys(JOB_MBEDS[key]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+#         mutli_video = Video()
+#         mutli_video.set(host, key)
+#         mutli_video.set(host, key_2)
+#         CloseGui(JOB_MBEDS[key]).run()
+#         RESULT.update({"Private and Exclusive":
+#                        {
+#                          "Channel": {"Console 1": key,
+#                                      "Console 2": key_2,
+#                                      "Computer": target
+#                                      },
+#                          "video": mutli_video.get(),
+#                          "mouse": test_usb.mouse(),
+#                          "keyboard": test_usb.key_b()
+#                          }
+#                        })
 
     def start_gui(self, test_type="none"):
         system = platform.system()
