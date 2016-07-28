@@ -426,8 +426,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
+        time.sleep(3)
 
         # exclusive with view
         key_2 = self.get_second_key(key)
@@ -461,9 +461,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "keyboard": test_usb.key_b()
                         }
                        })
-        time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
 
         # exclusive with shared
         self.start_gui()
@@ -496,9 +496,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "keyboard": test_usb.key_b()
                         }
                        })
-        time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
 
         # exclusive with shared
         self.start_gui()
@@ -531,9 +531,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        time.sleep(3)
         Disconnect(JOB_MBEDS[key]).run()
         Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
@@ -602,6 +602,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
         # private and shared
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
@@ -633,6 +637,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
+
         # private and exclusive
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
@@ -664,6 +672,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
+        Disconnect(JOB_MBEDS[key]).run()
+        Disconnect(JOB_MBEDS[key_2]).run()
+        time.sleep(3)
 
     def start_gui(self, test_type="none"):
         system = platform.system()
