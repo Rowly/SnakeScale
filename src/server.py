@@ -152,8 +152,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         elif host == "Win7":
                             target = random.choice(["11", "12", "13",
                                                     "14", "15", "16",
-                                                    "17", "18", "19",
-                                                    "20"])
+                                                    "17", "18", "19"])
                         if DEBUG:
                             print(target)
 
@@ -233,6 +232,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(15)
         single_video = Video()
@@ -249,6 +253,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -293,6 +307,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(15)
         MouseMove(JOB_MBEDS[key]).run()
@@ -317,6 +336,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # no contention
         self.start_gui()
         key_2 = self.get_second_key(key)
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -357,6 +386,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             pass
         else:
             self.start_gui()
+            OSDConnect(OSD_MBEDS[key],
+                       resolution_x,
+                       resolution_y,
+                       style,
+                       "20").run()
+            OSDConnect(OSD_MBEDS[key_2],
+                       resolution_x,
+                       resolution_y,
+                       style,
+                       "20").run()
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
                        resolution_y,
@@ -409,6 +448,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(15)
         MouseMove(JOB_MBEDS[key]).run()
@@ -430,8 +474,18 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         # exclusive with view
-        key_2 = self.get_second_key(key)
         self.start_gui()
+        key_2 = self.get_second_key(key)
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -470,6 +524,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(0.5)
         OSDConnect(OSD_MBEDS[key_2],
@@ -500,6 +564,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # exclusive with shared
         self.start_gui()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()        
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -547,6 +621,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(15)
         MouseMove(JOB_MBEDS[key]).run()
@@ -570,6 +649,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # private and view
         key_2 = self.get_second_key(key)
         self.start_gui()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -608,6 +697,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
                    target).run()
         time.sleep(0.5)
         OSDConnect(OSD_MBEDS[key_2],
@@ -638,6 +737,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # private and exclusive
         self.start_gui()
+        OSDConnect(OSD_MBEDS[key],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
+        OSDConnect(OSD_MBEDS[key_2],
+                   resolution_x,
+                   resolution_y,
+                   style,
+                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,

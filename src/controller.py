@@ -128,8 +128,10 @@ class Jobs():
 
         if self.device == "ddx30":
             if test_type == "view":
-                if ("FALSE" in RESULT["View Single"]["video"] or
-                        "FALSE" in RESULT["View Multi"]["video"]):
+                if (
+                        "FALSE" in RESULT["View Single"]["video"] or
+                        "FALSE" in RESULT["View Multi"]["video"]
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -141,13 +143,15 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "shared":
-                if ("FALSE" in RESULT["Shared Single"]["video"] or
+                if (
+                        "FALSE" in RESULT["Shared Single"]["video"] or
                         "FALSE" in RESULT["Shared"]["mouse"] or
                         RESULT["Shared Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Shared Non Contention"]["video"] or
                         RESULT["Shared Non Contention"]["keyboard"] == "TRUE" or
                         "FALSE" in RESULT["Shared Contention"]["video"] or
-                        RESULT["Shared Contention"]["keyboard"] == "TRUE"):
+                        RESULT["Shared Contention"]["keyboard"] == "TRUE"
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -159,7 +163,8 @@ class Jobs():
                     logging_stop()
                     sys.exit()
             elif test_type == "exclusive":
-                if ("FALSE" in RESULT["Exclusive Single"]["video"] or
+                if (
+                        "FALSE" in RESULT["Exclusive Single"]["video"] or
                         RESULT["Exclusive Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Exclusive Single"]["mouse"] or
                         "FALSE" in RESULT["Exclusive and View"]["video"] or
@@ -167,7 +172,8 @@ class Jobs():
                         RESULT["Exclusive and Shared"]["video"] == ["TRUE", "TRUE"] or
                         RESULT["Exclusive and Shared"]["keyboard"] == "TRUE" or
                         RESULT["Exclusive and Private"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Exclusive and Private"]["keyboard"] == "TRUE"):
+                        RESULT["Exclusive and Private"]["keyboard"] == "TRUE"
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
