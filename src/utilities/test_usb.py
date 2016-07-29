@@ -84,5 +84,5 @@ def mouse(path="./dump/test.txt"):
 
 if __name__ == "__main__":
     data = json.dumps({"mouse": mouse("../dump/test.txt"),
-                       "keyb": key_b("../dump/test.txt")}, indent=4)
+                       "keyb": key_b("../dump/test.txt", "non-contention")}, indent=4)
     print(data)
