@@ -223,8 +223,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
     def reset_to_osd(self):
         # ensure all consoles are on the OSD before tests start
         for i in ["1", "2", "3", "4", "5"]:
-            Process(target=OpenOSD(JOB_MBEDS[i]).run).start()
-        time.sleep(3)
+            OpenOSD(JOB_MBEDS[i]).run()
+            time.sleep(1)
 
     def ddx_view(self, host, key, resolution_x, resolution_y, target):
         global RESULT
