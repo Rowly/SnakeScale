@@ -113,7 +113,7 @@ class MouseMove():
         send(self.mbed_ip, str.encode("mouse\0"), path)
 
 
-class Disconnect():
+class OpenOSD():
 
     def __init__(self, mbed_ip):
         self.mbed_ip = mbed_ip
@@ -153,4 +153,4 @@ if __name__ == "__main__":
     time.sleep(2)
     CloseGui("10.10.10.151").run()
     for ip in ips:
-        Process(target=Disconnect(ip).run).start()
+        Process(target=OpenOSD(ip).run).start()

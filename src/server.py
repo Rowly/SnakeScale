@@ -24,14 +24,14 @@ from collections import OrderedDict
 from multiprocessing import Process
 try:
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, MouseClick, Disconnect, Av4proConnect
+        CloseGui, MouseClick, OpenOSD, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, MouseClick, Disconnect, Av4proConnect
+        CloseGui, MouseClick, OpenOSD, Av4proConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
@@ -139,6 +139,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     BUSY = True
 
                     if device == "ddx30":
+                        # ensure all consoles are on the OSD before tests start
+                        for i in ["1", "2", "3", "4", "5"]:
+                            Process(target=OpenOSD(JOB_MBEDS[i]).run).start()
+
                         if DEBUG:
                             key = "1"
                             print(key)
@@ -232,17 +236,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
-                   "20").run()
-        time.sleep(3)
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
                    target).run()
         time.sleep(15)
         single_video = Video()
         single_video.set(host, key)
-        Disconnect(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
         RESULT.update({"View Single":
                        {
                         "Channel": {"Console": key,
@@ -254,18 +252,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -290,8 +276,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "video": single_video.get(),
                         }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
@@ -306,12 +292,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(1)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -333,25 +313,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         # multi
         # no contention
         self.start_gui()
         key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -383,8 +351,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "keyboard": test_usb.key_b("non-contention")
                         }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
         # contention
@@ -397,18 +365,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                            })
         else:
             self.start_gui()
-            OSDConnect(OSD_MBEDS[key],
-                       resolution_x,
-                       resolution_y,
-                       style,
-                       "20").run()
-            time.sleep(1)
-            OSDConnect(OSD_MBEDS[key_2],
-                       resolution_x,
-                       resolution_y,
-                       style,
-                       "20").run()
-            time.sleep(3)
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
                        resolution_y,
@@ -440,8 +396,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             "keyboard": test_usb.key_b("contention")
                             }
                            })
-            Disconnect(JOB_MBEDS[key]).run()
-            Disconnect(JOB_MBEDS[key_2]).run()
+            OpenOSD(JOB_MBEDS[key]).run()
+            OpenOSD(JOB_MBEDS[key_2]).run()
             time.sleep(3)
 
     def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
@@ -456,12 +412,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -483,24 +433,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         # exclusive with view
         self.start_gui()
         key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -514,7 +452,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -525,28 +464,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                     "Console 2": key_2,
                                     "Computer": target
                                     },
-                        "video": mutli_video.get(),
-                        "keyboard": test_usb.key_b()
+                        "mouse": test_usb.mouse()
                         }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
         # exclusive with shared
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -560,7 +486,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -571,27 +498,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                     "Console 2": key_2,
                                     "Computer": target
                                     },
-                        "video": mutli_video.get(),
-                        "keyboard": test_usb.key_b()
+                        "mouse": test_usb.mouse()
                         }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
         # exclusive with shared
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -605,7 +520,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -616,12 +532,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Console 2": key_2,
                                      "Computer": target
                                      },
-                         "video": mutli_video.get(),
-                         "keyboard": test_usb.key_b()
+                         "mouse": test_usb.mouse()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
@@ -635,11 +550,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         """
         # single
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -661,7 +571,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
         time.sleep(3)
 
         # private and view
@@ -671,18 +581,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_x,
                    resolution_y,
                    style,
-                   "20").run()
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
                    target).run()
-        time.sleep(0.5)
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
@@ -690,7 +590,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -701,26 +602,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Console 2": key_2,
                                      "Computer": target
                                      },
-                         "video": mutli_video.get(),
-                         "keyboard": test_usb.key_b()
+                         "mouse": test_usb.mouse()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
         # private and shared
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -734,7 +624,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -745,26 +636,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Console 2": key_2,
                                      "Computer": target
                                      },
-                         "video": mutli_video.get(),
-                         "keyboard": test_usb.key_b()
+                         "mouse": test_usb.mouse()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
         # private and exclusive
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
-        OSDConnect(OSD_MBEDS[key_2],
-                   resolution_x,
-                   resolution_y,
-                   style,
-                   "20").run()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -778,7 +658,8 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key_2]).run()
+#         SendKeys(JOB_MBEDS[key_2]).run()
+        MouseMove(JOB_MBEDS[key_2]).run()
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -789,12 +670,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                                      "Console 2": key_2,
                                      "Computer": target
                                      },
-                         "video": mutli_video.get(),
-                         "keyboard": test_usb.key_b()
+                         "mouse": test_usb.mouse()
                          }
                        })
-        Disconnect(JOB_MBEDS[key]).run()
-        Disconnect(JOB_MBEDS[key_2]).run()
+        OpenOSD(JOB_MBEDS[key]).run()
+        OpenOSD(JOB_MBEDS[key_2]).run()
         time.sleep(3)
 
     def start_gui(self, test_type="none"):

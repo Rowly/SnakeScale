@@ -169,12 +169,12 @@ class Jobs():
                         "FALSE" in RESULT["Exclusive Single"]["video"] or
                         RESULT["Exclusive Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Exclusive Single"]["mouse"] or
-                        "FALSE" in RESULT["Exclusive and View"]["video"] or
-                        RESULT["Exclusive and View"]["keyboard"] == "TRUE" or
-                        RESULT["Exclusive and Shared"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Exclusive and Shared"]["keyboard"] == "TRUE" or
-                        RESULT["Exclusive and Private"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Exclusive and Private"]["keyboard"] == "TRUE"
+
+                        "TRUE" in RESULT["Exclusive and View"]["mouse"] or
+
+                        "TRUE" in RESULT["Exclusive and Shared"]["mouse"]or
+
+                        "TRUE" in RESULT["Exclusive and Private"]["mouse"]
                         ):
                     time.sleep(2)
                     EmailNotifier(self.device,
@@ -191,12 +191,12 @@ class Jobs():
                         "FALSE" in RESULT["Private Single"]["video"] or
                         RESULT["Private Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Private Single"]["mouse"] or
-                        RESULT["Private and View"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and View"]["keyboard"] == "TRUE" or
-                        RESULT["Private and Shared"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and Shared"]["keyboard"] == "TRUE" or
-                        RESULT["Private and Exclusive"]["video"] == ["TRUE", "TRUE"] or
-                        RESULT["Private and Exclusive"]["keyboard"] == "TRUE"
+
+                        "TRUE" in RESULT["Private and View"]["keyboard"] or
+
+                        "TRUE" in RESULT["Private and Shared"]["keyboard"] or
+
+                        "TRUE" in RESULT["Private and Exclusive"]["keyboard"]
                         ):
                     time.sleep(2)
                     EmailNotifier(self.device,
