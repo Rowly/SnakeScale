@@ -241,15 +241,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    style,
                    target).run()
         time.sleep(15)
-        single_video = Video()
-        single_video.set(host, key)
+        single_view = Video()
+        single_view.set(host, key)
         OpenOSD(JOB_MBEDS[key]).run()
         RESULT.update({"View Single":
                        {
                         "Channel": {"Console": key,
                                     "Computer": target
                                     },
-                        "video": single_video.get(),
+                        "video": single_view.get(),
                         }
                        })
         time.sleep(3)
@@ -268,16 +268,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    style,
                    target).run()
         time.sleep(15)
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
+        mutli_view = Video()
+        mutli_view.set(host, key)
+        mutli_view.set(host, key_2)
         RESULT.update({"View Multi":
                       {
                         "Channel": {"Console 1": key,
                                     "Console 2": key_2,
                                     "Computer": target
                                     },
-                        "video": single_video.get(),
+                        "video": single_view.get(),
                         }
                        })
 
@@ -303,14 +303,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         MouseMove(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key]).run()
         CloseGui(JOB_MBEDS[key]).run()
-        single_video = Video()
-        single_video.set(host, key)
+        single_shared = Video()
+        single_shared.set(host, key)
         RESULT.update({"Shared Single":
                        {
                          "Channel": {"Console": key,
                                      "Computer": target
                                      },
-                         "video": single_video.get(),
+                         "video": single_shared.get(),
                          "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
@@ -338,16 +338,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
         SendKeys(JOB_MBEDS[key_2]).run()
         CloseGui(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
+        mutli_shared_nc = Video()
+        mutli_shared_nc.set(host, key)
+        mutli_shared_nc.set(host, key_2)
         RESULT.update({"Shared Non Contention":
                       {
                         "Channel": {"Console 1": key,
                                     "Console 2": key_2,
                                     "Computer": target
                                     },
-                        "video": mutli_video.get(),
+                        "video": mutli_shared_nc.get(),
                         "keyboard": test_usb.key_b("non-contention")
                         }
                        })
@@ -380,16 +380,16 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 Process(target=SendKeys(JOB_MBEDS[k]).run).start()
             time.sleep(0.5)
             CloseGui(JOB_MBEDS[key]).run()
-            mutli_video = Video()
-            mutli_video.set(host, key)
-            mutli_video.set(host, key_2)
+            mutli_shared_c = Video()
+            mutli_shared_c.set(host, key)
+            mutli_shared_c.set(host, key_2)
             RESULT.update({"Shared Contention":
                           {
                             "Channel": {"Console 1": key,
                                         "Console 2": key_2,
                                         "Computer": target
                                         },
-                            "video": mutli_video.get(),
+                            "video": mutli_shared_c.get(),
                             "keyboard": test_usb.key_b("contention")
                             }
                            })
@@ -416,14 +416,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         MouseMove(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key]).run()
         CloseGui(JOB_MBEDS[key]).run()
-        single_video = Video()
-        single_video.set(host, key)
+        single_exclusive = Video()
+        single_exclusive.set(host, key)
         RESULT.update({"Exclusive Single":
                        {
                          "Channel": {"Console": key,
                                      "Computer": target
                                      },
-                         "video": single_video.get(),
+                         "video": single_exclusive.get(),
                          "mouse": test_usb.mouse(),
                          "keyboard": test_usb.key_b()
                          }
@@ -446,11 +446,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Exclusive and View":
                       {
@@ -478,11 +474,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Exclusive and Shared":
                       {
@@ -510,11 +502,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Exclusive and Private":
                        {
@@ -547,14 +535,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         MouseMove(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key]).run()
         CloseGui(JOB_MBEDS[key]).run()
-        single_video = Video()
-        single_video.set(host, key)
+        single_private = Video()
+        single_private.set(host, key)
         RESULT.update({"Private Single":
                        {
                          "Channel": {"Console": key,
                                      "Computer": target
                                      },
-                         "video": single_video.get(),
+                         "video": single_private.get(),
                          "keyboard": test_usb.key_b(),
                          "mouse": test_usb.mouse()
                          }
@@ -577,11 +565,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Private and View":
                        {
@@ -609,11 +593,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Private and Shared":
                        {
@@ -641,11 +621,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    target).run()
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
-#         SendKeys(JOB_MBEDS[key_2]).run()
         MouseMove(JOB_MBEDS[key_2]).run()
-        mutli_video = Video()
-        mutli_video.set(host, key)
-        mutli_video.set(host, key_2)
         CloseGui(JOB_MBEDS[key]).run()
         RESULT.update({"Private and Exclusive":
                        {
