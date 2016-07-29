@@ -139,10 +139,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     BUSY = True
 
                     if device == "ddx30":
-                        # ensure all consoles are on the OSD before tests start
-                        for i in ["1", "2", "3", "4", "5"]:
-                            Process(target=OpenOSD(JOB_MBEDS[i]).run).start()
-
                         if DEBUG:
                             key = "1"
                             print(key)
@@ -224,6 +220,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         self.end_headers()
                         self.wfile.write(bytes(data, "UTF-8"))
 
+    def reset_to_osd(self):
+        # ensure all consoles are on the OSD before tests start
+        for i in ["1", "2", "3", "4", "5"]:
+            Process(target=OpenOSD(JOB_MBEDS[i]).run).start()
+        time.sleep(3)
+
     def ddx_view(self, host, key, resolution_x, resolution_y, target):
         global RESULT
         style = "v"
@@ -232,6 +234,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Single connection
         - Multiple connections
         """
+        self.reset_to_osd()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -251,6 +254,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        })
         time.sleep(3)
 
+        self.reset_to_osd()
         key_2 = self.get_second_key(key)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -276,9 +280,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "video": single_video.get(),
                         }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
     def ddx_shared(self, host, key, resolution_x, resolution_y, target):
         global RESULT
@@ -291,6 +292,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- With contention
         """
         # single
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -313,11 +315,10 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        time.sleep(3)
 
         # multi
         # no contention
+        self.reset_to_osd()
         self.start_gui()
         key_2 = self.get_second_key(key)
         OSDConnect(OSD_MBEDS[key],
@@ -337,7 +338,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
         SendKeys(JOB_MBEDS[key_2]).run()
         CloseGui(JOB_MBEDS[key_2]).run()
-
         mutli_video = Video()
         mutli_video.set(host, key)
         mutli_video.set(host, key_2)
@@ -351,11 +351,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "keyboard": test_usb.key_b("non-contention")
                         }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
         # contention
+        self.reset_to_osd()
         if host == "Win7":
             RESULT.update({"Shared Contention":
                            {
@@ -382,7 +380,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                 Process(target=SendKeys(JOB_MBEDS[k]).run).start()
             time.sleep(0.5)
             CloseGui(JOB_MBEDS[key]).run()
-
             mutli_video = Video()
             mutli_video.set(host, key)
             mutli_video.set(host, key_2)
@@ -396,9 +393,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             "keyboard": test_usb.key_b("contention")
                             }
                            })
-            OpenOSD(JOB_MBEDS[key]).run()
-            OpenOSD(JOB_MBEDS[key_2]).run()
-            time.sleep(3)
 
     def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
         global RESULT
@@ -411,6 +405,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- Shared, Exlusive, Private, nothing
         """
         # single
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -433,10 +428,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "keyboard": test_usb.key_b()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        time.sleep(3)
 
         # exclusive with view
+        self.reset_to_osd()
         self.start_gui()
         key_2 = self.get_second_key(key)
         OSDConnect(OSD_MBEDS[key],
@@ -467,11 +461,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "mouse": test_usb.mouse()
                         }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
         # exclusive with shared
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -501,11 +493,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         "mouse": test_usb.mouse()
                         }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
         # exclusive with shared
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -535,9 +525,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
     def ddx_private(self, host, key, resolution_x, resolution_y, target):
         global RESULT
@@ -549,6 +536,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         -- View, Shared, Exlusive, Private, nothing
         """
         # single
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -571,10 +559,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        time.sleep(3)
 
         # private and view
+        self.reset_to_osd()
         key_2 = self.get_second_key(key)
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
@@ -605,11 +592,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
         # private and shared
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -639,11 +624,9 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
         # private and exclusive
+        self.reset_to_osd()
         self.start_gui()
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
@@ -673,9 +656,6 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          "mouse": test_usb.mouse()
                          }
                        })
-        OpenOSD(JOB_MBEDS[key]).run()
-        OpenOSD(JOB_MBEDS[key_2]).run()
-        time.sleep(3)
 
     def start_gui(self, test_type="none"):
         system = platform.system()
