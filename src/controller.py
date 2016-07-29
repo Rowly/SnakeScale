@@ -149,10 +149,10 @@ class Jobs():
                         RESULT["Shared Single"]["keyboard"] == "FALSE" or
 
                         "FALSE" in RESULT["Shared Non Contention"]["video"] or
-                        RESULT["Shared Non Contention"]["keyboard"] == "TRUE" or
+                        RESULT["Shared Non Contention"]["keyboard"] == "FALSE" or
 
                         "FALSE" in RESULT["Shared Contention"]["video"] or
-                        RESULT["Shared Contention"]["keyboard"] == "TRUE"
+                        RESULT["Shared Contention"]["keyboard"] == "FALSE"
                         ):
                     time.sleep(2)
                     EmailNotifier(self.device,
