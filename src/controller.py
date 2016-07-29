@@ -94,7 +94,7 @@ class Jobs():
         """
         logging.info("Execution {} HOST {} gives:"
                      .format(self.execution, self.host))
-        logging.info("{}".format(json.dumps(RESULT, indent=2)))
+        logging.info("\n{}".format(json.dumps(RESULT, indent=2)))
 
         """
         Record time at the end of each Job

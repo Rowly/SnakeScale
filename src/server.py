@@ -233,6 +233,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -258,11 +259,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -308,6 +311,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -341,11 +345,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -390,11 +396,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                        resolution_y,
                        style,
                        "20").run()
+            time.sleep(1)
             OSDConnect(OSD_MBEDS[key_2],
                        resolution_x,
                        resolution_y,
                        style,
                        "20").run()
+            time.sleep(3)
             OSDConnect(OSD_MBEDS[key],
                        resolution_x,
                        resolution_y,
@@ -447,6 +455,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
@@ -479,17 +488,19 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
-        time.sleep(0.5)
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
@@ -523,17 +534,19 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
-        time.sleep(0.5)
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
@@ -572,12 +585,13 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                    resolution_y,
                    style,
                    "20").run()
+        time.sleep(3)
         OSDConnect(OSD_MBEDS[key],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
-        time.sleep(0.5)
+        time.sleep(1)
         OSDConnect(OSD_MBEDS[key_2],
                    resolution_x,
                    resolution_y,
