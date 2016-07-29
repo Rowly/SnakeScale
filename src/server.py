@@ -366,6 +366,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(15)
         MouseClick(JOB_MBEDS[key]).run()
         SendKeys(JOB_MBEDS[key]).run()
+        time.sleep(3)
         SendKeys(JOB_MBEDS[key_2]).run()
         CloseGui(JOB_MBEDS[key_2]).run()
 
@@ -388,7 +389,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # contention
         if host == "Win7":
-            pass
+            RESULT.update({"Shared Contention":
+                           {
+                            "video": "null",
+                            "keyboard": "null"
+                           }
+                           })
         else:
             self.start_gui()
             OSDConnect(OSD_MBEDS[key],
