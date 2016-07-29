@@ -192,11 +192,11 @@ class Jobs():
                         RESULT["Private Single"]["keyboard"] == "FALSE" or
                         "FALSE" in RESULT["Private Single"]["mouse"] or
 
-                        "TRUE" in RESULT["Private and View"]["keyboard"] or
+                        "TRUE" in RESULT["Private and View"]["mouse"] or
 
-                        "TRUE" in RESULT["Private and Shared"]["keyboard"] or
+                        "TRUE" in RESULT["Private and Shared"]["mouse"] or
 
-                        "TRUE" in RESULT["Private and Exclusive"]["keyboard"]
+                        "TRUE" in RESULT["Private and Exclusive"]["mouse"]
                         ):
                     time.sleep(2)
                     EmailNotifier(self.device,
