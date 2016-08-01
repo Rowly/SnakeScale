@@ -26,8 +26,6 @@ def send(mbed_ip, payload, path="."):
         MBED_ECHO_PORT = 7
     end = b":"
     try:
-        if DEBUG:
-            print(payload)
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
@@ -46,6 +44,8 @@ def send(mbed_ip, payload, path="."):
                     total_data[-2] = last_pair[:last_pair.find(end)]
                     total_data.pop()
                     break
+        if DEBUG:
+            print(payload)
         s.close()
     except Exception as e:
         logging.info("Failed to connect to MBED {}".format(mbed_ip))
