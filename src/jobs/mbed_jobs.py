@@ -149,7 +149,7 @@ class BBCConnect():
         self.alif = alif
 
     def run(self):
-        ccs = self.css.replace("bbc", "")
+        ccs = self.ccs.replace("bbc", "")
         logging.info("MBED {} instructed to connect BBC ccs {} to alif {}"
                      .format(self.mbed_ip, self.ccs, self.alif))
         send(self.mbed_ip, str.encode("ccs {} alif {}\0"
