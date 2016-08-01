@@ -143,24 +143,23 @@ class Av4proConnect():
 
 class BBCConnect():
 
-    def __init__(self, mbed_ip, host, channel):
+    def __init__(self, mbed_ip, ccs, alif):
         self.mbed_ip = mbed_ip
-        self.host = host
-        self.channel = channel
+        self.ccs = ccs
+        self.alif = alif
 
     def run(self):
-        host = self.host.replace("bbc", "")
-        logging.info("MBED {} instructed to connect AV4pro channel {}"
-                     .format(self.mbed_ip, self.channel))
+        ccs = self.css.replace("bbc", "")
+        logging.info("MBED {} instructed to connect BBC ccs {} to alif {}"
+                     .format(self.mbed_ip, self.ccs, self.alif))
         send(self.mbed_ip, str.encode("ccs {} alif {}\0"
-                                      .format(host, self.channel)))
+                                      .format(ccs, self.alif)))
 
 
 if __name__ == "__main__":
     DEBUG = True
-    for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
-        for channel in ["1", "2", "3", "4"]:
-            BBCConnect("10.10.10.157", host, channel).run()
+    for ccs in ["1", "2", "3", "4"]:
+        BBCConnect("10.10.10.157", ccs, "1").run()
 #     import subprocess
 #     try:
 #         gui = subprocess.Popen(["python",
