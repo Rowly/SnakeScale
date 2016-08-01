@@ -152,12 +152,11 @@ class BBCConnect():
         host = self.host.replace("bbc", "")
         logging.info("MBED {} instructed to connect AV4pro channel {}"
                      .format(self.mbed_ip, self.channel))
-        send(self.mbed_ip, str.encode("BBC {} channel{}\0"
+        send(self.mbed_ip, str.encode("BBC {} channel {}\0"
                                       .format(host, self.channel)))
 
 
 if __name__ == "__main__":
-    global DEBUG
     DEBUG = True
     for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
         for channel in ["1", "2", "3", "4"]:
