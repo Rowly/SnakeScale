@@ -15,14 +15,19 @@ except:
     sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
     from config import config  # @Reimport
 
+DEBUG = False
+
 
 def send(mbed_ip, payload, path="."):
+    global DEBUG
     try:
         MBED_ECHO_PORT = config.get_mbed_echo_port(path)
     except Exception:
         MBED_ECHO_PORT = 7
     end = b":"
     try:
+        if DEBUG:
+            print(payload)
         logging.info("Attempting to connect to MBED {}".format(mbed_ip))
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((mbed_ip, MBED_ECHO_PORT))
@@ -152,6 +157,8 @@ class BBCConnect():
 
 
 if __name__ == "__main__":
+    global DEBUG
+    DEBUG = True
     for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
         for channel in ["1", "2", "3", "4"]:
             BBCConnect("10.10.10.157", host, channel).run()
