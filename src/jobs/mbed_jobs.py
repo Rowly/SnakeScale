@@ -152,7 +152,7 @@ class BBCConnect():
         host = self.host.replace("bbc", "")
         logging.info("MBED {} instructed to connect AV4pro channel {}"
                      .format(self.mbed_ip, self.channel))
-        send(self.mbed_ip, str.encode("BBC {} channel {}\0"
+        send(self.mbed_ip, str.encode("bbc {} channel {}\0"
                                       .format(host, self.channel)))
 
 
