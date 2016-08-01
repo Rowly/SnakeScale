@@ -159,7 +159,9 @@ class BBCConnect():
 if __name__ == "__main__":
     DEBUG = True
     for ccs in ["1", "2", "3", "4"]:
-        BBCConnect("10.10.10.157", ccs, "1").run()
+        for alif in ["1", "2", "3", "4"]:
+            BBCConnect("10.10.10.157", ccs, alif).run()
+
 #     import subprocess
 #     try:
 #         gui = subprocess.Popen(["python",
