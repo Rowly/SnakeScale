@@ -152,21 +152,24 @@ class BBCConnect():
 
 
 if __name__ == "__main__":
-    import subprocess
-    try:
-        gui = subprocess.Popen(["python",
-                                "../utilities/capture_gui.py"])
-    except SystemExit:
-        pass
-    ips = ["10.10.10.51", "10.10.10.52", "10.10.10.53"]
-    for ip in ips:
-        Process(target=OSDConnect(ip, "1920", "1080", "s", "11").run).start()
-    time.sleep(3)
-    ips = ["10.10.10.151", "10.10.10.152", "10.10.10.153"]
-    for ip in ips:
-        Process(target=MouseMove(ip).run).start()
-        Process(target=SendKeys(ip).run).start()
-    time.sleep(2)
-    CloseGui("10.10.10.151").run()
-    for ip in ips:
-        Process(target=OpenOSD(ip).run).start()
+    for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
+        for channel in ["1", "2", "3", "4"]:
+            BBCConnect("10.10.10.157", host, channel).run()
+#     import subprocess
+#     try:
+#         gui = subprocess.Popen(["python",
+#                                 "../utilities/capture_gui.py"])
+#     except SystemExit:
+#         pass
+#     ips = ["10.10.10.51", "10.10.10.52", "10.10.10.53"]
+#     for ip in ips:
+#         Process(target=OSDConnect(ip, "1920", "1080", "s", "11").run).start()
+#     time.sleep(3)
+#     ips = ["10.10.10.151", "10.10.10.152", "10.10.10.153"]
+#     for ip in ips:
+#         Process(target=MouseMove(ip).run).start()
+#         Process(target=SendKeys(ip).run).start()
+#     time.sleep(2)
+#     CloseGui("10.10.10.151").run()
+#     for ip in ips:
+#         Process(target=OpenOSD(ip).run).start()
