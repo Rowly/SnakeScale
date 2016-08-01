@@ -24,14 +24,14 @@ from collections import OrderedDict
 from multiprocessing import Process
 try:
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, MouseClick, OpenOSD, Av4proConnect
+        CloseGui, MouseClick, OpenOSD, Av4proConnect, BBCConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
 except ImportError:
     sys.path.append(os.path.dirname(__file__))
     from jobs.mbed_jobs import OSDConnect, SendKeys, MouseMove,\
-        CloseGui, MouseClick, OpenOSD, Av4proConnect
+        CloseGui, MouseClick, OpenOSD, Av4proConnect, BBCConnect
     from config import config
     from utilities import test_usb
     from utilities.test_video import Video
@@ -42,6 +42,8 @@ HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 AV4PRO_MBED = config.get_av4pro_mbed_ip()
+BBC_MBED = config.get_bbc_mbed_ip()
+
 DEBUG = False
 BUSY = False
 HEADER_TEXT = ("<html>" +
@@ -192,6 +194,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         MouseMove(AV4PRO_MBED).run()
                         SendKeys(AV4PRO_MBED).run()
                         CloseGui(AV4PRO_MBED).run()
+                        RESULT.update({"channel": channel,
+                                       "mouse": test_usb.mouse(),
+                                       "keyboard": test_usb.key_b()})
+                        time.sleep(3)
+
+                    elif device == "bbc":
+                        RESULT.clear()
+                        channel = test_type
+                        self.start_gui(device)
+                        BBCConnect(BBC_MBED, channel).run()
+                        time.sleep(15)
+                        MouseMove(BBC_MBED).run()
+                        SendKeys(BBC_MBED).run()
+                        CloseGui(BBC_MBED).run()
                         RESULT.update({"channel": channel,
                                        "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})

@@ -220,41 +220,66 @@ class Jobs():
                                   RESULT).send_av4pro_failure_email()
                     logging_stop()
                     sys.exit()
+        elif device == "bbc":
+                if "FALSE" in RESULT:
+                    time.sleep(2)
+                    EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT).send_av4pro_failure_email()
+                    logging_stop()
+                    sys.exit()
 
 
 def main(device, test_type, resolution):
     logging_start(device)
+    try:
+        start_time = datetime.now()
 
-    start_time = datetime.now()
-
-    """
-    TODO: Add in an API call to ensure that all Source Receivers are connected
-    through to the HOSTs before tests start
-    """
-    print(start_time.strftime(T_FORMAT))
-    counter = 0
-    if device == "ddx30":
-        while True:
-            for host in ["Win7", "Ubuntu"]:
-                counter += 1
-                if DEBUG:
+        print(start_time.strftime(T_FORMAT))
+        counter = 0
+        if device == "ddx30":
+            """
+            TODO: Add in an API call to ensure that all Source Receivers
+            are connected through to the HOSTs before tests start
+            """
+            while True:
+                for host in ["Win7", "Ubuntu"]:
+                    counter += 1
+                    if DEBUG:
+                        print(counter)
+                        print(host)
+                    item = Jobs(device, host, test_type,
+                                resolution, counter, start_time)
+                    ControlQ.put(item)
+                    Executor().run()
+                    time.sleep(3)
+        elif device == "av4pro":
+            while True:
+                for channel in ["1", "2", "3", "4"]:
+                    counter += 1
                     print(counter)
-                    print(host)
-                item = Jobs(device, host, test_type,
-                            resolution, counter, start_time)
-                ControlQ.put(item)
-                Executor().run()
-                time.sleep(3)
-    elif device == "av4pro":
-        while True:
-            for i in ["1", "2", "3", "4"]:
-                counter += 1
-                print(counter)
-                item = Jobs(device, "av4pro", i, resolution,
-                            counter, start_time)
-                ControlQ.put(item)
-                Executor().run()
-                time.sleep(1)
+                    item = Jobs(device, "av4pro", channel, resolution,
+                                counter, start_time)
+                    ControlQ.put(item)
+                    Executor().run()
+                    time.sleep(1)
+        elif device == "BBC":
+            while True:
+                for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
+                    for channel in ["1", "2", "3", "4"]:
+                        counter += 1
+                        print(counter)
+                        item = Jobs(device, host, channel, resolution,
+                                    counter, start_time)
+                        ControlQ.put(item)
+                        Executor().run()
+                        time.sleep(1)
+    except KeyboardInterrupt:
+        logging_stop()
 
 
 if __name__ == '__main__':

@@ -92,8 +92,13 @@ def get_av4pro_mbed_ip(path="."):
     return json.load(open(f))["data"]["av4pro_mbed"]
 
 
+def get_bbc_mbed_ip(path="."):
+    path = "{}/config/data.json".format(path)
+    f = os.path.abspath(path)
+    return json.load(open(f))["data"]["bbc_mbed"]
+
 if __name__ == "__main__":
-    print("Rpis:")
+    print("Hosts:")
     print(json.dumps(get_hosts(".."), indent=2))
     print("OSD Mbeds:")
     print(json.dumps(get_mbed_osders(".."), indent=2))
@@ -115,3 +120,5 @@ if __name__ == "__main__":
     print(json.dumps(get_email_recipients("..")))
     print("AV4PRO Details")
     print(json.dumps(get_av4pro_mbed_ip("..")))
+    print("BBC mbed Details")
+    print(json.dumps(get_bbc_mbed_ip("..")))
