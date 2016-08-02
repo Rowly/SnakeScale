@@ -19,6 +19,8 @@ DEBUG = False
 
 def send(mbed_ip, payload, path="."):
     global DEBUG
+    if DEBUG:
+        print("Sending {}".format(payload))
     try:
         MBED_ECHO_PORT = config.get_mbed_echo_port(path)
     except Exception:
@@ -44,7 +46,7 @@ def send(mbed_ip, payload, path="."):
                     total_data.pop()
                     break
         if DEBUG:
-            print(payload)
+            print("Sent {}".format(payload))
         s.close()
     except Exception as e:
         logging.info("Failed to connect to MBED {}".format(mbed_ip))
