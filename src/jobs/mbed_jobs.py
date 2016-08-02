@@ -8,7 +8,6 @@ import os
 import logging
 import socket
 import time
-from multiprocessing import Process
 try:
     from config import config  # @UnusedImport
 except:
@@ -163,6 +162,7 @@ if __name__ == "__main__":
             BBCConnect("10.10.10.157", ccs, alif).run()
 
 #     import subprocess
+#     from multiprocess import Process
 #     try:
 #         gui = subprocess.Popen(["python",
 #                                 "../utilities/capture_gui.py"])
