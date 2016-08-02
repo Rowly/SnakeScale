@@ -159,9 +159,7 @@ class BBCConnect():
 
 if __name__ == "__main__":
     DEBUG = True
-#     for ccs in ["1", "2", "3", "4"]:
-    for alif in ["1", "2", "3", "4"]:
-        BBCConnect("10.10.10.157", "1", alif).run()
+    BBCConnect("10.10.10.157", "2", "3").run()
 
 #     import subprocess
 #     from multiprocess import Process
