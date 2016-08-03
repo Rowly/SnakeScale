@@ -289,9 +289,10 @@ if __name__ == '__main__':
     parser.add_argument("device",
                         type=str,
                         help="device under test")
-    parser.add_argument("test_type",
+    parser.add_argument("--test_type",
                         type=str,
                         choices=test_types,
+                        default="all",
                         help="Type of test to send_ddx_failure_email")
     parser.add_argument("--resolution",
                         type=str,
