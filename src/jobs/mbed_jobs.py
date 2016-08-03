@@ -162,6 +162,7 @@ if __name__ == "__main__":
     for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
         for ccs in ["1", "2", "3", "4"]:
             BBCConnect("10.10.10.157", host, ccs).run()
+            time.sleep(3)
 
 #     import subprocess
 #     from multiprocess import Process
