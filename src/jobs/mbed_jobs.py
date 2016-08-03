@@ -144,22 +144,24 @@ class Av4proConnect():
 
 class BBCConnect():
 
-    def __init__(self, mbed_ip, ccs, alif):
+    def __init__(self, mbed_ip, alif, ccs):
         self.mbed_ip = mbed_ip
         self.ccs = ccs
         self.alif = alif
 
     def run(self):
-        ccs = self.ccs.replace("bbc", "")
+        alif = self.alif.replace("bbc", "")
         logging.info("MBED {} instructed to connect BBC ccs {} to alif {}"
                      .format(self.mbed_ip, self.ccs, self.alif))
         send(self.mbed_ip, str.encode("ccs {} alif {}\0"
-                                      .format(ccs, self.alif)))
+                                      .format(self.ccs, alif)))
 
 
 if __name__ == "__main__":
     DEBUG = True
-    BBCConnect("10.10.10.157", "2", "3").run()
+    for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
+        for ccs in ["1", "2", "3", "4"]:
+            BBCConnect("10.10.10.157", host, ccs).run()
 
 #     import subprocess
 #     from multiprocess import Process
