@@ -271,7 +271,8 @@ def main(device, test_type, resolution):
         elif device == "bbc":
             print("Starting for BBC")
             while True:
-                for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
+#                 for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
+                for host in ["bbc1", "bbc3", "bbc4"]:
                     for ccs in ["1", "2", "3", "4"]:
                         counter += 1
                         print(counter)
