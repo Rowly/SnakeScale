@@ -273,6 +273,7 @@ def main(device, test_type, resolution):
                     for ccs in ["1", "2", "3", "4"]:
                         counter += 1
                         print(counter)
+                        print(host)
                         item = Jobs(device, host, ccs, resolution,
                                     counter, start_time)
                         ControlQ.put(item)
