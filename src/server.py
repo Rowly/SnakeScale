@@ -188,7 +188,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     elif device == "av4pro":
                         RESULT.clear()
                         channel = test_type
-                        self.start_gui(device)
+                        self.start_gui()
                         Av4proConnect(AV4PRO_MBED, channel).run()
                         time.sleep(15)
                         MouseMove(AV4PRO_MBED).run()
@@ -202,14 +202,12 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                     elif device == "bbc":
                         RESULT.clear()
                         channel = test_type
-                        self.start_gui(device)
-                        BBCConnect(BBC_MBED, channel).run()
+                        self.start_gui()
+                        BBCConnect(BBC_MBED, host, channel).run()
                         time.sleep(15)
-                        MouseMove(BBC_MBED).run()
                         SendKeys(BBC_MBED).run()
                         CloseGui(BBC_MBED).run()
                         RESULT.update({"channel": channel,
-                                       "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})
                         time.sleep(3)
 
@@ -649,7 +647,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                          }
                        })
 
-    def start_gui(self, test_type="none"):
+    def start_gui(self):
         system = platform.system()
         if system == "Win32" or system == "Windows":
             suffix = ""
@@ -676,16 +674,19 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
 
 try:
+    choices = []
+    [choices.append(name) for (name, ip) in HOSTS.items()]
     parser = argparse.ArgumentParser(description="Remote Server")
-    parser.add_argument("ip", type=str, help="IP of Server")
+    parser.add_argument("host", type=str, help="Host name", choices=choices)
     parser.add_argument("--debug", dest="debug", action="store_true",
                         help="Force to use console 1 only")
     parser.set_defaults(debug=False)
 
     args = parser.parse_args()
-    ip = args.ip
+    host = args.host
     DEBUG = args.debug
     logging_start()
+    ip = HOSTS[host]
     server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
     logging.info("Started Server on %s" % ip)
     server.serve_forever()
