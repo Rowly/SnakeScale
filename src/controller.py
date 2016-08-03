@@ -240,6 +240,7 @@ def main(device, test_type, resolution):
         start_time = datetime.now()
 
         print(start_time.strftime(T_FORMAT))
+        print(device)
         counter = 0
         if device == "ddx30":
             """
@@ -268,6 +269,7 @@ def main(device, test_type, resolution):
                     Executor().run()
                     time.sleep(1)
         elif device == "BBC":
+            print("Starting for BBC")
             while True:
                 for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
                     for ccs in ["1", "2", "3", "4"]:
