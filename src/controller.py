@@ -136,7 +136,7 @@ class Jobs():
                               RESULT).send_bbc_update_email()
 
         if self.device == "ddx30":
-            if RESULT is None:
+            if not RESULT:
                 time.sleep(2)
                 EmailNotifier(self.device,
                               self.host,
