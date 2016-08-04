@@ -235,7 +235,7 @@ class Jobs():
                                   self.start.strftime(T_FORMAT),
                                   end_time.strftime(T_FORMAT),
                                   self.execution,
-                                  RESULT).send_av4pro_failure_email()
+                                  RESULT).send_bbc_failure_email()
                     logging_stop()
                     sys.exit()
 
