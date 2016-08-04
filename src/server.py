@@ -42,7 +42,7 @@ HOSTS = config.get_hosts()
 OSD_MBEDS = config.get_mbed_osders()
 JOB_MBEDS = config.get_mbed_jobbers()
 AV4PRO_MBED = config.get_av4pro_mbed_ip()
-BBC_MBED = config.get_bbc_mbed_ip()
+BBC_MBEDS = config.get_bbc_mbeds()
 
 DEBUG = False
 BUSY = False
@@ -203,11 +203,14 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         RESULT.clear()
                         channel = test_type
                         self.start_gui()
-                        BBCConnect(BBC_MBED, host, channel).run()
+                        BBCConnect(BBC_MBEDS["keyboard"], host, channel).run()
                         time.sleep(15)
-                        SendKeys(BBC_MBED).run()
-                        CloseGui(BBC_MBED).run()
+                        MouseClick(BBC_MBEDS["mouse"]).run()
+                        MouseMove(BBC_MBEDS["mouse"]).run()
+                        SendKeys(BBC_MBEDS["keyboard"]).run()
+                        CloseGui(BBC_MBEDS["keyboard"]).run()
                         RESULT.update({"channel": channel,
+                                       "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})
                         time.sleep(3)
 

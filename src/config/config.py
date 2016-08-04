@@ -19,6 +19,8 @@ OSD_MBEDS = OrderedDict()
 
 JOB_MBEDS = OrderedDict()
 
+BBC_MBEDS = OrderedDict()
+
 
 def get_host_port(path="."):
     path = "{}/config/data.json".format(path)
@@ -92,10 +94,12 @@ def get_av4pro_mbed_ip(path="."):
     return json.load(open(f))["data"]["av4pro_mbed"]
 
 
-def get_bbc_mbed_ip(path="."):
+def get_bbc_mbeds(path="."):
     path = "{}/config/data.json".format(path)
     f = os.path.abspath(path)
-    return json.load(open(f))["data"]["bbc_mbed"]
+    osders = json.load(open(f), object_pairs_hook=OrderedDict)
+    BBC_MBEDS.update(osders["data"]["bbc_mbeds"])
+    return BBC_MBEDS
 
 if __name__ == "__main__":
     print("Hosts:")
@@ -121,4 +125,4 @@ if __name__ == "__main__":
     print("AV4PRO Details")
     print(json.dumps(get_av4pro_mbed_ip("..")))
     print("BBC mbed Details")
-    print(json.dumps(get_bbc_mbed_ip("..")))
+    print(json.dumps(get_bbc_mbeds("..")))

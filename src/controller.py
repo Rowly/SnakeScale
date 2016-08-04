@@ -209,7 +209,10 @@ class Jobs():
                     logging_stop()
                     sys.exit()
         elif device == "av4pro":
-                if "FALSE" in RESULT:
+                if (
+                        "FALSE" in RESULT["mouse"] or
+                        "FALSE" in RESULT["keyboard"]
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,
@@ -221,7 +224,10 @@ class Jobs():
                     logging_stop()
                     sys.exit()
         elif device == "bbc":
-                if "FALSE" in RESULT:
+                if (
+                        "FALSE" in RESULT["mouse"] or
+                        "FALSE" in RESULT["keyboard"]
+                        ):
                     time.sleep(2)
                     EmailNotifier(self.device,
                                   self.host,

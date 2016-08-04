@@ -29,7 +29,10 @@
                 "5": "10.10.10.154"
                },
          "av4pro_mbed": "10.10.10.156",
-         "bbc_mbed": "10.10.10.157",
+         "bbc_mbeds": 
+             {"keyboard": "10.10.10.157",
+              "mouse": "10.10.10.158"
+             },
          "smtp_server": "192.168.42.115",
          "email_recipients" : ["mark.rowlands@adder.com", "simonh@adder.com"]
         }

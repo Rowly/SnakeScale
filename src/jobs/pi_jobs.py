@@ -6,7 +6,14 @@ Created on 27 Apr 2015
 import requests
 import logging
 import time
-from config import config
+try:
+    from config import config
+except ImportError:
+    import sys
+    import os
+    sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+    from config import config
+
 
 HOST_PORT = config.get_host_port()
 HOSTS = config.get_hosts()
