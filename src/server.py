@@ -194,7 +194,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         MouseMove(AV4PRO_MBED).run()
                         SendKeys(AV4PRO_MBED).run()
                         CloseGui(AV4PRO_MBED).run()
-                        RESULT.update({"channel": channel,
+                        RESULT.update({"av4pro channel": channel,
                                        "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})
                         time.sleep(3)
@@ -209,7 +209,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         MouseMove(BBC_MBEDS["mouse"]).run()
                         SendKeys(BBC_MBEDS["keyboard"]).run()
                         CloseGui(BBC_MBEDS["keyboard"]).run()
-                        RESULT.update({"channel": channel,
+                        RESULT.update({"ccs channel": channel,
                                        "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})
                         time.sleep(3)

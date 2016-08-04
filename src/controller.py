@@ -104,10 +104,11 @@ class Jobs():
         """
         If 24hours (timedelta(1)) has passed between start_time
         and end_time, send the update email
+
+        Updated to 100 executions as the timedelta didn't work.
+        TODO: Get the timedelta working!
         """
-#         if (self.start - end_time > timedelta(1) or
-#                 self.execution % 50 == 0):
-        if self.start - end_time > timedelta(1):
+        if self.execution % 100 == 0:
             time.sleep(2)
             if self.device == "ddx30":
                 EmailNotifier(self.device,
@@ -125,6 +126,14 @@ class Jobs():
                               end_time.strftime(T_FORMAT),
                               self.execution,
                               RESULT).send_av4pro_update_email()
+            elif self.device == "bbc":
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_bbc_update_email()
 
         if self.device == "ddx30":
             if test_type == "view":
@@ -209,35 +218,38 @@ class Jobs():
                     logging_stop()
                     sys.exit()
         elif device == "av4pro":
-                if (
-                        "FALSE" in RESULT["mouse"] or
-                        "FALSE" in RESULT["keyboard"]
-                        ):
-                    time.sleep(2)
-                    EmailNotifier(self.device,
-                                  self.host,
-                                  self.test_type,
-                                  self.start.strftime(T_FORMAT),
-                                  end_time.strftime(T_FORMAT),
-                                  self.execution,
-                                  RESULT).send_av4pro_failure_email()
-                    logging_stop()
-                    sys.exit()
+            if (
+                    "FALSE" in RESULT["mouse"] or
+                    "FALSE" in RESULT["keyboard"]
+                    ):
+                time.sleep(2)
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_av4pro_failure_email()
+                logging_stop()
+                sys.exit()
         elif device == "bbc":
-                if (
-                        "FALSE" in RESULT["mouse"] or
-                        "FALSE" in RESULT["keyboard"]
-                        ):
-                    time.sleep(2)
-                    EmailNotifier(self.device,
-                                  self.host,
-                                  self.test_type,
-                                  self.start.strftime(T_FORMAT),
-                                  end_time.strftime(T_FORMAT),
-                                  self.execution,
-                                  RESULT).send_bbc_failure_email()
-                    logging_stop()
-                    sys.exit()
+            if DEBUG:
+                print(device)
+                print("Error checking")
+            if (
+                    "FALSE" in RESULT["mouse"] or
+                    "FALSE" in RESULT["keyboard"]
+                    ):
+                time.sleep(2)
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_bbc_failure_email()
+                logging_stop()
+                sys.exit()
 
 
 def main(device, test_type, resolution):
@@ -277,8 +289,7 @@ def main(device, test_type, resolution):
         elif device == "bbc":
             print("Starting for BBC")
             while True:
-#                 for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
-                for host in ["bbc1", "bbc3", "bbc4"]:
+                for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
                     for ccs in ["1", "2", "3", "4"]:
                         counter += 1
                         print(counter)
