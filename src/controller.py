@@ -136,6 +136,17 @@ class Jobs():
                               RESULT).send_bbc_update_email()
 
         if self.device == "ddx30":
+            if RESULT is None:
+                time.sleep(2)
+                EmailNotifier(self.device,
+                              self.host,
+                              self.test_type,
+                              self.start.strftime(T_FORMAT),
+                              end_time.strftime(T_FORMAT),
+                              self.execution,
+                              RESULT).send_ddx_failure_email()
+                logging_stop()
+                sys.exit()
             if test_type == "view":
                 if (
                         "FALSE" in RESULT["View Single"]["video"] or
