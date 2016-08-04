@@ -43,6 +43,7 @@ class EmailNotifier():
                Begun {}
                Ended {}
                Execution number {}
+               HOST {}
                Response from most recent test:
                {}
                Location of test log:
@@ -52,6 +53,7 @@ class EmailNotifier():
                           self.start,
                           self.end,
                           self.execution,
+                          self.host,
                           json.dumps(self.response, indent=4))
         commaspace = ", "
 
@@ -75,6 +77,7 @@ class EmailNotifier():
                Begun {}
                Ended {}
                Execution number {}
+               HOST {}
                Response from most recent test:
                {}
                Location of test log:
@@ -84,6 +87,7 @@ class EmailNotifier():
                           self.start,
                           self.end,
                           self.execution,
+                          self.host,
                           json.dumps(self.response, indent=4))
         commaspace = ", "
 
