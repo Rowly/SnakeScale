@@ -285,20 +285,21 @@ def main(device, test_type, resolution):
             while True:
                 for channel in ["1", "2", "3", "4"]:
                     counter += 1
-                    print(counter)
+                    if DEBUG:
+                        print(counter)
                     item = Jobs(device, "av4pro", channel, resolution,
                                 counter, start_time)
                     ControlQ.put(item)
                     Executor().run()
                     time.sleep(1)
         elif device == "bbc":
-            print("Starting for BBC")
             while True:
                 for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
                     for ccs in ["1", "2", "3", "4"]:
                         counter += 1
-                        print(counter)
-                        print(host)
+                        if DEBUG:
+                            print(counter)
+                            print(host)
                         item = Jobs(device, host, ccs, resolution,
                                     counter, start_time)
                         ControlQ.put(item)
