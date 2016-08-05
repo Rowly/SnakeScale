@@ -288,7 +288,8 @@ def main(device, test_type, resolution):
             """
             while True:
                 for tt in tests:
-                    for host in ["Ubuntu", "Win7"]:
+#                     for host in ["Ubuntu", "Win7"]:
+                    for host in ["Win7"]:
                         counter += 1
                         if DEBUG:
                             print(counter)
