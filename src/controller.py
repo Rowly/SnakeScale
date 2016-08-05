@@ -277,21 +277,27 @@ def main(device, test_type, resolution):
         print(device)
         counter = 0
         if device == "ddx30":
+            tests = []
+            if test_type == "all":
+                tests = ["view", "shared", "exclusive", "private"]
+            else:
+                tests = tests.append(test_type)
             """
             TODO: Add in an API call to ensure that all Source Receivers
             are connected through to the HOSTs before tests start
             """
             while True:
-                for host in ["Win7", "Ubuntu"]:
-                    counter += 1
-                    if DEBUG:
-                        print(counter)
-                        print(host)
-                    item = Jobs(device, host, test_type,
-                                resolution, counter, start_time)
-                    ControlQ.put(item)
-                    Executor().run()
-                    time.sleep(3)
+                for tt in tests:
+                    for host in ["Ubuntu", "Win7"]:
+                        counter += 1
+                        if DEBUG:
+                            print(counter)
+                            print(host)
+                        item = Jobs(device, host, tt,
+                                    resolution, counter, start_time)
+                        ControlQ.put(item)
+                        Executor().run()
+                        time.sleep(3)
         elif device == "av4pro":
             while True:
                 for channel in ["1", "2", "3", "4"]:
