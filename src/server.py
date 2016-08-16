@@ -11,6 +11,7 @@ through the use of the pi_jobs modules.
 """
 import sys
 import os
+import gc
 import platform
 import subprocess
 import logging
@@ -206,11 +207,11 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                         BBCConnect(BBC_MBEDS["keyboard"], host, channel).run()
                         time.sleep(15)
                         MouseClick(BBC_MBEDS["mouse"]).run()
-                        MouseMove(BBC_MBEDS["mouse"]).run()
+#                         MouseMove(BBC_MBEDS["mouse"]).run()
                         SendKeys(BBC_MBEDS["keyboard"]).run()
                         CloseGui(BBC_MBEDS["keyboard"]).run()
                         RESULT.update({"ccs channel": channel,
-                                       "mouse": test_usb.mouse(),
+#                                        "mouse": test_usb.mouse(),
                                        "keyboard": test_usb.key_b()})
                         time.sleep(3)
 
@@ -690,6 +691,7 @@ try:
     DEBUG = args.debug
     logging_start()
     ip = HOSTS[host]
+    gc.enable()
     server = http.server.HTTPServer((ip, HOST_PORT), RemoteServer)
     logging.info("Started Server on %s" % ip)
     server.serve_forever()
