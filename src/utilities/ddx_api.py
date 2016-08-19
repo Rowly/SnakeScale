@@ -87,19 +87,49 @@ def post(token, endpoint, path="."):
         fd.close()
 
 
+def switch(token, console, computer, mode, path="."):
+    IP = config.get_ddx_ut_ip(path)
+    target = "api/consoles/{}/switch".format(console)
+    json = {"computerId": "{}".format(computer),
+            "mode": "{}".format(mode)}
+    headers = {"Authorization": "Bearer {}".format(token)}
+    r = requests.post("https://{}/{}".format(IP, target),
+                      headers=headers,
+                      json=json,
+                      verify=False,
+                      stream=True)
+    try:
+        assert(r.status_code == 204)
+    except Exception as e:
+        print(target)
+        raise e
+
 if __name__ == "__main__":
     import json
     path = ".."
     token = login(0, path)
-    for endpoint in ["systemInfo",
-                     "computers",
-                     "consoles",
-                     "transmitters",
-                     "receivers",
-                     "ports",
-                     "supplies",
-                     "temperatures",
-                     ]:
-        info = get(token, endpoint, path)
-        print(json.dumps(info, indent=4))
+    info = get(token, "systemInfo", path)
+    for console in ["2", "3", "4"]:
+        for computer in ["11", "12", "13"]:
+            for mode in ["VIEWONLY", "SHARED", "EXCLUSIVE", "PRIVATE", "NONE"]:
+                switch(token, console, computer, mode, path)
+                endpoint = "consoles/{}".format(console)
+                info = get(token, endpoint, path)
+                if mode != "NONE":
+                    connectedComputer = info["connectedComputer"]
+                    currentAccessMode = info["currentAccessMode"]
+                    assert(connectedComputer == int(computer))
+                    assert(currentAccessMode == mode)
+                time.sleep(5)
+#     for endpoint in ["systemInfo",
+#                      "computers",
+#                      "consoles",
+#                      "transmitters",
+#                      "receivers",
+#                      "ports",
+#                      "supplies",
+#                      "temperatures",
+#                      ]:
+#         info = get(token, endpoint, path)
+#         print(json.dumps(info, indent=4))
 #     post(token, "system/backup", path)

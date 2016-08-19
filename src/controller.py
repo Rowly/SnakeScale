@@ -277,6 +277,11 @@ def main(device, test_type, resolution):
         print(device)
         counter = 0
         if device == "ddx30":
+
+            """
+            Call API test class here
+            """
+
             tests = []
             if test_type == "all":
                 tests = ["view", "shared", "exclusive", "private"]
@@ -288,8 +293,7 @@ def main(device, test_type, resolution):
             """
             while True:
                 for tt in tests:
-#                     for host in ["Ubuntu", "Win7"]:
-                    for host in ["Win7"]:
+                    for host in ["Win7", "Ubuntu"]:
                         counter += 1
                         if DEBUG:
                             print(counter)
@@ -312,7 +316,6 @@ def main(device, test_type, resolution):
                     time.sleep(1)
         elif device == "bbc":
             while True:
-#                 for host in ["bbc1", "bbc2", "bbc3", "bbc4"]:
                 for host in ["bbc1", "bbc3", "bbc4"]:
                     for ccs in ["1", "2", "3", "4"]:
                         counter += 1

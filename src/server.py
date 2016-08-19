@@ -56,7 +56,7 @@ BODY_TEXT = ("<body>" +
              "<p>This is the ControlServer.</p>" +
              "<p>Usage:</p>" +
              "<p>/api?command=notify&device=ddx30&hosts=1&test_type=exclusive&resolution=1920x1080</p>" +
-             "<p>/api?command=get_result&device=ddx30&test_type=exclusive" +
+             "<p>/api?command=get_result&device=ddx30" +
              "</body></html>")
 RESULT = OrderedDict()
 
@@ -143,47 +143,44 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
                     if device == "ddx30":
                         if DEBUG:
-                            key = "1"
-                            print(key)
+                            console = "1"
+                            print(console)
                         else:
-                            key = str(random.randint(1, len(OSD_MBEDS)))
+                            console = str(random.randint(1, len(OSD_MBEDS)))
                         if host == "Ubuntu":
                             target = random.choice(["1", "2", "3",
-                                                    "4", "5", "6",
-                                                    "7", "8", "9",
-                                                    "10"])
+                                                    "4", "5"])
                         elif host == "Win7":
                             target = random.choice(["11", "12", "13",
-                                                    "14", "15", "16",
-                                                    "17", "18", "19"])
+                                                    "14", "15"])
                         if DEBUG:
                             print(target)
 
                         if test_type == "view":
                             RESULT.clear()
-                            self.ddx_view(host, key, resolution_x,
+                            self.ddx_view(host, console, resolution_x,
                                           resolution_y, target)
                         elif test_type == "shared":
                             RESULT.clear()
-                            self.ddx_shared(host, key, resolution_x,
+                            self.ddx_shared(host, console, resolution_x,
                                             resolution_y, target)
                         elif test_type == "exclusive":
                             RESULT.clear()
-                            self.ddx_exclusive(host, key, resolution_x,
+                            self.ddx_exclusive(host, console, resolution_x,
                                                resolution_y, target)
                         elif test_type == "private":
                             RESULT.clear()
-                            self.ddx_private(host, key, resolution_x,
+                            self.ddx_private(host, console, resolution_x,
                                              resolution_y, target)
                         elif test_type == "all":
                             RESULT.clear()
-                            self.ddx_view(host, key, resolution_x,
+                            self.ddx_view(host, console, resolution_x,
                                           resolution_y, target)
-                            self.ddx_shared(host, key, resolution_x,
+                            self.ddx_shared(host, console, resolution_x,
                                             resolution_y, target)
-                            self.ddx_exclusive(host, key, resolution_x,
+                            self.ddx_exclusive(host, console, resolution_x,
                                                resolution_y, target)
-                            self.ddx_private(host, key, resolution_x,
+                            self.ddx_private(host, console, resolution_x,
                                              resolution_y, target)
 
                     elif device == "av4pro":
@@ -244,7 +241,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
             OpenOSD(JOB_MBEDS[i]).run()
             time.sleep(1)
 
-    def ddx_view(self, host, key, resolution_x, resolution_y, target):
+    def ddx_view(self, host, console, resolution_x, resolution_y, target):
         global RESULT
         style = "v"
         """
@@ -253,18 +250,18 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         - Multiple connections
         """
         self.reset_to_osd()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
         single_view = Video()
-        single_view.set(host, key)
-        OpenOSD(JOB_MBEDS[key]).run()
+        single_view.set(host, console)
+        OpenOSD(JOB_MBEDS[console]).run()
         RESULT.update({"View Single":
                        {
-                        "Channel": {"Console": key,
+                        "Channel": {"Console": console,
                                     "Computer": target
                                     },
                         "video": single_view.get(),
@@ -273,33 +270,33 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         time.sleep(3)
 
         self.reset_to_osd()
-        key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
+        console_2 = self.get_second_console(console)
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
         mutli_view = Video()
-        mutli_view.set(host, key)
-        mutli_view.set(host, key_2)
+        mutli_view.set(host, console)
+        mutli_view.set(host, console_2)
         RESULT.update({"View Multi":
                       {
-                        "Channel": {"Console 1": key,
-                                    "Console 2": key_2,
+                        "Channel": {"Console 1": console,
+                                    "Console 2": console_2,
                                     "Computer": target
                                     },
                         "video": single_view.get(),
                         }
                        })
 
-    def ddx_shared(self, host, key, resolution_x, resolution_y, target):
+    def ddx_shared(self, host, console, resolution_x, resolution_y, target):
         global RESULT
         style = "s"
         """
@@ -312,20 +309,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # single
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseMove(JOB_MBEDS[console]).run()
+        SendKeys(JOB_MBEDS[console]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         single_shared = Video()
-        single_shared.set(host, key)
+        single_shared.set(host, console)
         RESULT.update({"Shared Single":
                        {
-                         "Channel": {"Console": key,
+                         "Channel": {"Console": console,
                                      "Computer": target
                                      },
                          "video": single_shared.get(),
@@ -338,31 +335,31 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # no contention
         self.reset_to_osd()
         self.start_gui()
-        key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
+        console_2 = self.get_second_console(console)
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        SendKeys(JOB_MBEDS[console]).run()
         time.sleep(3)
-        SendKeys(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key_2]).run()
+        SendKeys(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console_2]).run()
         mutli_shared_nc = Video()
-        mutli_shared_nc.set(host, key)
-        mutli_shared_nc.set(host, key_2)
+        mutli_shared_nc.set(host, console)
+        mutli_shared_nc.set(host, console_2)
         RESULT.update({"Shared Non Contention":
                       {
-                        "Channel": {"Console 1": key,
-                                    "Console 2": key_2,
+                        "Channel": {"Console 1": console,
+                                    "Console 2": console_2,
                                     "Computer": target
                                     },
                         "video": mutli_shared_nc.get(),
@@ -381,30 +378,30 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                            })
         else:
             self.start_gui()
-            OSDConnect(OSD_MBEDS[key],
+            OSDConnect(OSD_MBEDS[console],
                        resolution_x,
                        resolution_y,
                        style,
                        target).run()
             time.sleep(1)
-            OSDConnect(OSD_MBEDS[key_2],
+            OSDConnect(OSD_MBEDS[console_2],
                        resolution_x,
                        resolution_y,
                        style,
                        target).run()
             time.sleep(15)
-            MouseClick(JOB_MBEDS[key]).run()
-            for k in [key, key_2]:
+            MouseClick(JOB_MBEDS[console]).run()
+            for k in [console, console_2]:
                 Process(target=SendKeys(JOB_MBEDS[k]).run).start()
             time.sleep(0.5)
-            CloseGui(JOB_MBEDS[key]).run()
+            CloseGui(JOB_MBEDS[console]).run()
             mutli_shared_c = Video()
-            mutli_shared_c.set(host, key)
-            mutli_shared_c.set(host, key_2)
+            mutli_shared_c.set(host, console)
+            mutli_shared_c.set(host, console_2)
             RESULT.update({"Shared Contention":
                           {
-                            "Channel": {"Console 1": key,
-                                        "Console 2": key_2,
+                            "Channel": {"Console 1": console,
+                                        "Console 2": console_2,
                                         "Computer": target
                                         },
                             "video": mutli_shared_c.get(),
@@ -412,7 +409,7 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
                             }
                            })
 
-    def ddx_exclusive(self, host, key, resolution_x, resolution_y, target):
+    def ddx_exclusive(self, host, console, resolution_x, resolution_y, target):
         global RESULT
         style = "e"
         """
@@ -425,20 +422,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # single
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseMove(JOB_MBEDS[console]).run()
+        SendKeys(JOB_MBEDS[console]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         single_exclusive = Video()
-        single_exclusive.set(host, key)
+        single_exclusive.set(host, console)
         RESULT.update({"Exclusive Single":
                        {
-                         "Channel": {"Console": key,
+                         "Channel": {"Console": console,
                                      "Computer": target
                                      },
                          "video": single_exclusive.get(),
@@ -450,26 +447,26 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # exclusive with view
         self.reset_to_osd()
         self.start_gui()
-        key_2 = self.get_second_key(key)
-        OSDConnect(OSD_MBEDS[key],
+        console_2 = self.get_second_console(console)
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "v",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Exclusive and View":
                       {
-                        "Channel": {"Console 1": key,
-                                    "Console 2": key_2,
+                        "Channel": {"Console 1": console,
+                                    "Console 2": console_2,
                                     "Computer": target
                                     },
                         "mouse": test_usb.mouse()
@@ -479,25 +476,25 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # exclusive with shared
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "s",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Exclusive and Shared":
                       {
-                        "Channel": {"Console 1": key,
-                                    "Console 2": key_2,
+                        "Channel": {"Console 1": console,
+                                    "Console 2": console_2,
                                     "Computer": target
                                     },
                         "mouse": test_usb.mouse()
@@ -507,32 +504,32 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # exclusive with shared
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "p",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Exclusive and Private":
                        {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
+                         "Channel": {"Console 1": console,
+                                     "Console 2": console_2,
                                      "Computer": target
                                      },
                          "mouse": test_usb.mouse()
                          }
                        })
 
-    def ddx_private(self, host, key, resolution_x, resolution_y, target):
+    def ddx_private(self, host, console, resolution_x, resolution_y, target):
         global RESULT
         style = "p"
         """
@@ -544,20 +541,20 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # single
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(15)
-        MouseMove(JOB_MBEDS[key]).run()
-        SendKeys(JOB_MBEDS[key]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseMove(JOB_MBEDS[console]).run()
+        SendKeys(JOB_MBEDS[console]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         single_private = Video()
-        single_private.set(host, key)
+        single_private.set(host, console)
         RESULT.update({"Private Single":
                        {
-                         "Channel": {"Console": key,
+                         "Channel": {"Console": console,
                                      "Computer": target
                                      },
                          "video": single_private.get(),
@@ -568,27 +565,27 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
 
         # private and view
         self.reset_to_osd()
-        key_2 = self.get_second_key(key)
+        console_2 = self.get_second_console(console)
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(1)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "v",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Private and View":
                        {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
+                         "Channel": {"Console 1": console,
+                                     "Console 2": console_2,
                                      "Computer": target
                                      },
                          "mouse": test_usb.mouse()
@@ -598,25 +595,25 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # private and shared
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(0.5)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "s",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Private and Shared":
                        {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
+                         "Channel": {"Console 1": console,
+                                     "Console 2": console_2,
                                      "Computer": target
                                      },
                          "mouse": test_usb.mouse()
@@ -626,25 +623,25 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         # private and exclusive
         self.reset_to_osd()
         self.start_gui()
-        OSDConnect(OSD_MBEDS[key],
+        OSDConnect(OSD_MBEDS[console],
                    resolution_x,
                    resolution_y,
                    style,
                    target).run()
         time.sleep(0.5)
-        OSDConnect(OSD_MBEDS[key_2],
+        OSDConnect(OSD_MBEDS[console_2],
                    resolution_x,
                    resolution_y,
                    "e",
                    target).run()
         time.sleep(15)
-        MouseClick(JOB_MBEDS[key]).run()
-        MouseMove(JOB_MBEDS[key_2]).run()
-        CloseGui(JOB_MBEDS[key]).run()
+        MouseClick(JOB_MBEDS[console]).run()
+        MouseMove(JOB_MBEDS[console_2]).run()
+        CloseGui(JOB_MBEDS[console]).run()
         RESULT.update({"Private and Exclusive":
                        {
-                         "Channel": {"Console 1": key,
-                                     "Console 2": key_2,
+                         "Channel": {"Console 1": console,
+                                     "Console 2": console_2,
                                      "Computer": target
                                      },
                          "mouse": test_usb.mouse()
@@ -670,16 +667,15 @@ class RemoteServer(http.server.BaseHTTPRequestHandler):
         with open(f, "w"):
             pass
 
-    def get_second_key(self, key):
-        key_2 = key
-        while key_2 == key:
-            key_2 = str(random.randint(1, len(OSD_MBEDS)))
-        return key_2
+    def get_second_console(self, console):
+        console_2 = console
+        while console_2 == console:
+            console_2 = str(random.randint(1, len(OSD_MBEDS)))
+        return console_2
 
 
 try:
-    choices = []
-    [choices.append(name) for (name, ip) in HOSTS.items()]
+    choices = [name for (name, ip) in HOSTS.items()]
     parser = argparse.ArgumentParser(description="Remote Server")
     parser.add_argument("host", type=str, help="Host name", choices=choices)
     parser.add_argument("--debug", dest="debug", action="store_true",

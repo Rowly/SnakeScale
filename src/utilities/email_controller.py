@@ -37,6 +37,74 @@ class EmailNotifier():
         self.response = response
         self.recipients = config.get_email_recipients(".")
 
+    def send_ddx_api_update_email(self, path="."):
+        fail_body = """
+               Test for {}
+               Begun {}
+               Ended {}
+               Execution number {}
+               HOST {}
+               Response from most recent test:
+               {}
+               Location of test log:
+               vnc to 192.168.42.179
+               directory /var/log/snakescale-ddxapi/result.log
+               """.format(self.device,
+                          self.start,
+                          self.end,
+                          self.execution,
+                          self.host,
+                          json.dumps(self.response, indent=4))
+        commaspace = ", "
+
+        msg = MIMEText(fail_body)
+
+        msg["Subject"] = "DDX30 API Update Email"
+        msg["From"] = "ddx30soaktest@example.com"
+        msg["To"] = commaspace.join(self.recipients)
+
+        try:
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
+            smtpObj.send_message(msg)
+            smtpObj.quit()
+        except SMTPException:
+            logging.info("Failed to send send_ddx_api_update_email email")
+
+    def send_ddx_api_failure_email(self, path="."):
+        fail_body = """
+               Test for {}
+               Begun {}
+               Ended {}
+               Execution number {}
+               HOST {}
+               Response from most recent test:
+               {}
+               Location of test log:
+               vnc to 192.168.42.179
+               directory /var/log/snakescale-ddxapi/result.log
+               """.format(self.device,
+                          self.start,
+                          self.end,
+                          self.execution,
+                          self.host,
+                          json.dumps(self.response, indent=4))
+        commaspace = ", "
+
+        msg = MIMEText(fail_body)
+
+        msg["Subject"] = "DDX30 API Failure"
+        msg["From"] = "ddx30soaktest@example.com"
+        msg["To"] = commaspace.join(self.recipients)
+
+        try:
+            smtp_ip = config.get_smtp_server_ip(path)
+            smtpObj = smtplib.SMTP(smtp_ip, 25)
+            smtpObj.send_message(msg)
+            smtpObj.quit()
+        except SMTPException:
+            logging.info("Failed to send send_ddx_api_failure_email email")
+
     def send_bbc_failure_email(self, path="."):
         fail_body = """
                Test for {}
@@ -272,7 +340,7 @@ class EmailNotifier():
                           self.test_type,
                           self.start,
                           self.execution,
-                          self.response)
+                          json.dumps(self.response, indent=4))
 
         commaspace = ", "
 
