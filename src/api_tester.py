@@ -117,6 +117,8 @@ def main():
              "PRIVATE/VIEWONLY", "PRIVATE/SHARED",
              "PRIVATE/EXCLUSIVE", "PRIVATE/PRIVATE"]
     token = ddx_api.login()
+    for console in consoles:
+        ddx_api.switch(token, console, "1", "NONE")
     while True:
         for console in consoles:
             for mode in modes:
