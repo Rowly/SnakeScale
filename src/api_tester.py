@@ -155,6 +155,9 @@ def main():
                                "video": multi_view.get()})
                 logging.info("\n{}".format(json.dumps(RESULT, indent=2)))
                 verification(RESULT, mode, start_time, host, execution)
+                ddx_api.switch(token, console, "1", "NONE")
+                ddx_api.switch(token, console_2, "1", "NONE")
+                time.sleep(5)
 
 if __name__ == "__main__":
     main()
