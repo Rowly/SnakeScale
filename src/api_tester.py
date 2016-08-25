@@ -74,9 +74,14 @@ def verification(result, mode, start_time, host, execution):
             failure(host, mode, start_time,
                     end_time, execution, result)
     elif not mode.startswith("PRIVATE"):
-        if "FALSE" in result["video"]:
-            failure(host, mode, start_time,
-                    end_time, execution, result)
+        if mode.endswith("VIEWONLY"):
+            if result["video"] != ["TRUE", "TRUE"]:
+                failure(host, mode, start_time,
+                        end_time, execution, result)
+        else:
+            if "FALSE" in result["video"]:
+                failure(host, mode, start_time,
+                        end_time, execution, result)
 
     if execution % 1000 == 0:
         update(host, mode, start_time,
