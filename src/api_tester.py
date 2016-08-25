@@ -43,38 +43,38 @@ def verification(result, mode, start_time, host, execution):
     end_time = datetime.now()
     if mode.startswith("VIEWONLY"):
         if "FALSE" in result["video"]:
-            send_failure(host, mode, start_time,
-                         end_time, execution, result)
+            failure(host, mode, start_time,
+                    end_time, execution, result)
     elif mode.startswith("SHARED"):
         if mode.endswith("VIEWONLY") or mode.endswith("SHARED"):
             if "FALSE" in result["video"]:
-                send_failure(host, mode, start_time,
-                             end_time, execution, result)
+                failure(host, mode, start_time,
+                        end_time, execution, result)
         elif mode.endswith("EXCLUSIVE") or mode.endswith("PRIVATE"):
             if result["video"] != ["TRUE", "FALSE"]:
-                send_failure(host, mode, start_time,
-                             end_time, execution, result)
+                failure(host, mode, start_time,
+                        end_time, execution, result)
     elif mode.startswith("EXCLUSIVE"):
         if mode.endswith("VIEWONLY"):
             if result["video"] != ["TRUE", "TRUE"]:
-                send_failure(host, mode, start_time,
-                             end_time, execution, result)
+                failure(host, mode, start_time,
+                        end_time, execution, result)
         elif (mode.endswith("SHARED") or
                 mode.endswith("EXCLUSIVE") or
                 mode.endswith("PRIVATE")):
             if result["video"] != ["TRUE", "FALSE"]:
-                send_failure(host, mode, start_time,
-                             end_time, execution, result)
+                failure(host, mode, start_time,
+                        end_time, execution, result)
     elif mode.startswith("PRIVATE"):
         if result["video"] != ["TRUE", "FALSE"]:
-            send_failure(host, mode, start_time,
-                         end_time, execution, result)
-    if execution % 1000:
-        send_update(host, mode, start_time,
+            failure(host, mode, start_time,
                     end_time, execution, result)
+    if execution % 1000 == 0:
+        update(host, mode, start_time,
+               end_time, execution, result)
 
 
-def send_update(host, mode, start_time, end_time, execution, result):
+def update(host, mode, start_time, end_time, execution, result):
     EmailNotifier("ddx30 api",
                   host,
                   mode,
@@ -84,14 +84,16 @@ def send_update(host, mode, start_time, end_time, execution, result):
                   result).send_ddx_api_update_email()
 
 
-def send_failure(host, mode, start_time, end_time, execution, result):
+def failure(host, mode, start_time, end_time, execution, result):
     EmailNotifier("ddx30 api",
                   host,
                   mode,
                   start_time.strftime(T_FORMAT),
                   end_time.strftime(T_FORMAT),
                   execution,
-                  result).send_bbc_failure_email()
+                  result).send_ddx_api_failure_email()
+    stop_logging()
+    sys.exit()
 
 
 def main():
