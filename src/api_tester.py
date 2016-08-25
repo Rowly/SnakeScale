@@ -42,37 +42,42 @@ def stop_logging():
 
 def verification(result, mode, start_time, host, execution):
     end_time = datetime.now()
-    if mode.startswith("VIEWONLY"):
-        # Only test for false due to fall back to highest possible
-        # ie if View in place can't connect PRIVATE on 2nd so
-        # connects as exclusive
-        if "FALSE" in result["video"]:
-            failure(host, mode, start_time,
-                    end_time, execution, result)
-    elif mode.startswith("SHARED"):
-        if mode.endswith("VIEWONLY") or mode.endswith("SHARED"):
-            if "FALSE" in result["video"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
-        elif mode.endswith("EXCLUSIVE") or mode.endswith("PRIVATE"):
-            if result["video"] != ["TRUE", "FALSE"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
-    elif mode.startswith("EXCLUSIVE"):
-        if mode.endswith("VIEWONLY"):
-            if result["video"] != ["TRUE", "TRUE"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
-        elif (mode.endswith("SHARED") or
-                mode.endswith("EXCLUSIVE") or
-                mode.endswith("PRIVATE")):
-            if result["video"] != ["TRUE", "FALSE"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
-    elif mode.startswith("PRIVATE"):
+#     if mode.startswith("VIEWONLY"):
+#         # Only test for false due to fall back to highest possible
+#         # ie if View in place can't connect PRIVATE on 2nd so
+#         # connects as exclusive
+#         if "FALSE" in result["video"]:
+#             failure(host, mode, start_time,
+#                     end_time, execution, result)
+#     elif mode.startswith("SHARED"):
+#         if mode.endswith("VIEWONLY") or mode.endswith("SHARED"):
+#             if "FALSE" in result["video"]:
+#                 failure(host, mode, start_time,
+#                         end_time, execution, result)
+#         elif mode.endswith("EXCLUSIVE") or mode.endswith("PRIVATE"):
+#             if result["video"] != ["TRUE", "FALSE"]:
+#                 failure(host, mode, start_time,
+#                         end_time, execution, result)
+#     elif mode.startswith("EXCLUSIVE"):
+#         if mode.endswith("VIEWONLY"):
+#             if result["video"] != ["TRUE", "TRUE"]:
+#                 failure(host, mode, start_time,
+#                         end_time, execution, result)
+#         elif (mode.endswith("SHARED") or
+#                 mode.endswith("EXCLUSIVE") or
+#                 mode.endswith("PRIVATE")):
+#             if result["video"] != ["TRUE", "FALSE"]:
+#                 failure(host, mode, start_time,
+#                         end_time, execution, result)
+    if mode.startswith("PRIVATE"):
         if result["video"] != ["TRUE", "FALSE"]:
             failure(host, mode, start_time,
                     end_time, execution, result)
+    elif not mode.startswith("PRIVATE"):
+        if "FALSE" in result["video"]:
+            failure(host, mode, start_time,
+                    end_time, execution, result)
+
     if execution % 1000 == 0:
         update(host, mode, start_time,
                end_time, execution, result)
