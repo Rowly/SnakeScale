@@ -43,14 +43,12 @@ def stop_logging():
 def verification(result, mode, start_time, host, execution):
     end_time = datetime.now()
     if mode.startswith("VIEWONLY"):
-        if mode.endswith("PRIVATE"):
-            if result["video"] != ["TRUE", "FALSE"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
-        elif not mode.endswith("PRIVATE"):
-            if "FALSE" in result["video"]:
-                failure(host, mode, start_time,
-                        end_time, execution, result)
+        # Only test for false due to fall back to highest possible
+        # ie if View in place can't connect PRIVATE on 2nd so
+        # connects as exclusive
+        if "FALSE" in result["video"]:
+            failure(host, mode, start_time,
+                    end_time, execution, result)
     elif mode.startswith("SHARED"):
         if mode.endswith("VIEWONLY") or mode.endswith("SHARED"):
             if "FALSE" in result["video"]:
