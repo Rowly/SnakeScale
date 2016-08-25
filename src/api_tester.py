@@ -129,13 +129,13 @@ def main():
                     console_2 = random.choice(consoles)
                 ddx_api.switch(token, console, "20", "VIEWONLY")
                 ddx_api.switch(token, console_2, "20", "VIEWONLY")
-                time.sleep(2)
+                time.sleep(5)
                 target = random.choice(computers)
                 p_mode = mode.split("/")[0]
                 s_mode = mode.split("/")[-1]
                 ddx_api.switch(token, console, target, p_mode)
                 ddx_api.switch(token, console_2, target, s_mode)
-                time.sleep(2)
+                time.sleep(5)
                 if target in ["6", "7", "8", "9", "10"]:
                     host = "Ubuntu"
                 elif target in ["16", "17", "18", "19"]:
