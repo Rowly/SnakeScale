@@ -10,6 +10,7 @@ import logging
 from collections import OrderedDict
 import random
 from datetime import datetime
+import json
 try:
     from utilities import ddx_api
     from utilities.test_video import Video
@@ -42,9 +43,14 @@ def stop_logging():
 def verification(result, mode, start_time, host, execution):
     end_time = datetime.now()
     if mode.startswith("VIEWONLY"):
-        if "FALSE" in result["video"]:
-            failure(host, mode, start_time,
-                    end_time, execution, result)
+        if mode.endswith("PRIVATE"):
+            if result["video"] != ["TRUE", "FALSE"]:
+                failure(host, mode, start_time,
+                        end_time, execution, result)
+        elif not mode.endswith("PRIVATE"):
+            if "FALSE" in result["video"]:
+                failure(host, mode, start_time,
+                        end_time, execution, result)
     elif mode.startswith("SHARED"):
         if mode.endswith("VIEWONLY") or mode.endswith("SHARED"):
             if "FALSE" in result["video"]:
@@ -137,10 +143,12 @@ def main():
                 multi_view = Video()
                 multi_view.set(host, console)
                 multi_view.set(host, console_2)
-                RESULT.update({"console": console,
+                RESULT.update({"console 1": console,
+                               "console 2": console_2,
                                "computer": target,
                                "mode": mode,
                                "video": multi_view.get()})
+                logging.info("\n{}".format(json.dumps(RESULT, indent=2)))
                 verification(RESULT, mode, start_time, host, execution)
 
 if __name__ == "__main__":
