@@ -6,7 +6,7 @@ Created on Jun 29, 2016
 import sys
 import os
 import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from requests.packages.urllib3.exceptions import InsecureRequestWarning as irw
 import time
 try:
     from config import config
@@ -15,7 +15,7 @@ except ImportError:
     from config import config
 
 
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)  # @UndefinedVariable
+requests.packages.urllib3.disable_warnings(irw)  # @UndefinedVariable
 
 
 def login(retry=0, path=".", unit="dut"):
@@ -121,15 +121,15 @@ if __name__ == "__main__":
                     assert(connectedComputer == int(computer))
                     assert(currentAccessMode == mode)
                 time.sleep(5)
-#     for endpoint in ["systemInfo",
-#                      "computers",
-#                      "consoles",
-#                      "transmitters",
-#                      "receivers",
-#                      "ports",
-#                      "supplies",
-#                      "temperatures",
-#                      ]:
-#         info = get(token, endpoint, path)
-#         print(json.dumps(info, indent=4))
-#     post(token, "system/backup", path)
+    for endpoint in ["systemInfo",
+                     "computers",
+                     "consoles",
+                     "transmitters",
+                     "receivers",
+                     "ports",
+                     "supplies",
+                     "temperatures",
+                     ]:
+        info = get(token, endpoint, path)
+        print(json.dumps(info, indent=4))
+    post(token, "system/backup", path)

@@ -101,40 +101,6 @@ class Jobs():
         """
         end_time = datetime.now()
 
-        """
-        If 24hours (timedelta(1)) has passed between start_time
-        and end_time, send the update email
-
-        Updated to 100 executions as the timedelta didn't work.
-        TODO: Get the timedelta working!
-        """
-        if self.execution % 100 == 0:
-            time.sleep(2)
-            if self.device == "ddx30":
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_ddx_update_email()
-            elif self.device == "av4pro":
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_av4pro_update_email()
-            elif self.device == "bbc":
-                EmailNotifier(self.device,
-                              self.host,
-                              self.test_type,
-                              self.start.strftime(T_FORMAT),
-                              end_time.strftime(T_FORMAT),
-                              self.execution,
-                              RESULT).send_bbc_update_email()
-
         if self.device == "ddx30":
             if not RESULT:
                 time.sleep(2)
@@ -266,6 +232,29 @@ class Jobs():
                               RESULT).send_bbc_failure_email()
                 logging_stop()
                 sys.exit()
+
+        """
+        If 24hours (timedelta(1)) has passed between start_time
+        and end_time, send the update email
+
+        Updated to 100 executions as the timedelta didn't work.
+        TODO: Get the timedelta working!
+        """
+        if self.execution % 100 == 0:
+            time.sleep(2)
+            email = EmailNotifier(self.device,
+                                  self.host,
+                                  self.test_type,
+                                  self.start.strftime(T_FORMAT),
+                                  end_time.strftime(T_FORMAT),
+                                  self.execution,
+                                  RESULT)
+            if self.device == "ddx30":
+                email.send_ddx_update_email()
+            elif self.device == "av4pro":
+                email.send_av4pro_update_email()
+            elif self.device == "bbc":
+                email.send_bbc_update_email()
 
 
 def main(device, test_type, resolution):

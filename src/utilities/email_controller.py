@@ -35,7 +35,7 @@ class EmailNotifier():
         self.end = end
         self.execution = execution
         self.response = response
-        self.recipients = config.get_email_recipients(".")
+        self.recipients = config.get_email_recipients("..")
 
     def send_ddx_api_update_email(self, path="."):
         fail_body = """
@@ -363,7 +363,6 @@ class EmailNotifier():
         f = os.path.abspath("{}/dump/fail/{}.txt".format(path, endpoint))
         with open(f, "w+") as file:
             file.write(json.dumps(content, indent=4))
-
 
 if __name__ == "__main__":
     T_FORMAT = "%H:%M %d-%m-%Y"

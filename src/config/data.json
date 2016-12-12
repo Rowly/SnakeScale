@@ -34,6 +34,6 @@
               "mouse": "10.10.10.158"
              },
          "smtp_server": "192.168.42.115",
-         "email_recipients" : ["mark.rowlands@adder.com", "simonh@adder.com"]
+         "email_recipients" : ["admin@mail1.adder.co"]
         }
 }
